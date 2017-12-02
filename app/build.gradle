@@ -1,0 +1,108 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.22.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.cycliq"
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled  true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+//    repositories {
+//        maven { url 'https://maven.fabric.io/public' }
+//    }
+
+}
+
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//        maven { url 'https://maven.fabric.io/public' }
+//    }
+//
+//    dependencies {
+//        // ...
+//      //  classpath 'io.fabric.tools:gradle:1.14.3'
+//        classpath 'io.fabric.tools:gradle:1.24.1'
+//
+//    }
+//}
+
+//apply plugin: 'io.fabric'
+
+
+//apply plugin: 'io.fabric'
+//
+//repositories {
+//    maven { url 'https://maven.fabric.io/public' }
+//}
+
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+//    classpath 'io.fabric.tools:gradle:1.22.1'
+
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    compile 'com.google.android.gms:play-services:10.2.4'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:cardview-v7:25.3.+'
+
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.android.gms:play-services-maps:10.2.4'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.snappydb:snappydb-lib:0.5.2'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+
+    compile('com.payumoney.sdkui:plug-n-play:1.0.0'){
+        transitive = true;
+        exclude module: 'payumoney-sdk'
+    }
+
+    compile 'com.payumoney.core:payumoney-sdk:7.0.1'
+    compile 'io.reactivex:rxjava:1.1.2'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
+
+    compile 'com.razorpay:checkout:1.4.1'
+
+}

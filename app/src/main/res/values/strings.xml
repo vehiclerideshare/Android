@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Cycliq</string>
+    <string name="title_activity_maps">Map</string>
+
+
+    <string name="title_my_wallet">My Wallet</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_details">Details</string>
+    <string name="title_my_trips">My Trips</string>
+    <string name="title_my_report">Report</string>
+    <string name="title_my_payments">My Payments</string>
+
+    <string name="un_lock">unlock</string>
+    <string name="received_lock">received lock</string>
+    <string name="info">connected ble device,can unlock</string>
+    <string name="connect_tip">Must connected BLE device</string>
+    <string name="scan">scan</string>
+    <string name="scanning">scanning...</string>
+    <string name="getseckey">Get Key</string>
+
+    <string name="main_permissions_camera">Open the camera\'s access in Application management</string>
+    <string name="main_permissions_location">Open the positiong\'s access in Application management</string>
+    <string name="main_dialog_tip">Tip</string>
+    <string name="main_dialog_submit">OK</string>
+
+
+    <string name="error_message_unlock_server">Error from server and he status is null</string>
+
+</resources>

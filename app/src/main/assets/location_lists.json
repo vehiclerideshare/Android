@@ -1,0 +1,41 @@
+{
+	"status" : "success",
+	"locationlists" : [
+			{
+				"name" : "Cycle 1",
+				"lat"  : "13.09042",
+				"lng"  : "80.29171079999992",
+				"locaddress" : "N Beach Rd, George Town, Chennai, Tamil Nadu 600001, India",
+				"deviceid" : "1"
+			},
+			{
+				"name" : "Cycle 2",
+				"lat"  : "12.986",
+				"lng"  : "80.24",
+				"locaddress" : "Tidel Park, (Tamil Nadu)",
+				"deviceid" : "2"
+			},
+			{
+				"name" : "Cycle 3",
+				"lat"  : "13.0604",
+				"lng"  : "80.2496",
+				"locaddress" : "TCS, Siruseri, Chennai",
+				"deviceid" : "3"
+			},
+			{
+				"name" : "Cycle 4",
+				"lat"  : "13.018410",
+				"lng"  : "80.223068",
+				"locaddress" : "Childrens Park, Anna Nagar, Chennai",
+				"deviceid" : "4"
+			},
+			{
+				"name" : "Cycle 5",
+				"lat"  : "13.32",
+				"lng"  : "80.2837",
+				"locaddress" : "Marina beach, Chennai",
+				"deviceid" : "5"
+			}
+	]
+
+}

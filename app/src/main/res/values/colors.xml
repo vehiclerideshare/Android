@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#E5B02B</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="appBgColor">#ECEDEE</color>
+    <color name="btnBlack">#363738</color>
+    <color name="btnYellow">#E5B02B</color>
+
+    <color name="durationClr">#ED792F</color>
+    <color name="carbonClr">#E14248</color>
+    <color name="kCalClr">#4EBD2A</color>
+
+    <color name="colorSearchBg">#dedcda</color>
+
+    <color name="dark_gray">#aaa</color>
+    <color name="colorGreen">#59e729</color>
+
+</resources>
