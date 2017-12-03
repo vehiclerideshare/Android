@@ -40,15 +40,15 @@ public class ReportFormActivity extends AppCompatActivity implements View.OnClic
 
     private void setViews() {
 
-        txtSubject = (EditText) findViewById(R.id.txtSubject);
+//        txtSubject = (EditText) findViewById(R.id.txtSubject);
+//
+//        txtCategory = (EditText) findViewById(R.id.txtCategory);
+//
+//        txtComments = (EditText) findViewById(R.id.txtComments);
 
-        txtCategory = (EditText) findViewById(R.id.txtCategory);
-
-        txtComments = (EditText) findViewById(R.id.txtComments);
-
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-
-        btnBack = (ImageButton) findViewById(R.id.btnBack);
+//        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+//
+//        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
     }
 

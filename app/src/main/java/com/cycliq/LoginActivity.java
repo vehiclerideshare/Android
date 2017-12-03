@@ -132,6 +132,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 layoutVerifyOtp.setVisibility(View.VISIBLE);
 
+                editOtp.requestFocus();
+
             }
         } else if (view == btnVerifyPin) {
 

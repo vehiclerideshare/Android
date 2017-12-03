@@ -58,6 +58,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:padding="15dp"
+                        android:visibility="gone"
                         android:src="@mipmap/menu_white" />
 
                     <ImageButton

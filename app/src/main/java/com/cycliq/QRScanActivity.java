@@ -55,6 +55,17 @@ public class QRScanActivity extends AppCompatActivity {
 
     private boolean isOPenScanAlready = false;
 
+    String rideId = "";
+    String rideStatus = "";
+
+    Boolean isStart = true;
+    Boolean webCalling = false;
+    Boolean unLocking = false;
+    Boolean cancelProcess = false;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,15 +106,18 @@ public class QRScanActivity extends AppCompatActivity {
 
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
 
-                txtQrResult.setText("Result Not Found");
+                txtQrResult.setText("");
 
             } else {
+
+                txtQrResult.setVisibility(View.GONE);
+
                 //if qr contains data
                 try {
                     //converting the data to json
                     JSONObject obj = new JSONObject(result.getContents());
                     //setting values to textviews
-                    txtQrResult.setText(obj.getString("name"));
+                  //  txtQrResult.setText(obj.getString("name"));
 
                     update(obj.getString("name"));
 
@@ -222,13 +236,30 @@ public class QRScanActivity extends AppCompatActivity {
             }
 
             String url = Constants.DEMO_BASE_URL + Constants.UNLOCK_VEHICLE;
-
+            webCalling = true;
             RequestQueue queue = CycliqApplication.getInstance().getRequestQueue();
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, params,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             System.out.println("response values == "+response);
+
+                            webCalling = false;
+
+                            if (cancelProcess) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        // Update UI elements
+
+                                            Constants.hideProgressDialog();
+
+
+
+                                    }
+                                });
+                                return;
+                            }
+
 
                             try {
 
@@ -244,9 +275,12 @@ public class QRScanActivity extends AppCompatActivity {
 
 //                                            Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
 
-                                            Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_ID, "123426100000150");
+                                            rideId = "123426100000150";
+                                            rideStatus = "Authorized";
 
-                                            Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_STATUS, "Authorized");
+
+                                            unLocking = true;
+
                                             CycliqBluetoothComm.getInstance().bgOperation(1002);
 
 
@@ -257,9 +291,11 @@ public class QRScanActivity extends AppCompatActivity {
 
                                         String strRideId = response.getString(Constants.KEY_RIDE_ID);
 
-                                        Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_ID, strRideId);
+                                        rideId = strRideId;
+                                        rideStatus = strRideStatus;
 
-                                        Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_STATUS, strRideStatus);
+
+                                        unLocking = true;
 
                                         CycliqBluetoothComm.getInstance().bgOperation(1002);
 
@@ -336,6 +372,10 @@ public class QRScanActivity extends AppCompatActivity {
             public void run() {
                 // Update UI elements
 
+                Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_ID, rideId);
+
+                Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_STATUS, rideStatus);
+
                 Constants.hideProgressDialog();
                 CycliqBluetoothComm.getInstance().getMapsActivity().sendLockOpenStatus();
                 finish();
@@ -346,4 +386,16 @@ public class QRScanActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if (unLocking) {
+
+        } else {
+            cancelProcess = true;
+            super.onBackPressed();
+        }
+
+
+    }
 }

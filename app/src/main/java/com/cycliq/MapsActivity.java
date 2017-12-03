@@ -1137,6 +1137,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtTripStart.setText("Trip Start: "+GetToday());
         txtTripEnd.setText("Trip End: "+"-");
         txtTripTimer.setText("00:00:00");
+        btnTripClose.setVisibility(View.GONE);
         btnUnlock.setVisibility(View.GONE);
 
         JSONObject params = new JSONObject();
@@ -1313,11 +1314,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void run() {
                 tripCountDown = tripCountDown + 1;
 
-                String text = String.format(Locale.getDefault(), "%02d:%02d:%02d",
-                        TimeUnit.MILLISECONDS.toHours(tripCountDown) % 60,
-                        TimeUnit.MILLISECONDS.toMinutes(tripCountDown) % 60,
-                        TimeUnit.MILLISECONDS.toSeconds(tripCountDown) % 60);
-                txtTripTimer.setText(text);
+                Integer hours = (tripCountDown / 3600) % 60;
+                Integer mins = (tripCountDown / 60) % 60;
+                Integer seconds = tripCountDown % 60;
+
+                final String text =  String.format("%02d:%02d:%02d", hours, mins, seconds);
+
+
+//                final String text = String.format(Locale.getDefault(), "%02d:%02d:%02d",
+//                        TimeUnit.MILLISECONDS.toHours(tripCountDown) % 60,
+//                        TimeUnit.MILLISECONDS.toMinutes(tripCountDown) % 60,
+//                        TimeUnit.MILLISECONDS.toSeconds(tripCountDown) % 60);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        txtTripTimer.setText(text);
+
+
+                    }
+                });
             }
         }, 0, 1000);
 
@@ -1329,8 +1343,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             tripTimer = null;
         }
 
+        runOnUiThread(new Runnable() {
+            public void run() {
+                txtTripEnd.setText("Trip End :" + GetToday());
+                btnTripClose.setVisibility(View.VISIBLE);
+
+            }
+        });
+
 //        txtTripTimer.setText("00:00:00");
-        txtTripEnd.setText(GetToday());
+
+
     }
 
              Polyline polylineFinal = null;
