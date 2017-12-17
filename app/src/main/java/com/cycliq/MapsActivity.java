@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -30,6 +31,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.googledirection.DirectionCallback;
+import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.constant.RequestResult;
+import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.model.Step;
+import com.akexorcist.googledirection.util.DirectionConverter;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -86,6 +95,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -111,7 +121,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     LinearLayout layoutRideStatus, layoutSearch, layoutClock, layoutBottom;
 
-    TextView txtRideStatus, txtRideId, txtClock, txtCancelReservation, btnCloseBottomView, txtBottomVehicleNo, txtAvailable;
+    TextView txtRideStatus, txtRideId, txtClock, txtCancelReservation, btnCloseBottomView, txtBottomVehicleNo, txtAvailable, txtAddress;
 
     LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
@@ -147,6 +157,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Timer tripTimer = null;
 
     Integer tripCountDown = 0;
+
+    Polyline polylineFinal = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -369,6 +382,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnLocation.setOnClickListener(this);
 
+
+
         btnMenu.setOnClickListener(this);
 
         btnSearch.setOnClickListener(this);
@@ -439,6 +454,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtTripTimer = (TextView) findViewById(R.id.txtTripTimer);
         btnBikeReport = (Button) findViewById(R.id.btnReportBike);
         btnTripClose = (Button) findViewById(R.id.btnTripClose);
+        txtAddress = (TextView) findViewById(R.id.txtBottomAddress);
+
+        txtAddress.setVisibility(View.GONE);
 
 
     }
@@ -519,6 +537,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             Log.d("location button", "location button pressed.");
 
+            getMyLocation();
+
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -538,9 +558,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     Log.d("location button", "location button pressed with not null.");
 
-                    LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//                    LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+//
+//                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
                 }
 
@@ -654,7 +674,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        //  currentLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+         // currentLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
         readDataFromJson(false);
 
@@ -749,7 +769,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                     LatLngBounds bounds = builder.build();
 
-                                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10));
+                                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 160));
 
                                 }
 
@@ -783,6 +803,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+
+
+
+    private void getMyLocation() {
+        if (currentLocation != null) {
+            LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 100);
+            mMap.animateCamera(cameraUpdate);
+
+
+        }
+
+
+    }
+
+
 
 
     private void makeReservation() {
@@ -1356,7 +1392,80 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-             Polyline polylineFinal = null;
+    public void getStreetAddress(String lat, String lng) {
+        String destloc = "latlng=" + lat + "," + lng;
+        String serverKey = "AIzaSyDLlE_6rqomakJuSnthZLw9AyzOyZdF87U";
+
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?" + destloc + "&sensor=true&key=" + serverKey;
+
+        RequestQueue queue = CycliqApplication.getInstance().getRequestQueue();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("response values == " + response);
+
+                        List<List<HashMap<String, String>>> routes = new ArrayList<>() ;
+                        JSONArray jRoutes;
+                        JSONArray jLegs;
+                        JSONArray jSteps;
+
+
+                        try {
+                            jRoutes = response.getJSONArray("results");
+
+                            if (jRoutes != null) {
+                                if (jRoutes.length() > 0) {
+                                    JSONObject address_comp = jRoutes.getJSONObject(0);
+                                    final String current_address = address_comp.getString("formatted_address");
+
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            // Update UI elements
+                                        txtAddress.setVisibility(View.VISIBLE);
+                                        txtAddress.setText(current_address);
+
+                                        }
+                                    });
+                                }
+                            }
+
+
+
+
+
+
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(final VolleyError error) {
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                // Update UI elements
+//                                    Toast.makeText(this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        });
+                    }
+                });
+
+
+        queue.add(jsObjRequest);
+
+    }
+
+
 
     public void makeDirection(String lat, String lng) {
 
@@ -1366,11 +1475,152 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             polylineFinal = null;
         }
 
-        LatLng latLngSource = new LatLng(Double.parseDouble(stringLat), Double.parseDouble(stringLng));
-        LatLng latLngDest = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+        getStreetAddress(lat, lng);
+
+        final LatLng latLngSource = new LatLng(Double.parseDouble(stringLat), Double.parseDouble(stringLng));
+        final LatLng latLngDest = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
 
 
-        PolylineOptions rectOptions = new PolylineOptions();
+        String destloc = "latlng=" + lat + "," + lng;
+
+
+
+
+        LatLng start = latLngSource;
+        LatLng end = latLngDest;
+
+        String serverKey = "AIzaSyDLlE_6rqomakJuSnthZLw9AyzOyZdF87U";
+        LatLng origin = start;
+        LatLng destination = end;
+        GoogleDirection.withServerKey(serverKey)
+                .from(origin)
+                .to(destination)
+                .execute(new DirectionCallback() {
+
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String s) {
+                        String status = direction.getStatus();
+                        if(status.equals(RequestResult.OK)) {
+                            Route route = direction.getRouteList().get(0);
+                            Leg leg = route.getLegList().get(0);
+                            ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                            PolylineOptions polylineOptions = DirectionConverter.createPolyline(getApplicationContext(), directionPositionList, 5, Color.RED);
+                            polylineFinal = mMap.addPolyline(polylineOptions);
+                            LatLngBounds.Builder builder1 = new LatLngBounds.Builder();
+                            builder1.include(latLngSource).include(latLngDest);
+
+//Animate to the bounds
+                            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder1.build(), 160);
+                            mMap.moveCamera(cameraUpdate);
+//                            List<Step> stepList = direction.getRouteList().get(0).getLegList().get(0).getStepList();
+//                            ArrayList<PolylineOptions> polylineOptionList = DirectionConverter.createTransitPolyline(getApplicationContext(), stepList, 5, Color.RED, 3, Color.BLUE);
+//                            for (PolylineOptions polylineOption : polylineOptionList) {
+//                                mMap.addPolyline(polylineOption);
+//                            }
+                            // Do something
+                        } else if(status.equals(RequestResult.NOT_FOUND)) {
+                            // Do something
+                        }
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+                        // Do something here
+                    }
+                });
+
+       /* JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("response values == " + response);
+
+                        List<List<HashMap<String, String>>> routes = new ArrayList<>() ;
+                        JSONArray jRoutes;
+                        JSONArray jLegs;
+                        JSONArray jSteps;
+
+
+                        try {
+                            jRoutes = response.getJSONArray("routes");
+
+                            if (jRoutes != null) {
+                                if (jRoutes.length() > 0) {
+                                    ArrayList<LatLng> points = null;
+
+                                    PolylineOptions polyLineOptions = null;
+                                    for (int i = 0; i < routes.size(); i++) {
+                                        points = new ArrayList<LatLng>();
+                                        polyLineOptions = new PolylineOptions();
+                                        List<HashMap<String, String>> path = routes.get(i);
+
+                                        for (int j = 0; j < path.size(); j++) {
+                                            HashMap<String, String> point = path.get(j);
+
+                                            double lat = Double.parseDouble(point.get("lat"));
+                                            double lng = Double.parseDouble(point.get("lng"));
+                                            LatLng position = new LatLng(lat, lng);
+
+                                            points.add(position);
+                                        }
+
+                                        polyLineOptions.addAll(points);
+                                        polyLineOptions.width(2);
+                                        polyLineOptions.color(Color.BLUE);
+                                    }
+
+                                    mMap.addPolyline(polyLineOptions);
+
+//                                    JSONObject overview_polyline = jRoutes.getJSONObject(0);
+//                                    if (overview_polyline.length() > 0) {
+//                                        JSONObject dictPolyline = overview_polyline.getJSONObject("overview_polyline");
+//                                        String points = dictPolyline.getString("points");
+//
+//
+//                                    }
+                                }
+
+
+                            }
+
+
+
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                // Update UI elements
+
+
+                            }
+                        });
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(final VolleyError error) {
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                // Update UI elements
+//                                    Toast.makeText(this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        });
+                    }
+                });
+
+
+        queue.add(jsObjRequest);*/
+
+
+      /*  PolylineOptions rectOptions = new PolylineOptions();
         LatLng polLatLng = null;
 
 
@@ -1405,7 +1655,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //Animate to the bounds
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder1.build(), 100);
-        mMap.moveCamera(cameraUpdate);
+        mMap.moveCamera(cameraUpdate);*/
     }
 
 

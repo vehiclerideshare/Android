@@ -15,5 +15,6 @@
 
     <color name="dark_gray">#aaa</color>
     <color name="colorGreen">#59e729</color>
+    <color name="scanner_line">#00ceff</color>
 
 </resources>

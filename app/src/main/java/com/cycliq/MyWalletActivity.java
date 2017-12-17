@@ -195,7 +195,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             txtAdd1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            txtAmount.setText(String.valueOf(Integer.parseInt(txtAmount.getText().toString()) + 50));
+            txtAmount.setText("50");
 
         }
 
@@ -205,7 +205,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             txtAdd2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            txtAmount.setText(String.valueOf(Integer.parseInt(txtAmount.getText().toString()) + 100));
+            txtAmount.setText("100");
 
         }
 
@@ -215,7 +215,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             txtAdd3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            txtAmount.setText(String.valueOf(Integer.parseInt(txtAmount.getText().toString()) + 200));
+            txtAmount.setText("200");
 
         }
 
@@ -225,7 +225,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             txtAdd4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            txtAmount.setText(String.valueOf(Integer.parseInt(txtAmount.getText().toString()) + 500));
+            txtAmount.setText("500");
 
         }
 

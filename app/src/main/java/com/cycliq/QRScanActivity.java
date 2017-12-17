@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,19 +28,26 @@ import com.cycliq.ble.CycliqBluetoothComm;
 import com.cycliq.model.LocationListModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.google.android.gms.vision.barcode.Barcode;
+//import com.google.zxing.integration.android.IntentIntegrator;
+//import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 //implementing onclicklistener
-public class QRScanActivity extends AppCompatActivity {
+public class QRScanActivity extends AppCompatActivity  {
+
+
+//    private BarcodeReader barcodeReader;
+
 
     //View Objects
     private TextView txtQrResult, txtLoading;
@@ -51,7 +59,7 @@ public class QRScanActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     //qr code scanner object
-    private IntentIntegrator qrScan;
+//    private IntentIntegrator qrScan;
 
     private boolean isOPenScanAlready = false;
 
@@ -78,13 +86,17 @@ public class QRScanActivity extends AppCompatActivity {
 
         txtLoading = (TextView) findViewById(R.id.txtLoading);
 
-        //intializing scan object
-        qrScan = new IntentIntegrator(this);
 
-        if (!isOPenScanAlready) {
+       // barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_fragment);
 
-            qrScan.initiateScan();
-        }
+
+//        //intializing scan object
+//        qrScan = new IntentIntegrator(this);
+//
+//        if (!isOPenScanAlready) {
+//
+//            qrScan.initiateScan();
+//        }
 
         CycliqBluetoothComm.getInstance().setCurrentActivity(this);
         CycliqBluetoothComm.getInstance().init();
@@ -94,8 +106,8 @@ public class QRScanActivity extends AppCompatActivity {
     //Getting the scan results
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+      /*  IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         if (result != null) {
 
@@ -115,13 +127,15 @@ public class QRScanActivity extends AppCompatActivity {
                 //if qr contains data
                 try {
                     //converting the data to json
-                    JSONObject obj = new JSONObject(result.getContents());
-                    //setting values to textviews
-                  //  txtQrResult.setText(obj.getString("name"));
+//                    JSONObject obj = new JSONObject(result.getContents());
+//                    //setting values to textviews
+//                  //  txtQrResult.setText(obj.getString("name"));
+//
+//                    update(obj.getString("name"));
 
-                    update(obj.getString("name"));
+                    update("testid");
 
-                } catch (JSONException e) {
+                } catch (NullPointerException e) {
 
                     e.printStackTrace();
 
@@ -139,7 +153,7 @@ public class QRScanActivity extends AppCompatActivity {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
-        }
+        }*/
     }
 
     @Override
@@ -398,4 +412,31 @@ public class QRScanActivity extends AppCompatActivity {
 
 
     }
+
+//    @Override
+//    public void onScanned(Barcode barcode) {
+//        // play beep sound
+//        barcodeReader.playBeep();
+//    }
+//
+//    @Override
+//    public void onScannedMultiple(List<Barcode> list) {
+//
+//    }
+//
+//    @Override
+//    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+//
+//    }
+//
+//    @Override
+//    public void onScanError(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onCameraPermissionDenied() {
+//        Toast.makeText(getApplicationContext(), "Camera permission denied!", Toast.LENGTH_LONG).show();
+//    }
+
 }

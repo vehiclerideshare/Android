@@ -234,9 +234,12 @@ public class CycliqBluetoothComm {
             final String deviceName = device.getName();
             final String macAddress = device.getAddress();
             if (selectedBleDevice == null) {
-                scanLeDevice(false);
-                selectedBleDevice = bleDevice;
-                bgOperation(1003);
+                if (macAddress.toUpperCase().equalsIgnoreCase("FF:FF:11:00:02:2F")) {
+                    scanLeDevice(false);
+                    selectedBleDevice = bleDevice;
+                    bgOperation(1003);
+                }
+
             }
 
 

@@ -145,7 +145,7 @@
                                 android:background="@android:color/transparent"
                                 android:padding="15dp"
                                 android:text="Cancel"
-                                android:textColor="@color/wallet_holo_blue_light" />
+                               />
 
 
                         </LinearLayout>
@@ -589,7 +589,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="7dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="1st Main Road, Anna Nager West, Chennai"
                 android:textColor="#000000"
                 android:textSize="15dp" />
@@ -615,6 +615,8 @@
                 android:text="Available"
                 android:textColor="#59e729"
                 android:textSize="15dp" />
+
+
 
             <Button
                 android:id="@+id/btnMakeReservation"
