@@ -23,25 +23,34 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.cycliq.Application.CycliqApplication;
 import com.cycliq.CommonClasses.Constants;
 import com.cycliq.ble.CycliqBluetoothComm;
+import com.cycliq.model.LocationListModel;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.cycliq.CommonClasses.Constants.KEY_RIDE_ID;
 
-public class TripRunningActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener {
+public class TripRunningActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener {
 
     private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer, txtTripAmount;
 
@@ -59,6 +68,8 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
     LocationManager locationManager;
     Timer timer = new Timer();
+
+    Marker markerFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +96,11 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
         sendLockOpenStatus();
 
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
     }
 
     @Override
@@ -95,6 +111,8 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
 
         } else if (view == btnTripClose) {
+
+
             Intent intent = new Intent(this, MapsActivity.class);
 
             startActivity(intent);
@@ -108,16 +126,32 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
         mMap = googleMap;
 
 
+
+
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
 
-            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
             currentLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
             if (currentLocation != null) {
                 stringLat = Double.toString(currentLocation.getLatitude());
                 stringLng = Double.toString(currentLocation.getLongitude());
+
+                CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                CameraUpdate zoom=CameraUpdateFactory.zoomTo(11);
+                mMap.moveCamera(center);
+                mMap.animateCamera(zoom);
+
+
+                MarkerOptions markerSource = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title("");
+
+                // Changing marker icon
+                markerSource.icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin));
+
+                // adding marker
+                markerFinal = mMap.addMarker(markerSource);
 
 
             }
@@ -127,13 +161,30 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
             locationManager.requestLocationUpdates(best, 0, 1, new android.location.LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
+
+                    CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                    CameraUpdate zoom=CameraUpdateFactory.zoomTo(11);
+                    mMap.moveCamera(center);
+                    mMap.animateCamera(zoom);
+
+                    if (markerFinal != null) {
+                        markerFinal.remove();
+                    }
+
+
                     currentLocation = location;
 
                     if (currentLocation != null) {
                         stringLat = Double.toString(currentLocation.getLatitude());
                         stringLng = Double.toString(currentLocation.getLongitude());
 
-                        getMyLocation();
+                        MarkerOptions markerSource = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title("");
+
+                        // Changing marker icon
+                        markerSource.icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin));
+
+                        // adding marker
+                        markerFinal = mMap.addMarker(markerSource);
 
                     }
 
@@ -182,7 +233,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
     private void getMyLocation() {
         if (currentLocation != null) {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 80);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 100);
             mMap.animateCamera(cameraUpdate);
 
         }
@@ -546,5 +597,95 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onBackPressed() {
         return;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+
+
+
+        if (marker.getPosition() != null) {
+            LatLng postition = marker.getPosition();
+
+            getStreetAddress(Double.toString(postition.latitude),Double.toString(postition.longitude));
+        }
+
+
+        return false;
+    }
+
+    public void getStreetAddress(String lat, String lng) {
+        String destloc = "latlng=" + lat + "," + lng;
+        String serverKey = "AIzaSyDLlE_6rqomakJuSnthZLw9AyzOyZdF87U";
+
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?" + destloc + "&sensor=true&key=" + serverKey;
+
+        RequestQueue queue = CycliqApplication.getInstance().getRequestQueue();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("response values == " + response);
+
+                        List<List<HashMap<String, String>>> routes = new ArrayList<>() ;
+                        JSONArray jRoutes;
+                        JSONArray jLegs;
+                        JSONArray jSteps;
+
+
+                        try {
+                            jRoutes = response.getJSONArray("results");
+
+                            if (jRoutes != null) {
+                                if (jRoutes.length() > 0) {
+                                    JSONObject address_comp = jRoutes.getJSONObject(0);
+                                    final String current_address = address_comp.getString("formatted_address");
+
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            // Update UI elements
+                                            if (markerFinal != null) {
+                                                markerFinal.setTitle(current_address);
+                                            }
+
+                                        }
+                                    });
+                                }
+                            }
+
+
+
+
+
+
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(final VolleyError error) {
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                // Update UI elements
+//                                    Toast.makeText(this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        });
+                    }
+                });
+
+
+        queue.add(jsObjRequest);
+
     }
 }

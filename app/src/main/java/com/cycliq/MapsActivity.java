@@ -623,9 +623,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
 
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
+
+
 
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -633,6 +636,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (currentLocation != null) {
                 stringLat = Double.toString(currentLocation.getLatitude());
                 stringLng = Double.toString(currentLocation.getLongitude());
+
+                CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+                mMap.moveCamera(center);
+                mMap.animateCamera(zoom);
+
 
 
             }
@@ -650,6 +659,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                     }
+
+                    CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                    CameraUpdate zoom=CameraUpdateFactory.zoomTo(11);
+                    mMap.moveCamera(center);
+                    mMap.animateCamera(zoom);
 
                 }
 
@@ -1670,6 +1684,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
              }
+
 
 
 

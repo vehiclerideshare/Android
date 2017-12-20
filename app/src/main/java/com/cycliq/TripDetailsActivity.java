@@ -274,6 +274,7 @@ public class TripDetailsActivity extends AppCompatActivity implements View.OnCli
                             Leg leg = route.getLegList().get(0);
                             ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
                             PolylineOptions polylineOptions = DirectionConverter.createPolyline(getApplicationContext(), directionPositionList, 5, Color.RED);
+                            mMap.addPolyline(polylineOptions);
                             LatLngBounds.Builder builder1 = new LatLngBounds.Builder();
                             builder1.include(latLngSource).include(latLngDest);
 

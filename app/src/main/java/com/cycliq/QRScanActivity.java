@@ -86,12 +86,16 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
     private QREader qrEader;
     boolean hasCameraPermission = false;
 
+    boolean isScanned = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan_screen);
         hasCameraPermission = RuntimePermissionUtil.checkPermissonGranted(this, cameraPerm);
+
+        setTitle("Cycliq");
+        timer = new Timer();
 
 //        getSupportActionBar().hide();
 
@@ -137,10 +141,12 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
                 txtQrResult.post(new Runnable() {
                     @Override
                     public void run() {
-                        update(data);
+                        isScanned = true;
                         qrEader.stop();
                         mySurfaceView.setVisibility(View.GONE);
                         overlay_view.setVisibility(View.GONE);
+                        update(data);
+
                     }
                 });
             }
@@ -244,8 +250,10 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
     private void update(final String scannedString) {
 
+
         progressDialog = new ProgressDialog(QRScanActivity.this);
         progressDialog.setCancelable(false);
+        progressDialog.setTitle("Your request is processing! Please wait...");
         //  dialog.setCanceledOnTouchOutside(false);
         progressDialog.setIndeterminate(false);
         //  progressDialog.setMax(100);
@@ -257,7 +265,6 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
         loadingPercentage = 0;
 
-        timer = new Timer();
 
         timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -278,9 +285,13 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
                 });
 
                 if (loadingPercentage >= 90) {
-                    timer.cancel();
 
-                    timer = null;
+                    if (timer != null) {
+                        timer.cancel();
+                        timer = null;
+                    }
+
+
 
                     loadingPercentage = 100;
 
@@ -294,7 +305,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
             }
 
-        }, 0, 500);
+        }, 0, 1000);
 
 
     }
@@ -369,7 +380,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
                                             unLocking = true;
 
-                                            CycliqBluetoothComm.getInstance().bgOperation(1006);
+                                            CycliqBluetoothComm.getInstance().bgOperation(1002);
 
 
                                         }
@@ -385,7 +396,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
                                         unLocking = true;
 
-                                        CycliqBluetoothComm.getInstance().bgOperation(1006);
+                                        CycliqBluetoothComm.getInstance().bgOperation(1002);
 
 
                                     }
