@@ -809,7 +809,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void getMyLocation() {
         if (currentLocation != null) {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 100);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 30);
             mMap.animateCamera(cameraUpdate);
 
 
@@ -988,7 +988,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         layoutSearch.setVisibility(View.GONE);
 
-        validateCurrentRideStatus();
+       // validateCurrentRideStatus();
 
     }
 

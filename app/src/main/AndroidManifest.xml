@@ -3,6 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cycliq">
 
+    <!--<uses-sdk-->
+        <!--android:minSdkVersion="8"-->
+        <!--android:targetSdkVersion="22"-->
+        <!--tools:overrideLibrary="com.payumoney.sdkui,com.payumoney.core"-->
+        <!--/>-->
+
+
+    <uses-sdk
+
+        tools:overrideLibrary="com.payumoney.sdkui,com.payumoney.core"
+        />
+
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -17,14 +30,14 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
-    <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="22"
-        tools:overrideLibrary="com.payumoney.sdkui,com.payumoney.core" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".Application.CycliqApplication"
@@ -44,9 +57,9 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_fpipkC50Jq3gmh"
-            />
-        <!--android:value="rzp_live_ILgsfZCZoFIKMb"-->
+            android:value="rzp_test_fpipkC50Jq3gmh" />
+        <!-- android:value="rzp_live_ILgsfZCZoFIKMb" -->
+
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -59,7 +72,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fabaabc4273e4e67d52a5410e9b2fa7a59088976" />
@@ -67,40 +79,36 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-
         <activity
             android:name=".QRScanActivity"
             android:label="@string/title_activity_maps" />
-
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_maps" />
-
         <activity
             android:name=".MyWalletActivity"
             android:label="@string/title_activity_maps" />
-
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_maps" />
-
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_maps" />
-
         <activity
             android:name=".MyTripsActivity"
             android:label="@string/title_activity_maps" />
-
         <activity android:name=".MyPaymentsActivity" />
-
         <activity android:name=".TripDetailsActivity" />
-
         <activity android:name=".ReportFormActivity" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="fabaabc4273e4e67d52a5410e9b2fa7a59088976" />
+        <!--<meta-data-->
+            <!--android:name="io.fabric.ApiKey"-->
+            <!--android:value="fabaabc4273e4e67d52a5410e9b2fa7a59088976" />-->
+
+        <activity android:name=".TripRunningActivity"></activity>
+
+        <!--<activity android:name="com.paytm.pgsdk.PaytmPGActivity"-->
+            <!--android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation|keyboard"/>-->
 
     </application>
 

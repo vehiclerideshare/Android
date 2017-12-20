@@ -36,8 +36,11 @@ import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 import com.payumoney.sdkui.ui.utils.ResultModel;
 import com.razorpay.Checkout;
+import com.razorpay.ExternalWalletListener;
+import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,7 +58,7 @@ import java.util.Iterator;
 import static com.cycliq.CommonClasses.Constants.KEY_RIDE_ID;
 
 //implementing onclicklistener
-public class MyWalletActivity extends AppCompatActivity implements View.OnClickListener, PaymentResultListener {
+public class MyWalletActivity extends AppCompatActivity implements View.OnClickListener, PaymentResultListener, ExternalWalletListener {
     public static final String TAG = "MainActivity : ";
 
     //View Objects
@@ -911,7 +914,16 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
          * Pass your payment options to the Razorpay Checkout as a JSONObject
          */
         try {
+
+            JSONArray wallets = new JSONArray();
+            wallets.put("paytm");
+            JSONObject externals = new JSONObject();
+            externals.put("wallets", wallets);
+
             JSONObject options = new JSONObject();
+
+            options.put("external", externals);
+
 
             /**
              * Merchant Name
@@ -942,5 +954,10 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
         } catch(Exception e) {
             Log.e(TAG, "Error in starting Razorpay Checkout", e);
         }
+    }
+
+    @Override
+    public void onExternalWalletSelected(String s, PaymentData paymentData) {
+
     }
 }

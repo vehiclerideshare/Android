@@ -18,6 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.googledirection.DirectionCallback;
+import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.constant.RequestResult;
+import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.util.DirectionConverter;
 import com.cycliq.model.TripSummaryModel;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
@@ -189,14 +196,17 @@ public class TripDetailsActivity extends AppCompatActivity implements View.OnCli
             markerDest.icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin));
 
 
-//========================
-
-            PolylineOptions rectOptions = new PolylineOptions();
-            LatLng polLatLng = null;
-
 
             LatLng start = latLngSource;
             LatLng end = latLngDest;
+
+            makeDirection(start, end);
+
+           /* PolylineOptions rectOptions = new PolylineOptions();
+            LatLng polLatLng = null;
+
+
+
 
 
             ArrayList<LatLng> pathPoint = new ArrayList<LatLng>();
@@ -228,10 +238,63 @@ public class TripDetailsActivity extends AppCompatActivity implements View.OnCli
 //Animate to the bounds
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder1.build(), 100);
             mMap.moveCamera(cameraUpdate);
-
-        } catch (Exception e) {
+*/
+        }
+           catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void makeDirection(final LatLng latLngSource, final LatLng latLngDest) {
+
+
+       final LatLng start = latLngSource;
+        final LatLng end = latLngDest;
+
+
+
+
+
+
+
+        String serverKey = "AIzaSyDLlE_6rqomakJuSnthZLw9AyzOyZdF87U";
+        LatLng origin = start;
+        LatLng destination = end;
+        GoogleDirection.withServerKey(serverKey)
+                .from(origin)
+                .to(destination)
+                .execute(new DirectionCallback() {
+
+                    @Override
+                    public void onDirectionSuccess(Direction direction, String s) {
+                        String status = direction.getStatus();
+                        if (status.equals(RequestResult.OK)) {
+                            Route route = direction.getRouteList().get(0);
+                            Leg leg = route.getLegList().get(0);
+                            ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                            PolylineOptions polylineOptions = DirectionConverter.createPolyline(getApplicationContext(), directionPositionList, 5, Color.RED);
+                            LatLngBounds.Builder builder1 = new LatLngBounds.Builder();
+                            builder1.include(latLngSource).include(latLngDest);
+
+//Animate to the bounds
+                            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder1.build(), 160);
+                            mMap.moveCamera(cameraUpdate);
+//                            List<Step> stepList = direction.getRouteList().get(0).getLegList().get(0).getStepList();
+//                            ArrayList<PolylineOptions> polylineOptionList = DirectionConverter.createTransitPolyline(getApplicationContext(), stepList, 5, Color.RED, 3, Color.BLUE);
+//                            for (PolylineOptions polylineOption : polylineOptionList) {
+//                                mMap.addPolyline(polylineOption);
+//                            }
+                            // Do something
+                        } else if (status.equals(RequestResult.NOT_FOUND)) {
+                            // Do something
+                        }
+                    }
+
+                    @Override
+                    public void onDirectionFailure(Throwable t) {
+                        // Do something here
+                    }
+                });
     }
 }

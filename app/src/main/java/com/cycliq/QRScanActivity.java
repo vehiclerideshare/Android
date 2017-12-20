@@ -1,5 +1,6 @@
 package com.cycliq;
 
+import android.*;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -8,9 +9,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,8 +32,8 @@ import com.cycliq.model.LocationListModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.vision.barcode.Barcode;
-//import com.google.zxing.integration.android.IntentIntegrator;
-//import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,12 +44,17 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import github.nisrulz.qreader.QRDataListener;
+import github.nisrulz.qreader.QREader;
+import info.androidhive.barcode.BarcodeReader;
+import info.androidhive.barcode.ScannerOverlay;
+
 
 //implementing onclicklistener
-public class QRScanActivity extends AppCompatActivity  {
+public class QRScanActivity extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener  {
 
 
-//    private BarcodeReader barcodeReader;
+    private static final String cameraPerm = android.Manifest.permission.CAMERA;
 
 
     //View Objects
@@ -58,8 +66,11 @@ public class QRScanActivity extends AppCompatActivity  {
 
     ProgressDialog progressDialog;
 
+
+    ScannerOverlay overlay_view;
+
     //qr code scanner object
-//    private IntentIntegrator qrScan;
+   private IntentIntegrator qrScan;
 
     private boolean isOPenScanAlready = false;
 
@@ -71,15 +82,18 @@ public class QRScanActivity extends AppCompatActivity  {
     Boolean unLocking = false;
     Boolean cancelProcess = false;
 
-
+    private SurfaceView mySurfaceView;
+    private QREader qrEader;
+    boolean hasCameraPermission = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan_screen);
+        hasCameraPermission = RuntimePermissionUtil.checkPermissonGranted(this, cameraPerm);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         //View objects
         txtQrResult = (TextView) findViewById(R.id.txtQrResult);
@@ -87,27 +101,87 @@ public class QRScanActivity extends AppCompatActivity  {
         txtLoading = (TextView) findViewById(R.id.txtLoading);
 
 
-       // barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_fragment);
-
-
-//        //intializing scan object
-//        qrScan = new IntentIntegrator(this);
-//
-//        if (!isOPenScanAlready) {
-//
-//            qrScan.initiateScan();
-//        }
-
         CycliqBluetoothComm.getInstance().setCurrentActivity(this);
         CycliqBluetoothComm.getInstance().init();
 
+//        update("testid");
+
+        // Setup SurfaceView
+        // -----------------
+        mySurfaceView = (SurfaceView) findViewById(R.id.camera_view);
+        overlay_view = (ScannerOverlay) findViewById(R.id.overlay_view);
+
+
+        if (hasCameraPermission) {
+            // Setup QREader
+            setupQREader();
+        } else {
+            RuntimePermissionUtil.requestPermission(QRScanActivity.this, cameraPerm, 100);
+        }
+
+
     }
+    private BarcodeReader barcodeReader;
+
+    void setupQREader() {
+
+
+     //   barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_fragment);
+
+        // Init QREader
+        // ------------
+        qrEader = new QREader.Builder(this, mySurfaceView, new QRDataListener() {
+            @Override
+            public void onDetected(final String data) {
+                Log.d("QREader", "Value : " + data);
+                txtQrResult.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        update(data);
+                        qrEader.stop();
+                        mySurfaceView.setVisibility(View.GONE);
+                        overlay_view.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }).facing(QREader.BACK_CAM)
+                .enableAutofocus(true)
+                .height(mySurfaceView.getHeight())
+                .width(mySurfaceView.getWidth())
+                .build();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (hasCameraPermission) {
+
+            // Cleanup in onPause()
+            // --------------------
+            qrEader.releaseAndCleanup();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (hasCameraPermission) {
+
+            // Init and Start with SurfaceView
+            // -------------------------------
+            qrEader.initAndStart(mySurfaceView);
+        }
+    }
+
 
     //Getting the scan results
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      /*  IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+       IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         if (result != null) {
 
@@ -153,7 +227,7 @@ public class QRScanActivity extends AppCompatActivity  {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
-        }*/
+        }
     }
 
     @Override
@@ -220,7 +294,7 @@ public class QRScanActivity extends AppCompatActivity  {
 
             }
 
-        }, 0, 1500);
+        }, 0, 500);
 
 
     }
@@ -295,7 +369,7 @@ public class QRScanActivity extends AppCompatActivity  {
 
                                             unLocking = true;
 
-                                            CycliqBluetoothComm.getInstance().bgOperation(1002);
+                                            CycliqBluetoothComm.getInstance().bgOperation(1006);
 
 
                                         }
@@ -311,7 +385,7 @@ public class QRScanActivity extends AppCompatActivity  {
 
                                         unLocking = true;
 
-                                        CycliqBluetoothComm.getInstance().bgOperation(1002);
+                                        CycliqBluetoothComm.getInstance().bgOperation(1006);
 
 
                                     }
@@ -356,17 +430,17 @@ public class QRScanActivity extends AppCompatActivity  {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if(requestCode==2){
-            // 请求定位权限
-            if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-                //
-            }else{
-                showDialog(getResources().getString(R.string.main_permissions_location));
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        if(requestCode==2){
+//            // 请求定位权限
+//            if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+//                //
+//            }else{
+//                showDialog(getResources().getString(R.string.main_permissions_location));
+//            }
+//        }
+//    }
 
     private void showDialog(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -391,7 +465,12 @@ public class QRScanActivity extends AppCompatActivity  {
                 Constants.saveData(QRScanActivity.this, Constants.KEY_RIDE_STATUS, rideStatus);
 
                 Constants.hideProgressDialog();
-                CycliqBluetoothComm.getInstance().getMapsActivity().sendLockOpenStatus();
+
+                Intent intent = new Intent(QRScanActivity.this, TripRunningActivity.class);
+
+                startActivity(intent);
+
+                //CycliqBluetoothComm.getInstance().getMapsActivity().sendLockOpenStatus();
                 finish();
 
 
@@ -407,36 +486,80 @@ public class QRScanActivity extends AppCompatActivity  {
 
         } else {
             cancelProcess = true;
-            super.onBackPressed();
+            Intent intent = new Intent(QRScanActivity.this, MapsActivity.class);
+
+            startActivity(intent);
+
         }
 
 
     }
 
-//    @Override
-//    public void onScanned(Barcode barcode) {
-//        // play beep sound
-//        barcodeReader.playBeep();
-//    }
-//
-//    @Override
-//    public void onScannedMultiple(List<Barcode> list) {
-//
-//    }
-//
-//    @Override
-//    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
-//
-//    }
-//
-//    @Override
-//    public void onScanError(String s) {
-//
-//    }
-//
-//    @Override
-//    public void onCameraPermissionDenied() {
-//        Toast.makeText(getApplicationContext(), "Camera permission denied!", Toast.LENGTH_LONG).show();
-//    }
+
+
+    private static final int REQUEST_CAMERA_PERMISSION = 1;
+    private static final String FRAGMENT_DIALOG = "dialog";
+
+    private void requestCameraPermission() {
+        //if (this.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+        //    new ConfirmationDialog().show(this.getFragmentManager(), FRAGMENT_DIALOG);
+        //} else {
+//        this.requestPermissions(new String[]{Manifest.permission.CAMERA},
+//                REQUEST_CAMERA_PERMISSION);
+
+        //}
+        //Log.e(TAG, "DOESNT HAVE CAMERA PERMISSION");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions,
+                                           @NonNull final int[] grantResults) {
+        if (requestCode == 100) {
+            RuntimePermissionUtil.onRequestPermissionsResult(grantResults, new RPResultListener() {
+                @Override
+                public void onPermissionGranted() {
+                    if ( RuntimePermissionUtil.checkPermissonGranted(QRScanActivity.this, cameraPerm)) {
+                        restartActivity();
+                    }
+                }
+
+                @Override
+                public void onPermissionDenied() {
+                    // do nothing
+                }
+            });
+        }
+    }
+
+    void restartActivity() {
+        startActivity(new Intent(QRScanActivity.this, QRScanActivity.class));
+    }
+
+    @Override
+    public void onScanned(Barcode barcode) {
+        // play beep sound
+        barcodeReader.playBeep();
+    }
+
+    @Override
+    public void onScannedMultiple(List<Barcode> list) {
+
+    }
+
+    @Override
+    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+
+    }
+
+    @Override
+    public void onScanError(String s) {
+
+    }
+
+    @Override
+    public void onCameraPermissionDenied() {
+        Toast.makeText(getApplicationContext(), "Camera permission denied!", Toast.LENGTH_LONG).show();
+    }
+
 
 }

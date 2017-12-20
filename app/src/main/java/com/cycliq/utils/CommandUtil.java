@@ -3,6 +3,8 @@ package com.cycliq.utils;
 
 import android.util.Log;
 
+import com.cycliq.ble.CycliqBluetoothComm;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -38,6 +40,26 @@ public class CommandUtil {
         byte time2=(byte) (( timestamp>>16)&0xFF);
         byte time3=(byte) ( ( timestamp>>8)&0xFF);
         byte time4=(byte) ( timestamp &0xFF);
+
+
+        if (CycliqBluetoothComm.getInstance().getOGBDevice()) {
+            byte[] command=new byte[13];
+            command[0]= (byte) 0xFE;
+            command[1]=(byte) (randKey);
+            command[2]= bleKey;
+            command[3]= ORDER_UN_LOCK;
+            command[4]= 0x08;
+            command[5]= uidB1; // 用户id
+            command[6]= uidB2;
+            command[7]= uidB3;
+            command[8]= uidB4;
+            command[9]= time1; // 用户id
+            command[10]= time2;
+            command[11]= time3;
+            command[12]= time4;
+            return command ;
+        }
+
         byte[] command=new byte[9];// 不包含CRC校验的长度
         command[0]= (byte) 0xFE;
         command[1]=(byte) (randKey); //随机数 x1
@@ -105,7 +127,13 @@ public class CommandUtil {
 
 
     public static byte[] getCRCKeyCommand2( ){
-        byte[] command = getKeyCommand3(1001);
+        byte[] command;
+        if (CycliqBluetoothComm.getInstance().getOGBDevice()) {
+            command = getKeyCommand2(1001);
+        } else {
+            command = getKeyCommand3(1001);
+        }
+
         Log.i(TAG, "getCRCKeyCommand2: 原始"+getCommForHex(command));
         byte[] xorCommand=decode(command);
         Log.i(TAG, "getCRCKeyCommand2: 加0x32异或后："+getCommForHex(xorCommand));
@@ -211,7 +239,7 @@ public class CommandUtil {
         command[4]= len;  // 长度
         return command;
     }
-    private static byte[]   getKeyCommand2(  ){
+    private static byte[]   getKeyCommand2( int uid ){
         byte randKey = (byte) (new Random().nextInt(255) & 0xff);
 
         byte[] command=new byte[13];// 不包含CRC校验的长度

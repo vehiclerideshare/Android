@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.cycliq.MapsActivity;
 import com.cycliq.QRScanActivity;
 import com.cycliq.R;
+import com.cycliq.TripRunningActivity;
 import com.cycliq.utils.CRCUtil;
 import com.cycliq.utils.CommandUtil;
 
@@ -49,8 +50,11 @@ import java.util.List;
 public class CycliqBluetoothComm {
 
 
+    public Boolean isOGBDevice = false;
+
     QRScanActivity currentActivity = null;
     MapsActivity mapsActivity = null;
+    TripRunningActivity tripRunningActivity = null;
 
     private static  final String TAG="CycliqBluetoothComm";
     private Handler mHandler=new Handler();
@@ -70,6 +74,8 @@ public class CycliqBluetoothComm {
     private static final String ACTION_BLE_LOCK_OPEN_STATUS="com.cycliq.ACTION_BLE_LOCK_OPEN_STATUS";
 
     BLEDevice selectedBleDevice = null;
+
+    BluetoothAdapter btAdapter;
 
     private static final CycliqBluetoothComm ourInstance = new CycliqBluetoothComm();
 
@@ -235,6 +241,12 @@ public class CycliqBluetoothComm {
             final String macAddress = device.getAddress();
             if (selectedBleDevice == null) {
                 if (macAddress.toUpperCase().equalsIgnoreCase("FF:FF:11:00:02:2F")) {
+                    isOGBDevice = false;
+                    scanLeDevice(false);
+                    selectedBleDevice = bleDevice;
+                    bgOperation(1003);
+                } else if (macAddress.toLowerCase().equalsIgnoreCase("80:ea:ca:01:00:17")) {
+                    isOGBDevice = true;
                     scanLeDevice(false);
                     selectedBleDevice = bleDevice;
                     bgOperation(1003);
@@ -248,35 +260,70 @@ public class CycliqBluetoothComm {
     };
 
     private void handCommand(byte[] command){
-        Log.i(TAG, "handCommand: ord= "+String.format("0x%02X",command[7]));
-        switch (command[7]){
-            case 0x11:
-                // get key
-                handKey(command);
-                bgOperation(1001);
-                break;
-            case 0x22:
-                // lock
-                handLockClose(command);
-                bgOperation(1004);
 
-                break;
-            case 0x21:
-                handLockOpen(command);
-                bgOperation(1005);
-                break;
+        if (isOGBDevice) {
+            Log.i(TAG, "handCommand: ord= "+String.format("0x%02X",command[3]));
+            switch (command[3]){
+                case 0x11:
+                    // get key
+                    handKey(command);
+                    bgOperation(1001);
+                    break;
+                case 0x22:
+                    // lock
+                    handLockClose(command);
+                    bgOperation(1004);
+
+                    break;
+                case 0x21:
+                    handLockOpen(command);
+                    bgOperation(1005);
+                    break;
+            }
+        } else {
+            Log.i(TAG, "handCommand: ord= "+String.format("0x%02X",command[7]));
+            switch (command[7]){
+                case 0x11:
+                    // get key
+                    handKey(command);
+                    bgOperation(1001);
+                    break;
+                case 0x22:
+                    // lock
+                    handLockClose(command);
+                    bgOperation(1004);
+
+                    break;
+                case 0x21:
+                    handLockOpen(command);
+                    bgOperation(1005);
+                    break;
+            }
         }
+
+
     }
 
     private  byte bleCKey =0;
     private void handKey(byte[] command){
-        bleCKey=command[6];
+        if (isOGBDevice) {
+            bleCKey=command[2];
+
+        } else {
+            bleCKey=command[6];
+
+        }
         Log.i(TAG, "handKey: key=0x"+String.format("%02X",bleCKey));
         sendLocalBroadcast(ACTION_GET_LOCK_KEY);
     }
 
     private void handLockClose(byte[] command){
-        int status = command[7];
+        int status;
+        if (isOGBDevice) {
+            status = command[5];
+        } else {
+            status = command[7];
+        }
         // long  timestamp= ((command[6]&0xFF)<<24) | ((command[7]&0xff)<<16) | ((command[8]&0xFF)<<8) | (command[9]&0xFF);
         // int  runTime= ((command[10]&0xFF)<<24) | ((command[11]&0xff)<<16) | ((command[12]&0xFF)<<8) | (command[13]&0xFF);
 
@@ -295,6 +342,8 @@ public class CycliqBluetoothComm {
 
     private void handLockOpen(byte[] command){
         int status = command[5];
+        Log.i(TAG, "handLockOpen: status="+status);
+
         long timestamp = ((command[6]&0xFF)<<24) | ((command[7]&0xff)<<16) | ((command[8]&0xFF)<<8) | (command[9]&0xFF);
         Intent intent = new Intent(ACTION_BLE_LOCK_OPEN_STATUS);
         intent.putExtra("status",status);
@@ -485,8 +534,8 @@ public class CycliqBluetoothComm {
             case 1004: // DisConnect with Gatt
                 if (selectedBleDevice != null) {
                     mScanning = false;
-                    if (mapsActivity != null) {
-                        mapsActivity.sendLockClosedStatus();
+                    if (tripRunningActivity != null) {
+                        tripRunningActivity.sendLockClosedStatus();
                     }
                     mBLEGatt.disconnect();
                     try {
@@ -502,6 +551,14 @@ public class CycliqBluetoothComm {
                     }
 
                 }
+                break;
+            case 1006: // Bypass with Gatt
+//                if (selectedBleDevice != null) {
+//                    if (currentActivity != null) {
+                        currentActivity.sendLockOpenStatus();
+//                    }
+//
+//                }
                 break;
             default:
                 break;
@@ -531,11 +588,26 @@ public class CycliqBluetoothComm {
     private void getPermission(){
 
 
-        if(ContextCompat.checkSelfPermission(currentActivity, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+//        btAdapter = BluetoothAdapter.getDefaultAdapter();
+//        if (btAdapter == null)
+//        {
+//            // Device does not support Bluetooth
+//            Toast.makeText(currentActivity, "Device does not support bluetooth", Toast.LENGTH_LONG).show();
+//        }
+//        else {
+//            if (!btAdapter.isEnabled()) {
+//                btAdapter.enable();
+//                Toast.makeText(currentActivity, "Bluetooth switched ON", Toast.LENGTH_LONG).show();
+//
+//
+//            }
+//        }
 
-            // 检测定位权限
-            ActivityCompat.requestPermissions(currentActivity,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},2);
-        }
+//        if(ContextCompat.checkSelfPermission(currentActivity, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+//
+//            // 检测定位权限
+//            ActivityCompat.requestPermissions(currentActivity,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},2);
+//        }
     }
 
 
@@ -568,4 +640,18 @@ public class CycliqBluetoothComm {
     public MapsActivity getMapsActivity() {
         return mapsActivity;
     }
+
+    public TripRunningActivity getTripRunningActivity() {
+        return tripRunningActivity;
+    }
+
+    public void setTripRunningActivity(TripRunningActivity tripRunningActivity) {
+        this.tripRunningActivity = tripRunningActivity;
+    }
+
+    public Boolean getOGBDevice() {
+        return isOGBDevice;
+    }
+
+
 }
