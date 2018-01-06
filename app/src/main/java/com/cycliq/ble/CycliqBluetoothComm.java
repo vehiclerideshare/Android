@@ -1,6 +1,7 @@
 package com.cycliq.ble;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -19,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,6 +43,7 @@ import com.cycliq.utils.CRCUtil;
 import com.cycliq.utils.CommandUtil;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -377,11 +380,23 @@ public class CycliqBluetoothComm {
 
     public void init() {
 
+
+        if (selectedBleDevice != null) {
+            selectedBleDevice = null;
+        }
+        mScanning = false;
+
+
         initBLE();
 
         initReceiver();
 
         getPermission();
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            // Marshmallow+ Permission APIs
+            fuckMarshMallow();
+        }
     }
 
     private void initBLE() {
@@ -652,6 +667,24 @@ public class CycliqBluetoothComm {
     public Boolean getOGBDevice() {
         return isOGBDevice;
     }
+
+
+
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void fuckMarshMallow() {
+        int permissionCheck = ContextCompat.checkSelfPermission(currentActivity, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(currentActivity, Manifest.permission.ACCESS_FINE_LOCATION)){
+                Toast.makeText(currentActivity, "The permission to get BLE location data is required", Toast.LENGTH_SHORT).show();
+            }else{
+                currentActivity.requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }else{
+            //Toast.makeText(currentActivity, "Location permissions already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 
 }
