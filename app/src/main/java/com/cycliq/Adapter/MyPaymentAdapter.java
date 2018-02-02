@@ -31,6 +31,8 @@ public class MyPaymentAdapter extends BaseAdapter {
 
     }
 
+
+
     public int getCount() {
         return arrMyPaymentList.size();
     }
@@ -54,7 +56,7 @@ public class MyPaymentAdapter extends BaseAdapter {
 
         MyPaymentModel myPaymentModel = arrMyPaymentList.get(position);
 
-        tvAmount.setText(myPaymentModel.getPaymentAmount() + " INR");
+        tvAmount.setText("₹"+myPaymentModel.getPaymentAmount());
 
         tvDateTime.setText(myPaymentModel.getPaymentDateTime());
 

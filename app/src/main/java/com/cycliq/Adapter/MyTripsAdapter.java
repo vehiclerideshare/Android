@@ -34,7 +34,9 @@ public class MyTripsAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return arrTripSummary.size();
+
+        return 20;
+       // return arrTripSummary.size();
     }
 
     public Object getItem(int position) {
@@ -50,26 +52,26 @@ public class MyTripsAdapter extends BaseAdapter {
         if (convertView == null)
             vi = inflater.inflate(R.layout.adapter_my_trips, null);
 
-        LinearLayout linearMain = (LinearLayout) vi.findViewById(R.id.linearMain);
-
-        TextView tvBikeId = (TextView) vi.findViewById(R.id.tvBikeId);
-        TextView tvTripAmount = (TextView) vi.findViewById(R.id.tvTripAmount);
-        TextView tvTripId = (TextView) vi.findViewById(R.id.tvTripId);
-        TextView tvDateTime = (TextView) vi.findViewById(R.id.tvDateTime);
-
-        linearMain.setOnClickListener(onClickListener);
-
-        linearMain.setTag(position);
-
-        TripSummaryModel tripSummaryModel = arrTripSummary.get(position);
-
-        tvBikeId.setText("BIKE ID: " + tripSummaryModel.getBikeID());
-
-        tvTripAmount.setText(tripSummaryModel.getTripAmount() + " INR");
-
-        tvTripId.setText(tripSummaryModel.getTripID());
-
-        tvDateTime.setText(tripSummaryModel.getTripDateTime());
+//        LinearLayout linearMain = (LinearLayout) vi.findViewById(R.id.linearMain);
+//
+//        TextView tvBikeId = (TextView) vi.findViewById(R.id.tvBikeId);
+//        TextView tvTripAmount = (TextView) vi.findViewById(R.id.tvTripAmount);
+//        TextView tvTripId = (TextView) vi.findViewById(R.id.tvTripId);
+//        TextView tvDateTime = (TextView) vi.findViewById(R.id.tvDateTime);
+//
+//        linearMain.setOnClickListener(onClickListener);
+//
+//        linearMain.setTag(position);
+//
+//        TripSummaryModel tripSummaryModel = arrTripSummary.get(position);
+//
+//        tvBikeId.setText("BIKE ID: " + tripSummaryModel.getBikeID());
+//
+//        tvTripAmount.setText("₹" + tripSummaryModel.getTripAmount());
+//
+//        tvTripId.setText(tripSummaryModel.getTripID());
+//
+//        tvDateTime.setText(tripSummaryModel.getTripDateTime());
 
 
         return vi;

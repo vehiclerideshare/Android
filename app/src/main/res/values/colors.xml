@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E5B02B</color>
+    <color name="colorPrimary">#EC733A</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="appBgColor">#ECEDEE</color>
     <color name="btnBlack">#363738</color>
-    <color name="btnYellow">#E5B02B</color>
+    <color name="btnYellow">#EC733A</color>
 
     <color name="durationClr">#ED792F</color>
     <color name="carbonClr">#E14248</color>
@@ -16,5 +16,6 @@
     <color name="dark_gray">#aaa</color>
     <color name="colorGreen">#59e729</color>
     <color name="scanner_line">#00ceff</color>
+    <color name="nav_title_clr">#000000</color>
 
 </resources>

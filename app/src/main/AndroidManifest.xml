@@ -97,6 +97,11 @@
         <activity
             android:name=".MyTripsActivity"
             android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".VerifyOTPActivity"
+            android:label="@string/title_activity_maps" />
+
+
         <activity android:name=".MyPaymentsActivity" />
         <activity android:name=".TripDetailsActivity" />
         <activity android:name=".ReportFormActivity" />

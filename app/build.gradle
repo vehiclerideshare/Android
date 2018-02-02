@@ -133,6 +133,7 @@ dependencies {
     compile project(':qreader')
 
     compile 'info.androidhive:barcode-reader:1.1.5'
+//    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 
 }
 //apply plugin: 'com.google.gms.google-services'

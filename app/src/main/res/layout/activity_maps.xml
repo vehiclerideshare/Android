@@ -41,7 +41,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:padding="15dp"
-                        android:src="@mipmap/menu_white" />
+                        android:src="@mipmap/menu" />
 
                 </LinearLayout>
 
@@ -59,7 +59,15 @@
                         android:background="@android:color/transparent"
                         android:padding="15dp"
                         android:visibility="gone"
-                        android:src="@mipmap/menu_white" />
+                        android:src="@mipmap/menu" />
+
+                    <ImageButton
+                        android:id="@+id/btnReport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:padding="15dp"
+                        android:src="@mipmap/info" />
 
                     <ImageButton
                         android:id="@+id/btnSearch"
@@ -67,7 +75,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:padding="15dp"
-                        android:src="@mipmap/ic_search_white" />
+                        android:src="@mipmap/search" />
 
                 </LinearLayout>
 
@@ -177,6 +185,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
@@ -184,15 +193,18 @@
             <ImageButton
                 android:id="@+id/btnRefresh"
                 android:layout_width="70dp"
+                android:layout_gravity="center"
                 android:layout_height="70dp"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/btn_full_rounded_corner"
-                android:src="@mipmap/refersh" />
+                android:src="@mipmap/refresh" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:gravity="center">
 
                 <Button
@@ -200,7 +212,7 @@
                     style="@style/btn_style"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:drawableLeft="@mipmap/lock"
+                    android:drawableLeft="@mipmap/unlock"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:text="Unlock" />
@@ -211,9 +223,11 @@
                 android:id="@+id/btnLocation"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/btn_full_rounded_corner"
-                android:src="@mipmap/location" />
+                android:background="@android:color/transparent"
+                android:src="@mipmap/locator" />
 
         </LinearLayout>
 
@@ -233,6 +247,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+            android:visibility="gone"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="10dp">
 
@@ -546,6 +561,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:background="#ffffff"
+            android:visibility="gone"
             android:orientation="vertical">
 
 

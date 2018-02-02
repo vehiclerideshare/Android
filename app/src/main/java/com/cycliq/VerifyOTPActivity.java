@@ -1,61 +1,45 @@
 package com.cycliq;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.cycliq.Application.CycliqApplication;
 import com.cycliq.CommonClasses.Constants;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 //implementing onclicklistener
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class VerifyOTPActivity extends AppCompatActivity implements View.OnClickListener {
 
     //View Objects
     private Button btnSubmit, btnVerifyPin, btnCancel;
     private EditText editPhoneNumber, editOtp;
     private LinearLayout layoutLogin;
     private LinearLayout layoutVerifyOtp;
+    private ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.verify_otp);
 
         getSupportActionBar().hide();
 
-        setViews();
+      // setViews();
 
-        setListener();
+       // setListener();
 
-        Constants.saveData(LoginActivity.this, Constants.KEY_RIDE_ID, "");
-        Constants.saveData(LoginActivity.this, Constants.KEY_RIDE_STATUS, Constants.NONE);
+        Constants.saveData(VerifyOTPActivity.this, Constants.KEY_RIDE_ID, "");
+        Constants.saveData(VerifyOTPActivity.this, Constants.KEY_RIDE_STATUS, Constants.NONE);
 //        Constants.saveData(LoginActivity.this, Constants.KEY_RIDE_STATUS, "");
 
-
     }
+
+
+
 
     private void setListener() {
 
@@ -64,6 +48,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnVerifyPin.setOnClickListener(this);
 
         btnCancel.setOnClickListener(this);
+
+        btnBack.setOnClickListener(this);
+
 
     }
 
@@ -82,6 +69,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         layoutLogin = (LinearLayout) findViewById(R.id.layoutLogin);
 
         layoutVerifyOtp = (LinearLayout) findViewById(R.id.layoutVerifyOtp);
+
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
 
     }
 
@@ -127,16 +116,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             if (isValidatedLogin()) {
 
-                Constants.saveData(LoginActivity.this, Constants.KEY_USER_PHONE, editPhoneNumber.getText().toString());
+                Constants.saveData(VerifyOTPActivity.this, Constants.KEY_USER_PHONE, editPhoneNumber.getText().toString());
 
-//                layoutLogin.setVisibility(View.GONE);
-//
-//                layoutVerifyOtp.setVisibility(View.VISIBLE);
-//
-//                editOtp.requestFocus();
+                layoutLogin.setVisibility(View.GONE);
 
-                Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
-                startActivity(intent);
+                layoutVerifyOtp.setVisibility(View.VISIBLE);
+
+                editOtp.requestFocus();
 
             }
         } else if (view == btnVerifyPin) {
@@ -157,6 +143,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 layoutVerifyOtp.setVisibility(View.GONE);
 
             }
+        }
+        else if (view == btnBack) {
+
+            finish();
+
         }
 
     }

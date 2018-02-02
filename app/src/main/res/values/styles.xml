@@ -27,6 +27,8 @@
         <item name="android:background">@drawable/btn_rounded_corner</item>
     </style>
 
+
+
     <style name="btn_rounded" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@drawable/btn_rounded_corner</item>
     </style>
@@ -34,5 +36,12 @@
     <style name="Theme_Dialog" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <declare-styleable name="OtpView">
+        <attr name="android:inputType" />
+        <attr name="android:textColor" />
+        <attr name="text_background_color" format="color" />
+        <attr name="otp" format="string"/>
+    </declare-styleable>
 
 </resources>

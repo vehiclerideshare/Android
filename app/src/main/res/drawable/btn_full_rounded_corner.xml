@@ -4,12 +4,12 @@
     android:shape="rectangle">
     <!-- you can use any color you want I used here gray color-->
 
-    <solid android:color="@color/colorPrimary" />
+    <solid android:color="@android:color/white" />
 
     <corners
-        android:bottomLeftRadius="35dp"
-        android:bottomRightRadius="35dp"
-        android:topLeftRadius="35dp"
-        android:topRightRadius="35dp" />
+        android:bottomLeftRadius="20dp"
+        android:bottomRightRadius="20dp"
+        android:topLeftRadius="20dp"
+        android:topRightRadius="20dp" />
 
 </shape>

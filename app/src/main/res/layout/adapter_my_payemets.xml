@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:drawableRight="@mipmap/arrow"
             android:text="100 INR"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -58,9 +57,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/black" />
 
 
 </LinearLayout>

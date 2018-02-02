@@ -196,7 +196,9 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             hideAllColor();
 
-            txtAdd1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+           // txtAdd1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            txtAdd1.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("50");
 
@@ -206,7 +208,8 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             hideAllColor();
 
-            txtAdd2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+          //  txtAdd2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            txtAdd2.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("100");
 
@@ -216,7 +219,9 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             hideAllColor();
 
-            txtAdd3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            //txtAdd3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            txtAdd3.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("200");
 
@@ -226,7 +231,9 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             hideAllColor();
 
-            txtAdd4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+          //  txtAdd4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+            txtAdd4.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("500");
 
@@ -247,10 +254,15 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
     private void hideAllColor()
     {
 
-        txtAdd1.setBackgroundColor(Color.WHITE);
-        txtAdd2.setBackgroundColor(Color.WHITE);
-        txtAdd3.setBackgroundColor(Color.WHITE);
-        txtAdd4.setBackgroundColor(Color.WHITE);
+        txtAdd1.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner_with_border));
+        txtAdd2.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner_with_border));
+        txtAdd3.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner_with_border));
+        txtAdd4.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner_with_border));
+
+      //  txtAdd1.setBackgroundColor(Color.WHITE);
+//        txtAdd2.setBackgroundColor(Color.WHITE);
+//        txtAdd3.setBackgroundColor(Color.WHITE);
+//        txtAdd4.setBackgroundColor(Color.WHITE);
 
     }
 
