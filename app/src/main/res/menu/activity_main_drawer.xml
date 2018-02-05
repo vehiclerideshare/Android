@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_wallet"
+            android:icon="@mipmap/ic_wallet"
+            android:title="@string/menu_wallet" />
+        <item
+            android:id="@+id/nav_payments"
+            android:icon="@mipmap/ic_my_paymens"
+            android:title="@string/menu_my_payments" />
+        <item
+            android:id="@+id/nav_trips"
+            android:icon="@mipmap/ic_my_trips"
+            android:title="@string/menu_my_trips" />
+
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@mipmap/ic_messages"
+            android:title="@string/menu_my_messages" />
+
+        <item
+            android:id="@+id/nav_invite_friends"
+            android:icon="@mipmap/ic_invite_friends"
+            android:title="@string/menu_invite_friends" />
+
+        <item
+            android:id="@+id/nav_user_guide"
+            android:icon="@mipmap/ic_user_guide"
+            android:title="@string/menu_user_guide" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_settings"
+            android:title="@string/menu_settings" />
+
+
+    </group>
+
+    <!--<item android:title="Other">-->
+    <!--<menu>-->
+    <!--<item-->
+    <!--android:id="@+id/nav_about_us"-->
+    <!--android:title="@string/nav_about_us" />-->
+    <!--<item-->
+    <!--android:id="@+id/nav_privacy_policy"-->
+    <!--android:title="@string/privacy_policy" />-->
+    <!--</menu>-->
+    <!--</item>-->
+
+</menu>

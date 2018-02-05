@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        getSupportActionBar().hide();
+      //  getSupportActionBar().hide();
 
         setViews();
 
@@ -137,6 +137,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
                 startActivity(intent);
+//                Intent intent = new Intent(this, MapsActivity.class);
+//
+//                startActivity(intent);
+
 
             }
         } else if (view == btnVerifyPin) {

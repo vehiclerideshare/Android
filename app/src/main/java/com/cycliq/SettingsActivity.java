@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         setViews();
 

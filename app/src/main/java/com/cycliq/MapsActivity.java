@@ -11,23 +11,37 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -110,14 +124,13 @@ import rx.schedulers.Schedulers;
 
 import static com.cycliq.CommonClasses.Constants.KEY_RIDE_ID;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener
-         {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
 
-    private Button btnUnlock, btnSearchCancel, btnMakeReservation, btnTripClose, btnBikeReport;
+    private Button btnUnlock, btnReserve, btnSearchCancel, btnMakeReservation, btnTripClose, btnBikeReport;
 
-    private ImageButton btnRefresh, btnLocation, btnMenu, btnSearch, btnCompose;
+    private ImageButton btnRefresh, btnLocation, btnMenu, btnSearch, btnCompose, btnBack;
 
     LinearLayout layoutRideStatus, layoutSearch, layoutClock, layoutBottom;
 
@@ -145,10 +158,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     CountDownTimer countDownTimer;
 
+    ProgressBar progress;
+
     long millisFinishedUntil = 300000;
 
 
-    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer;
+    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer, txtBikeIdTop;
 
 
     String stringLat = "0.0";
@@ -161,12 +176,34 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Polyline polylineFinal = null;
 
 
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private View navHeader;
+    public static int navItemIndex = 0;
+
+    // tags used to attach the fragments
+    private static final String TAG_HOME = "home";
+    private static final String TAG_PHOTOS = "photos";
+    private static final String TAG_MOVIES = "movies";
+    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_SETTINGS = "settings";
+    public static String CURRENT_TAG = TAG_HOME;
+
+    // toolbar titles respected to selected nav menu item
+    private String[] activityTitles;
+
+    // flag to load home fragment when user presses back key
+    private boolean shouldLoadHomeFragOnBackPress = true;
+    private android.os.Handler mHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-        getSupportActionBar().hide();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //getSupportActionBar().hide();
 
 //        createLocationRequest();
 //
@@ -185,6 +222,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setViews();
 
         setListener();
+
+        setUpNavigationView();
 
 //        timerTopClock.scheduleAtFixedRate(new TimerTask() {
 //
@@ -209,11 +248,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // TODO: Get info about the selected place.
                 Log.i("", "Place: " + place.getName());
 
-                System.out.println("place"+place.getLatLng().latitude);
-                System.out.println("place"+place.getLatLng().longitude);
+                System.out.println("place" + place.getLatLng().latitude);
+                System.out.println("place" + place.getLatLng().longitude);
 
-                stringLat = ""+place.getLatLng().latitude;
-                stringLng = ""+place.getLatLng().longitude;
+                stringLat = "" + place.getLatLng().latitude;
+                stringLng = "" + place.getLatLng().longitude;
 
                 readDataFromJson(false);
 
@@ -240,14 +279,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void startCounDownTimer()
-    {
+    private void startCounDownTimer() {
+
+        progress.setMax((int) millisFinishedUntil);
 
         countDownTimer = new CountDownTimer(millisFinishedUntil, 1000) {
 
             public void onTick(long millisUntilFinished) {
 
-                txtClock.setText(""+String.format(FORMAT,TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                progress.setProgress((int) millisUntilFinished);
+
+                txtClock.setText("" + String.format(FORMAT, TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                         TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
                                 TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
@@ -258,11 +300,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             public void onFinish() {
 
-
                 txtClock.setText("00:00");
 
                 resetValues();
-
             }
 
         };
@@ -340,7 +380,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Add a marker in Sydney and move the camera
         LatLng latLng = new LatLng(Double.parseDouble(locationListModel.getLat()), Double.parseDouble(locationListModel.getLng()));
 
-
         MarkerOptions marker = new MarkerOptions().position(latLng).title(locationListModel.getVehicleRegnNumber());
 
         // Changing marker icon
@@ -357,6 +396,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         builder.include(latLng);
 
+        for (int i = 0; i < navigationView.getMenu().size(); i++) {
+            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
+
+        }
+
+        // load toolbar titles from string resources
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
 //        Marker marker =  mMap.addMarker(new MarkerOptions()
 //                .position(latLng)
@@ -374,6 +420,145 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+
+    private void setTextColorForMenuItem(MenuItem menuItem, @ColorRes int color) {
+
+        SpannableString spanString = new SpannableString(menuItem.getTitle().toString());
+        spanString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, color)), 0, spanString.length(), 0);
+        menuItem.setTitle(spanString);
+
+        Drawable drawable = menuItem.getIcon();
+        if (drawable != null) {
+            drawable.mutate();
+            drawable.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        }
+
+    }
+
+    private void setUpNavigationView() {
+
+
+        for (int i = 0; i < navigationView.getMenu().size(); i++) {
+            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
+
+            Drawable drawable = navigationView.getMenu().getItem(i).getIcon();
+            if(drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+            }
+
+        }
+
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.home:
+                        navItemIndex = 0;
+                        CURRENT_TAG = TAG_HOME;
+                        break;
+                    case R.id.nav_wallet:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_PHOTOS;
+
+                        startActivity(new Intent(MapsActivity.this, MyWalletActivity.class));
+                        drawer.closeDrawers();
+                        break;
+                    case R.id.nav_payments:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_MOVIES;
+
+                        startActivity(new Intent(MapsActivity.this, MyPaymentsActivity.class));
+                        drawer.closeDrawers();
+                        break;
+                    case R.id.nav_trips:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        startActivity(new Intent(MapsActivity.this, MyTripsActivity.class));
+                        drawer.closeDrawers();
+                        break;
+                    case R.id.nav_messages:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        drawer.closeDrawers();
+                        break;
+                    case R.id.nav_invite_friends:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_NOTIFICATIONS;
+
+                        drawer.closeDrawers();
+                        break;
+                    case R.id.nav_user_guide:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_NOTIFICATIONS;
+
+                        drawer.closeDrawers();
+                        break;
+                    case R.id.nav_settings:
+                        navItemIndex = 4;
+                        CURRENT_TAG = TAG_SETTINGS;
+
+                        startActivity(new Intent(MapsActivity.this, SettingsActivity.class));
+                        drawer.closeDrawers();
+
+                        break;
+//                    case R.id.nav_about_us:
+//                        // launch new intent instead of loading fragment
+//                        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+//                        drawer.closeDrawers();
+//                        return true;
+//                    case R.id.nav_privacy_policy:
+//                        // launch new intent instead of loading fragment
+//                        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+//                        drawer.closeDrawers();
+//                        return true;
+                    default:
+                        navItemIndex = 0;
+                }
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
+                }
+                menuItem.setChecked(true);
+
+                //  loadHomeFragment();
+
+                return true;
+            }
+        });
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        //Setting the actionbarToggle to drawer layout
+        drawer.setDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+    }
+
+
     private void setListener() {
 
         btnUnlock.setOnClickListener(this);
@@ -381,8 +566,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnRefresh.setOnClickListener(this);
 
         btnLocation.setOnClickListener(this);
-
-
 
         btnMenu.setOnClickListener(this);
 
@@ -402,12 +585,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnTripClose.setOnClickListener(this);
 
+        btnBack.setOnClickListener(this);
 
+        btnReserve.setOnClickListener(this);
     }
 
     private void setViews() {
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         btnUnlock = (Button) findViewById(R.id.btnUnlock);
+
+        btnReserve = (Button) findViewById(R.id.btnReserve);
 
         btnRefresh = (ImageButton) findViewById(R.id.btnRefresh);
 
@@ -421,7 +612,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //        txtRideId = (TextView) findViewById(R.id.txtRideId);
 //
-      // txtRideStatus = (TextView) findViewById(R.id.txtRideStatus);
+        // txtRideStatus = (TextView) findViewById(R.id.txtRideStatus);
 
         btnCompose = (ImageButton) findViewById(R.id.btnCompose);
 
@@ -448,6 +639,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtAvailable = (TextView) findViewById(R.id.txtAvailable);
 
         txtBikeId = (TextView) findViewById(R.id.txtBikeId);
+        txtBikeIdTop = (TextView) findViewById(R.id.txtBikeIdTop);
+
         txtTripId = (TextView) findViewById(R.id.txtTripId);
         txtTripStart = (TextView) findViewById(R.id.txtTripStart);
         txtTripEnd = (TextView) findViewById(R.id.txtTripEnd);
@@ -457,10 +650,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtAddress = (TextView) findViewById(R.id.txtBottomAddress);
 
         txtAddress.setVisibility(View.GONE);
-
+        navHeader = navigationView.getHeaderView(0);
+        btnBack = (ImageButton) navHeader.findViewById(R.id.btnBack);
 
     }
-
 
     @Override
     public void onClick(View view) {
@@ -475,12 +668,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         } else if (view == btnMenu) {
 
-            Intent intent = new Intent(this, ProfileActivity.class);
+//            Intent intent = new Intent(this, ProfileActivity.class);
+//
+//            startActivity(intent);
 
-            startActivity(intent);
+            drawer.openDrawer(Gravity.LEFT);
 
         } else if (view == btnRefresh) {
 
+            readDataFromJson(false);
 
         } else if (view == btnSearchCancel) {
 
@@ -520,7 +716,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             layoutSearch.setVisibility(View.VISIBLE);
 
-
 //            try {
 //                Intent intent =
 //                        new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
@@ -531,7 +726,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            } catch (GooglePlayServicesNotAvailableException e) {
 //                // TODO: Handle the error.
 //            }
-
 
         } else if (view == btnLocation) {
 
@@ -574,7 +768,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             makeReservation();
 
 
+        } else if (view == btnReserve) {
+
+            makeReservation();
+
+
         } else if (view == btnCloseBottomView) {
+
+            btnReserve.setVisibility(View.GONE);
+            btnUnlock.setVisibility(View.VISIBLE);
 
             layoutBottom.setVisibility(View.GONE);
             if (polylineFinal != null) {
@@ -594,8 +796,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             layoutRideStatus.setVisibility(View.GONE);
             btnUnlock.setVisibility(View.VISIBLE);
 
-        }
+        } else if (view == btnBack) {
 
+            drawer.closeDrawers();
+
+        }
     }
 
     @Override
@@ -615,7 +820,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        for(int i = 0; i < menu.size(); i++){
+            Drawable drawable = menu.getItem(i).getIcon();
+            if(drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            }
+        }
+
+        return true;
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -623,12 +841,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
 
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
-
-
 
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -637,11 +852,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 stringLat = Double.toString(currentLocation.getLatitude());
                 stringLng = Double.toString(currentLocation.getLongitude());
 
-                CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-                CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
                 mMap.moveCamera(center);
                 mMap.animateCamera(zoom);
-
 
 
             }
@@ -660,8 +874,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
 
-                    CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                    CameraUpdate zoom=CameraUpdateFactory.zoomTo(11);
+                    CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                    CameraUpdate zoom = CameraUpdateFactory.zoomTo(11);
                     mMap.moveCamera(center);
                     mMap.animateCamera(zoom);
 
@@ -688,7 +902,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-         // currentLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        // currentLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
         readDataFromJson(false);
 
@@ -723,14 +937,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 params.put("userRegistrationId", Constants.USER_REGISTERATION_ID);
 
-                if(isLocal) {
+                if (isLocal) {
 
                     params.put("latitude", "80.0");
 
                     params.put("longitude", "12.2");
 
-                }
-                else {
+                } else {
 
                     params.put("latitude", stringLat);
 
@@ -779,7 +992,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                 }
 
-                                if(builder != null) {
+                                if (builder != null) {
 
                                     LatLngBounds bounds = builder.build();
 
@@ -819,7 +1032,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
     private void getMyLocation() {
         if (currentLocation != null) {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -831,8 +1043,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
-
-
 
 
     private void makeReservation() {
@@ -879,14 +1089,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                     btnMakeReservation.setBackgroundColor(getResources().getColor(R.color.dark_gray));
 
-                                    System.out.println("millisFinishedUntil == "+millisFinishedUntil);
+                                    System.out.println("millisFinishedUntil == " + millisFinishedUntil);
 
                                     startCounDownTimer();
 
                                     countDownTimer.start();
 
                                 }
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -1002,7 +1211,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         layoutSearch.setVisibility(View.GONE);
 
-       // validateCurrentRideStatus();
+        // validateCurrentRideStatus();
 
     }
 
@@ -1036,13 +1245,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             txtTripId.setText("Trip ID:" + rideId);
             txtBikeId.setText("Bike ID:" + rideId);
+            txtBikeIdTop.setText("Bike ID:" + rideId);
 
             Log.d("TAG", "Tag values rideId == " + rideId);
 
-           // txtRideStatus.setText(rideStatus);
+            // txtRideStatus.setText(rideStatus);
 
             timer = new Timer();
-
 
 
             checkStatus();
@@ -1145,7 +1354,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         txtBottomVehicleNo.setText("Vehicle No:" + clickedMarkerDetails.getVehicleRegnNumber());
 
-        layoutBottom.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.GONE);
+
+        btnUnlock.setVisibility(View.GONE);
+        btnReserve.setVisibility(View.VISIBLE);
 
         makeDirection(clickedMarkerDetails.getLat(), clickedMarkerDetails.getLng());
 
@@ -1160,15 +1372,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void resetValues() {
 
         layoutBottom.setVisibility(View.GONE);
+        btnUnlock.setVisibility(View.VISIBLE);
+        btnReserve.setVisibility(View.GONE);
+
         layoutClock.setVisibility(View.GONE);
 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
 
@@ -1184,8 +1397,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         validateCurrentRideStatus();
         layoutRideStatus.setVisibility(View.VISIBLE);
-        txtTripStart.setText("Trip Start: "+GetToday());
-        txtTripEnd.setText("Trip End: "+"-");
+        txtTripStart.setText("Trip Start: " + GetToday());
+        txtTripEnd.setText("Trip End: " + "-");
         txtTripTimer.setText("00:00:00");
         btnTripClose.setVisibility(View.GONE);
         btnUnlock.setVisibility(View.GONE);
@@ -1232,7 +1445,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 // Update UI elements
 
 
-
                             }
                         });
 
@@ -1272,7 +1484,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
-
 
 
         JSONObject params = new JSONObject();
@@ -1340,16 +1551,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         queue.add(jsObjRequest);
 
 
-}
+    }
 
-    public static String GetToday(){
+    public static String GetToday() {
         Date presentTime_Date = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return dateFormat.format(presentTime_Date);
     }
 
-    public void startTripTimer () {
-         //Every three seconds it will trigger the api call
+    public void startTripTimer() {
+        //Every three seconds it will trigger the api call
 
 
         if (tripTimer != null) {
@@ -1368,7 +1579,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Integer mins = (tripCountDown / 60) % 60;
                 Integer seconds = tripCountDown % 60;
 
-                final String text =  String.format("%02d:%02d:%02d", hours, mins, seconds);
+                final String text = String.format("%02d:%02d:%02d", hours, mins, seconds);
 
 
 //                final String text = String.format(Locale.getDefault(), "%02d:%02d:%02d",
@@ -1387,7 +1598,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public void stopTripTimer () {
+    public void stopTripTimer() {
         if (tripTimer != null) {
             tripTimer.cancel();
             tripTimer = null;
@@ -1419,7 +1630,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onResponse(JSONObject response) {
                         System.out.println("response values == " + response);
 
-                        List<List<HashMap<String, String>>> routes = new ArrayList<>() ;
+                        List<List<HashMap<String, String>>> routes = new ArrayList<>();
                         JSONArray jRoutes;
                         JSONArray jLegs;
                         JSONArray jSteps;
@@ -1436,8 +1647,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             // Update UI elements
-                                        txtAddress.setVisibility(View.VISIBLE);
-                                        txtAddress.setText(current_address);
+                                            txtAddress.setVisibility(View.VISIBLE);
+                                            txtAddress.setText(current_address);
 
                                         }
                                     });
@@ -1445,16 +1656,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
 
 
-
-
-
-
                         } catch (JSONException e) {
 
                             e.printStackTrace();
 
                         }
-
 
 
                     }
@@ -1480,7 +1686,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
     public void makeDirection(String lat, String lng) {
 
 
@@ -1498,8 +1703,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String destloc = "latlng=" + lat + "," + lng;
 
 
-
-
         LatLng start = latLngSource;
         LatLng end = latLngDest;
 
@@ -1514,7 +1717,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onDirectionSuccess(Direction direction, String s) {
                         String status = direction.getStatus();
-                        if(status.equals(RequestResult.OK)) {
+                        if (status.equals(RequestResult.OK)) {
                             Route route = direction.getRouteList().get(0);
                             Leg leg = route.getLegList().get(0);
                             ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
@@ -1532,7 +1735,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                                mMap.addPolyline(polylineOption);
 //                            }
                             // Do something
-                        } else if(status.equals(RequestResult.NOT_FOUND)) {
+                        } else if (status.equals(RequestResult.NOT_FOUND)) {
                             // Do something
                         }
                     }
@@ -1673,19 +1876,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-             @Override
-             public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-                         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                             // All good!
-                         } else {
-                             Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
-                         }
-
-
-             }
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // All good!
+        } else {
+            Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+        }
 
 
+    }
 
 
 }

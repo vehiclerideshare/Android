@@ -45,4 +45,25 @@
     <string name="grant">GRANT</string>
     <string name="cancel">CANCEL</string>
 
+
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <string name="menu_wallet">Wallet</string>
+    <string name="menu_my_payments">My Payments</string>
+    <string name="menu_my_trips">My Trips</string>
+    <string name="menu_my_messages">My Messages</string>
+    <string name="menu_invite_friends">Invite Friends</string>
+    <string name="menu_user_guide">User Guide</string>
+    <string name="menu_settings">Settings</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Photos</item>
+        <item>Movies</item>
+        <item>Notifications</item>
+        <item>Settings</item>
+    </string-array>
+
 </resources>

@@ -10,9 +10,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.cycliq.CommonClasses.Constants;
+import com.cycliq.utils.OtpView;
 
 //implementing onclicklistener
-public class VerifyOTPActivity extends AppCompatActivity implements View.OnClickListener {
+public class VerifyOTPActivity extends AppCompatActivity implements View.OnClickListener, OtpView.MyListener {
 
     //View Objects
     private Button btnSubmit, btnVerifyPin, btnCancel;
@@ -26,19 +27,17 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verify_otp);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
-      // setViews();
+        setViews();
 
-       // setListener();
+        // setListener();
 
         Constants.saveData(VerifyOTPActivity.this, Constants.KEY_RIDE_ID, "");
         Constants.saveData(VerifyOTPActivity.this, Constants.KEY_RIDE_STATUS, Constants.NONE);
 //        Constants.saveData(LoginActivity.this, Constants.KEY_RIDE_STATUS, "");
 
     }
-
-
 
 
     private void setListener() {
@@ -56,19 +55,23 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
 
     private void setViews() {
 
-        editPhoneNumber = (EditText) findViewById(R.id.txtPhoneNumber);
+        OtpView otp = (OtpView) findViewById(R.id.txtOtp);
 
-        editOtp = (EditText) findViewById(R.id.txtOtp);
+        otp.passInterface(this);
 
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-
-        btnVerifyPin = (Button) findViewById(R.id.btnVerifyPin);
-
-        btnCancel = (Button) findViewById(R.id.btnCancel);
-
-        layoutLogin = (LinearLayout) findViewById(R.id.layoutLogin);
-
-        layoutVerifyOtp = (LinearLayout) findViewById(R.id.layoutVerifyOtp);
+//        editPhoneNumber = (EditText) findViewById(R.id.txtPhoneNumber);
+//
+//        editOtp = (EditText) findViewById(R.id.txtOtp);
+//
+//        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+//
+//        btnVerifyPin = (Button) findViewById(R.id.btnVerifyPin);
+//
+//        btnCancel = (Button) findViewById(R.id.btnCancel);
+//
+//        layoutLogin = (LinearLayout) findViewById(R.id.layoutLogin);
+//
+//        layoutVerifyOtp = (LinearLayout) findViewById(R.id.layoutVerifyOtp);
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
 
@@ -78,14 +81,14 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
 
         if (editPhoneNumber.getText().toString().length() == 0) {
 
-            Constants.showToast(this,"Enter mobile number");
+            Constants.showToast(this, "Enter mobile number");
 
             return false;
         }
 
         if (editPhoneNumber.getText().toString().length() != 10) {
 
-            Constants.showToast(this,"Enter valid mobile number");
+            Constants.showToast(this, "Enter valid mobile number");
 
             return false;
         }
@@ -97,7 +100,7 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
 
         if (editOtp.getText().toString().length() == 0) {
 
-            Constants.showToast(this,"Enter PIN");
+            Constants.showToast(this, "Enter PIN");
 
             return false;
         }
@@ -143,8 +146,7 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
                 layoutVerifyOtp.setVisibility(View.GONE);
 
             }
-        }
-        else if (view == btnBack) {
+        } else if (view == btnBack) {
 
             finish();
 
@@ -161,4 +163,13 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
     }
 
 
+    @Override
+    public void callback(String otp) {
+
+        System.out.println("otp is" + otp);
+
+        Intent intent = new Intent(this, MapsActivity.class);
+
+        startActivity(intent);
+    }
 }

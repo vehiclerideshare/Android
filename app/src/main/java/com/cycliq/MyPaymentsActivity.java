@@ -48,7 +48,7 @@ public class MyPaymentsActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_payments);
 
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
         setViews();
 

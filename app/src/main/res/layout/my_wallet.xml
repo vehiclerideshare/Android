@@ -22,7 +22,7 @@
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -40,7 +40,7 @@
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:gravity="center"
@@ -49,17 +49,9 @@
                     android:textColor="@color/nav_title_clr"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:text="Details"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:visibility="invisible" />
 
-            </LinearLayout>
+
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -86,13 +78,12 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/imgProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_marginLeft="20dp"
                     android:alpha="0.7"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
@@ -101,7 +92,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -111,10 +101,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgProfile"
                         android:layout_marginTop="5dp"
-                        android:gravity="center|left"
-                        android:text="Account Balance (INR)"
+                        android:gravity="center"
+                        android:text="Account Balance"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="15dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -122,10 +112,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgProfile"
                         android:layout_marginBottom="10dp"
-                        android:gravity="center|left"
+                        android:gravity="center"
                         android:text="₹0.0"
                         android:textColor="#000000"
-                        android:textSize="30dp"
+                        android:textSize="40dp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -144,15 +134,14 @@
                     android:id="@+id/input_layout_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="30dp"
+                    android:gravity="center">
 
                     <EditText
                         android:id="@+id/txtAmount"
-                        android:layout_width="match_parent"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_marginTop="30dp"
                         android:digits="0123456789"
                         android:hint="Your Amount"
@@ -199,7 +188,7 @@
                             android:id="@+id/layoutAdd1"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:padding="1dp"
                             android:textColor="@android:color/black">
@@ -215,7 +204,6 @@
                                 android:textSize="25dp" />
 
                         </LinearLayout>
-
 
                         <LinearLayout
                             android:id="@+id/layoutAdd2"
@@ -285,12 +273,12 @@
 
                 <Button
                     android:id="@+id/btnRecharge"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@color/btnBlack"
-                    android:text="Add Money"
+                    android:background="@drawable/btn_rounded_corner"
+                    android:drawableLeft="@mipmap/ic_recharge"
+                    android:drawablePadding="-10dp"
+                    android:text="Recharge"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textStyle="bold" />

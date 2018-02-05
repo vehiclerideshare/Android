@@ -62,7 +62,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
     public static final String TAG = "MainActivity : ";
 
     //View Objects
-    private Button btnDetails, btnRecharge, btnCancel;
+    private Button btnRecharge, btnCancel;
     private EditText editPhoneNumber, editOtp;
     private LinearLayout layoutLogin;
     private LinearLayout layoutMyWallet;
@@ -90,7 +90,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
         Checkout.preload(getApplicationContext());
 
 
-        getSupportActionBar().hide();
+       // getSupportActionBar().hide();
 
         setViews();
 
@@ -100,8 +100,6 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setListener() {
-
-        btnDetails.setOnClickListener(this);
 
         btnBack.setOnClickListener(this);
 
@@ -127,8 +125,6 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 //
 //        btnVerifyPin = (Button) findViewById(R.id.btnVerifyPin);
 //
-        btnDetails = (Button) findViewById(R.id.btnDetails);
-
         btnBack = (ImageButton) findViewById(R.id.btnBack);
 
         txtAmount = (EditText) findViewById(R.id.txtAmount);
@@ -171,14 +167,6 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 //        Intent intent = new Intent(this, QRScanActivity.class);
 
         int id = view.getId();
-
-        if (view == btnDetails) {
-
-            Intent intent = new Intent(this, DetailsActivity.class);
-
-            startActivity(intent);
-
-        }
 
         if (view == btnBack) {
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/appBgColor"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -19,11 +19,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="50dp"
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -41,31 +41,17 @@
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:gravity="center"
                     android:text="@string/title_profile"
                     android:textAllCaps="false"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/nav_title_clr"
                     android:textStyle="bold" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:text="Details"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff"
-                    android:visibility="invisible" />
+            </FrameLayout>
 
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/darker_gray" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -134,15 +120,15 @@
                         android:id="@+id/tvNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/imgProfile"
                         android:layout_marginTop="18dp"
                         android:gravity="center"
                         android:text="12345***22"
-                        android:textColor="#ffffff"
+                        android:textColor="#000000"
                         android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:layout_below="@+id/imgProfile"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -153,7 +139,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="20dp"
                 android:visibility="visible"
                 card_view:cardCornerRadius="4dp"
                 card_view:cardElevation="10dp">
@@ -166,7 +151,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/appBgColor"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp">
@@ -180,14 +164,27 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvDuration"
-                                android:textColor="@color/durationClr"
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="91.7"
-                                android:textSize="23dp"
-                                android:textStyle="bold" />
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/ic_duration" />
+
+                                <TextView
+                                    android:id="@+id/tvDuration"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="91.7"
+                                    android:textColor="#000000"
+                                    android:textSize="23dp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -195,22 +192,29 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/textView3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Duration"
-                                    android:id="@+id/textView3" />
+                                    android:text="Duration" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="(Min)"
-                                    android:visibility="gone"
+                                    android:textColor="@android:color/darker_gray"
 
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/darker_gray" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -219,14 +223,27 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvCarbon"
-                                android:textColor="@color/carbonClr"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="91.7"
-                                android:textSize="23dp"
-                                android:textStyle="bold" />
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/ic_carbon" />
+
+                                <TextView
+                                    android:id="@+id/tvCarbon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="91.7"
+                                    android:textColor="#000000"
+                                    android:textSize="23dp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -240,14 +257,21 @@
 
                                 <TextView
                                     android:layout_width="wrap_content"
-                                    android:visibility="gone"
                                     android:layout_height="wrap_content"
                                     android:text="(Min)"
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:textColor="@android:color/darker_gray"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/darker_gray" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -256,14 +280,28 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvKcal"
-                                android:textColor="@color/kCalClr"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="91.7"
-                                android:textSize="23dp"
-                                android:textStyle="bold" />
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/ic_kcal" />
+
+
+                                <TextView
+                                    android:id="@+id/tvKcal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="91.7"
+                                    android:textColor="#000000"
+                                    android:textSize="23dp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -279,8 +317,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="(Min)"
-                                    android:visibility="gone"
-                                    android:textColor="@android:color/darker_gray" />
+                                    android:textColor="@android:color/darker_gray"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
@@ -288,246 +326,14 @@
 
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:id="@+id/layoutMyWallet"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="My Wallet"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
-
-                    <LinearLayout
-                        android:id="@+id/layoutMyPayments"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="My Payments"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
-                    <LinearLayout
-                        android:id="@+id/layoutMyTrips"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="My Trips"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="20dp"
-                card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="My Messages"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="Invite Friends"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="User Guide"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
-                    <LinearLayout
-                        android:id="@+id/layoutSettings"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:text="Settings"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:src="@mipmap/arrow" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
 
                 </LinearLayout>
 
