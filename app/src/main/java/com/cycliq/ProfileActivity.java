@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnSubmit, btnVerifyPin, btnCancel;
     private EditText editPhoneNumber, editOtp;
     private LinearLayout layoutLogin;
-    private LinearLayout layoutMyWallet, layoutSettings, layoutMyTrips, layoutMyPayments;
+    private LinearLayout layoutMyWallet;
     private ImageButton btnBack;
 
     String strCreditScore = "";
@@ -73,13 +73,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         layoutMyWallet.setOnClickListener(this);
 
-        layoutSettings.setOnClickListener(this);
 
-        layoutMyTrips.setOnClickListener(this);
 
         btnBack.setOnClickListener(this);
-
-        layoutMyPayments.setOnClickListener(this);
 
     }
 
@@ -91,15 +87,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         tvKcal = (TextView) findViewById(R.id.tvKcal);
         tvCreditScore = (TextView) findViewById(R.id.tvCreditScore);
 
-
         layoutMyWallet = (LinearLayout) findViewById(R.id.layoutMyWallet);
-
-        layoutSettings = (LinearLayout) findViewById(R.id.layoutSettings);
-
-        layoutMyTrips = (LinearLayout) findViewById(R.id.layoutMyTrips);
-
-        layoutMyPayments = (LinearLayout) findViewById(R.id.layoutMyPayments);
-
 
         btnBack = (ImageButton) findViewById(R.id.btnBack);
 
@@ -126,30 +114,30 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         }
 
-        if(view == layoutMyPayments)
-        {
-
-            Intent intent = new Intent(this, MyPaymentsActivity.class);
-
-            startActivity(intent);
-
-        }
-
-        if (view == layoutSettings) {
-
-            Intent intent = new Intent(this, SettingsActivity.class);
-
-            startActivity(intent);
-
-        }
-
-        if (view == layoutMyTrips) {
-
-            Intent intent = new Intent(this, MyTripsActivity.class);
-
-            startActivity(intent);
-
-        }
+//        if(view == layoutMyPayments)
+//        {
+//
+//            Intent intent = new Intent(this, MyPaymentsActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
+//
+//        if (view == layoutSettings) {
+//
+//            Intent intent = new Intent(this, SettingsActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
+//
+//        if (view == layoutMyTrips) {
+//
+//            Intent intent = new Intent(this, MyTripsActivity.class);
+//
+//            startActivity(intent);
+//
+//        }
 
         if (view == btnBack) {
 

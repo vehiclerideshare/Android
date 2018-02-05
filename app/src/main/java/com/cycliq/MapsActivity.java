@@ -919,9 +919,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onBackPressed() {
         super.onBackPressed();
 
-        finish();
+       // finish();
 
-        System.exit(0);
+      //  System.exit(0);
+
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
 
     }
 
