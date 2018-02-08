@@ -7,12 +7,14 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -47,12 +49,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import static com.cycliq.CommonClasses.Constants.KEY_RIDE_ID;
 
 public class TripRunningActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener {
 
-    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer, txtTripAmount;
+    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer, txtTripAmount, txtClock;
 
     private GoogleMap mMap;
 
@@ -61,6 +64,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
     String stringLng = "0.0";
 
     Timer tripTimer = null;
+    private static final String FORMAT = "%02d:%02d";
 
     Integer tripCountDown = 0;
 
@@ -68,8 +72,11 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
     LocationManager locationManager;
     Timer timer = new Timer();
+    CountDownTimer countDownTimer;
 
+    ProgressBar progress;
     Marker markerFinal;
+    long millisFinishedUntil = 300000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
         txtTripEnd = (TextView) findViewById(R.id.txtTripEnd);
         txtTripTimer = (TextView) findViewById(R.id.txtTripTimer);
         txtTripAmount = (TextView) findViewById(R.id.txtTripAmount);
+        txtClock = (TextView) findViewById(R.id.txtClock);
 
         txtTripAmount.setVisibility(View.GONE);
 
@@ -100,6 +108,37 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+    }
+
+
+    private void startCounDownTimer() {
+
+        progress.setMax((int) millisFinishedUntil);
+
+        countDownTimer = new CountDownTimer(millisFinishedUntil, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+                progress.setProgress((int) millisUntilFinished);
+
+                txtClock.setText("" + String.format(FORMAT, TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+
+                millisFinishedUntil = millisUntilFinished;
+
+            }
+
+            public void onFinish() {
+
+                txtClock.setText("00:00");
+
+            }
+
+        };
 
     }
 
@@ -262,6 +301,10 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
         startTripTimer();
 
+
+        startCounDownTimer();
+
+        countDownTimer.start();
 
         String url = Constants.DEMO_BASE_URL + Constants.UPDATE_RIDE_STATUS;
 
@@ -436,7 +479,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 //                        TimeUnit.MILLISECONDS.toSeconds(tripCountDown) % 60);
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        txtTripTimer.setText(text);
+                       // txtTripTimer.setText(text);
 
 
                     }
