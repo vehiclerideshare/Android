@@ -64,7 +64,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
     //View Objects
     private Button btnRecharge, btnCancel;
     private EditText editPhoneNumber, editOtp;
-    private LinearLayout layoutLogin;
+    private LinearLayout layoutLogin, layoutRecharge;
     private LinearLayout layoutMyWallet;
     private ImageButton btnBack;
     private TextView txtAdd1, txtAdd2, txtAdd3, txtAdd4;
@@ -113,6 +113,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
         btnRecharge.setOnClickListener(this);
 
+        layoutRecharge.setOnClickListener(this);
     }
 
     private void setViews() {
@@ -131,7 +132,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
         btnRecharge = (Button) findViewById(R.id.btnRecharge);
 
-
+        layoutRecharge = (LinearLayout) findViewById(R.id.layoutRecharge);
 
         layoutAdd1 = (LinearLayout) findViewById(R.id.layoutAdd1);
 
@@ -232,9 +233,14 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
         {
 
 
+            setPaymentParameters();
+        }
 
+        if(view == layoutRecharge)
+        {
 
             setPaymentParameters();
+
         }
 
     }

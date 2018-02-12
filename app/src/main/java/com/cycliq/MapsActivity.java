@@ -124,7 +124,7 @@ import rx.schedulers.Schedulers;
 
 import static com.cycliq.CommonClasses.Constants.KEY_RIDE_ID;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
 
@@ -401,6 +401,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
 
+        setUpNavigationView();
+
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
@@ -430,7 +432,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Drawable drawable = menuItem.getIcon();
         if (drawable != null) {
             drawable.mutate();
-            drawable.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
         }
 
     }
@@ -444,7 +446,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Drawable drawable = navigationView.getMenu().getItem(i).getIcon();
             if(drawable != null) {
                 drawable.mutate();
-                drawable.setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+                drawable.setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
             }
 
         }
@@ -588,6 +590,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnBack.setOnClickListener(this);
 
         btnReserve.setOnClickListener(this);
+
     }
 
     private void setViews() {
@@ -839,7 +842,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-
+        mMap.setOnMapClickListener(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -1368,6 +1371,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return false;
     }
 
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+
+        if (polylineFinal != null) {
+            polylineFinal.remove();
+            polylineFinal = null;
+        }
+
+        layoutBottom.setVisibility(View.GONE);
+
+        btnUnlock.setVisibility(View.VISIBLE);
+        btnReserve.setVisibility(View.GONE);
+
+    }
+
     private class Handler {
 
 
@@ -1733,11 +1752,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //Animate to the bounds
                             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder1.build(), 160);
                             mMap.moveCamera(cameraUpdate);
-//                            List<Step> stepList = direction.getRouteList().get(0).getLegList().get(0).getStepList();
-//                            ArrayList<PolylineOptions> polylineOptionList = DirectionConverter.createTransitPolyline(getApplicationContext(), stepList, 5, Color.RED, 3, Color.BLUE);
-//                            for (PolylineOptions polylineOption : polylineOptionList) {
-//                                mMap.addPolyline(polylineOption);
-//                            }
+                            List<Step> stepList = direction.getRouteList().get(0).getLegList().get(0).getStepList();
+                            ArrayList<PolylineOptions> polylineOptionList = DirectionConverter.createTransitPolyline(getApplicationContext(), stepList, 5, Color.RED, 3, Color.BLUE);
+                            for (PolylineOptions polylineOption : polylineOptionList) {
+                                mMap.addPolyline(polylineOption);
+                            }
                             // Do something
                         } else if (status.equals(RequestResult.NOT_FOUND)) {
                             // Do something
