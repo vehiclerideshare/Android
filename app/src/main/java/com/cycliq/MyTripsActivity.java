@@ -1,6 +1,8 @@
 package com.cycliq;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -46,6 +50,7 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editPhoneNumber, editOtp;
     private LinearLayout layoutLogin;
     private LinearLayout layoutMyWallet, layoutSettings;
+    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtDuration, txtAmount;
 
     private ListView listMyTrips;
 
@@ -84,7 +89,7 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
         // preparing list data
         prepareListData();
 
-        listAdapter = new ExpandableTripsListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableTripsListAdapter(this, listDataHeader, listDataChild, this);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -98,7 +103,7 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
                 // Toast.makeText(getApplicationContext(),
                 // "Group Clicked " + listDataHeader.get(groupPosition),
                 // Toast.LENGTH_SHORT).show();
-                return false;
+                return true;
             }
         });
 
@@ -110,6 +115,8 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 //				Toast.makeText(getApplicationContext(),
 //						listDataHeader.get(groupPosition) + " Expanded",
 //						Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -140,14 +147,15 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 //										listDataHeader.get(groupPosition)).get(
 //										childPosition), Toast.LENGTH_SHORT)
 //						.show();
-                return false;
+                return true;
             }
         });
+
 
     }
 
     /*
-	 * Preparing the list data
+     * Preparing the list data
 	 */
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
@@ -222,12 +230,62 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+
     @Override
     public void onClick(View view) {
 
 //        Intent intent = new Intent(this, QRScanActivity.class);
 
         int id = view.getId();
+        
+        if (id == R.id.layoutGroupMain) {
+
+            // custom dialog
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_trip_details);
+            dialog.setCancelable(true);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            txtTripId = (TextView) dialog.findViewById(R.id.txtTripId);
+
+            txtBikeId = (TextView) dialog.findViewById(R.id.txtBikeId);
+
+            txtTripStart = (TextView) dialog.findViewById(R.id.txtTripStart);
+
+            txtTripEnd = (TextView) dialog.findViewById(R.id.txtTripEnd);
+
+            txtDuration = (TextView) dialog.findViewById(R.id.txtDuration);
+
+            txtAmount = (TextView) dialog.findViewById(R.id.txtAmount);
+
+
+            Button btnTripClose = (Button) dialog.findViewById(R.id.btnTripClose);
+            // if button is clicked, close the custom dialog
+            btnTripClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
+        }
+
+        if (id == R.id.ivExpand) {
+
+            int pos = (int) view.getTag();
+
+            if (expListView.isGroupExpanded(pos)) {
+
+                expListView.collapseGroup(pos);
+
+            } else {
+
+                expListView.expandGroup(pos);
+
+            }
+        }
 
         if (view == layoutMyWallet) {
 
@@ -249,10 +307,10 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
             finish();
 
+
         }
 
-        if(id == R.id.linearMain)
-        {
+        if (id == R.id.linearMain) {
 
             Intent intent = new Intent(this, TripDetailsActivity.class);
 
