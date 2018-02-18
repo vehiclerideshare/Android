@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.cycliq.R;
 
@@ -18,12 +19,14 @@ public class ExpandableTripsListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
+    private View.OnClickListener btnClickListener;
 
     public ExpandableTripsListAdapter(Context context, List<String> listDataHeader,
-                                      HashMap<String, List<String>> listChildData) {
+                                      HashMap<String, List<String>> listChildData, View.OnClickListener btnClickListener) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+        this.btnClickListener = btnClickListener;
     }
 
     @Override
@@ -101,14 +104,21 @@ public class ExpandableTripsListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.trips_list_group, null);
         }
 
+        LinearLayout layoutGroupMain = (LinearLayout) convertView.findViewById(R.id.layoutGroupMain);
+
+
         ImageView ivSideLine = (ImageView) convertView.findViewById(R.id.ivSideLine);
         View viewBottomLine = (View) convertView.findViewById(R.id.viewBottomLine);
         ImageView ivExpand = (ImageView) convertView.findViewById(R.id.ivExpand);
+        ivExpand.setOnClickListener(btnClickListener);
+        ivExpand.setTag(groupPosition);
+
+        layoutGroupMain.setOnClickListener(btnClickListener);
+        layoutGroupMain.setTag(groupPosition);
 
         if (isExpanded) {
 
             ivExpand.setImageResource(R.mipmap.ic_minus);
-
             ivSideLine.setVisibility(View.VISIBLE);
             viewBottomLine.setVisibility(View.GONE);
 

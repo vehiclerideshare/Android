@@ -130,7 +130,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Button btnUnlock, btnReserve, btnSearchCancel, btnMakeReservation, btnTripClose, btnBikeReport;
 
-    private ImageButton btnRefresh, btnLocation, btnMenu, btnSearch, btnCompose, btnBack;
+    private ImageButton btnRefresh, btnLocation, btnMenu, btnSearch, btnReport, btnCompose, btnBack;
 
     LinearLayout layoutRideStatus, layoutSearch, layoutClock, layoutBottom;
 
@@ -573,6 +573,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnSearch.setOnClickListener(this);
 
+        btnReport.setOnClickListener(this);
+
         btnCompose.setOnClickListener(this);
 
         btnSearchCancel.setOnClickListener(this);
@@ -620,6 +622,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnCompose = (ImageButton) findViewById(R.id.btnCompose);
 
         btnSearch = (ImageButton) findViewById(R.id.btnSearch);
+
+        btnReport = (ImageButton) findViewById(R.id.btnReport);
 
         layoutSearch = (LinearLayout) findViewById(R.id.layoutSearch);
 
@@ -672,7 +676,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             startActivity(intent);
 
-        } else if (view == btnMenu) {
+        }
+        else if (view == btnReport) {
+
+            Intent intent = new Intent(this, ReportActivity.class);
+
+            startActivity(intent);
+
+        }
+        else if (view == btnMenu) {
 
 //            Intent intent = new Intent(this, ProfileActivity.class);
 //

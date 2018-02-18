@@ -113,6 +113,7 @@
         <activity android:name=".MyPaymentsActivity" />
         <activity android:name=".TripDetailsActivity" />
         <activity android:name=".ReportFormActivity" />
+        <activity android:name=".ReportActivity" />
 
         <!--<meta-data-->
             <!--android:name="io.fabric.ApiKey"-->

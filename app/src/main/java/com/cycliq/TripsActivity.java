@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TripsActivity extends Activity {
+public class TripsActivity extends Activity implements View.OnClickListener{
 
 	ExpandableTripsListAdapter listAdapter;
 	ExpandableListView expListView;
@@ -33,7 +33,7 @@ public class TripsActivity extends Activity {
 		// preparing list data
 		prepareListData();
 
-		listAdapter = new ExpandableTripsListAdapter(this, listDataHeader, listDataChild);
+		listAdapter = new ExpandableTripsListAdapter(this, listDataHeader, listDataChild, this);
 
 		// setting list adapter
 		expListView.setAdapter(listAdapter);
@@ -134,5 +134,10 @@ public class TripsActivity extends Activity {
 		listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
 		listDataChild.put(listDataHeader.get(1), nowShowing);
 		listDataChild.put(listDataHeader.get(2), comingSoon);
+	}
+
+	@Override
+	public void onClick(View view) {
+
 	}
 }
