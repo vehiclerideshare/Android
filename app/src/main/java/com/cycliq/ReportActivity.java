@@ -1,21 +1,28 @@
 package com.cycliq;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.pm.PackageManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,25 +31,29 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.cycliq.Adapter.ExpandableTripsListAdapter;
 import com.cycliq.Adapter.MyTripsAdapter;
+import com.cycliq.Adapter.ReportRecyclerAdapter;
 import com.cycliq.Application.CycliqApplication;
 import com.cycliq.CommonClasses.Constants;
-import com.cycliq.model.LocationListModel;
 import com.cycliq.model.TripSummaryModel;
+import com.cycliq.utils.Utility;
+import com.payu.magicretry.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.cycliq.R.id.btnBack;
 
 //implementing onclicklistener
-public class MyTripsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReportActivity extends AppCompatActivity implements View.OnClickListener {
 
     //View Objects
     private ImageButton btnBack;
@@ -63,137 +74,40 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
+    private RecyclerView rGridView;
+
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private String userChoosenTask;
+
+    ReportRecyclerAdapter adapter;
+    ArrayList<Bitmap> arrBitmap = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_trips);
+        setContentView(R.layout.my_report);
 
 //        getSupportActionBar().hide();
 
         setViews();
 
-        setExpandList();
-
         setListener();
 
-        getMyTripsDetails();
+        arrBitmap = new ArrayList<>();
+
+
+        rGridView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false));
+
+        setRecyAdapter();
 
     }
 
-    private void setExpandList() {
+    private void setRecyAdapter() {
 
-        // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        adapter = new ReportRecyclerAdapter(arrBitmap, this);
 
-        // preparing list data
-        prepareListData();
+        rGridView.setAdapter(adapter);
 
-        listAdapter = new ExpandableTripsListAdapter(this, listDataHeader, listDataChild, this);
-
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
-
-        // Listview Group click listener
-        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                // Toast.makeText(getApplicationContext(),
-                // "Group Clicked " + listDataHeader.get(groupPosition),
-                // Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-        // Listview Group expanded listener
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-//				Toast.makeText(getApplicationContext(),
-//						listDataHeader.get(groupPosition) + " Expanded",
-//						Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
-
-        // Listview Group collasped listener
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-//				Toast.makeText(getApplicationContext(),
-//						listDataHeader.get(groupPosition) + " Collapsed",
-//						Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        // Listview on child click listener
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
-//				Toast.makeText(
-//						getApplicationContext(),
-//						listDataHeader.get(groupPosition)
-//								+ " : "
-//								+ listDataChild.get(
-//										listDataHeader.get(groupPosition)).get(
-//										childPosition), Toast.LENGTH_SHORT)
-//						.show();
-                return true;
-            }
-        });
-
-
-    }
-
-    /*
-     * Preparing the list data
-	 */
-    private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
-
-        // Adding child data
-        listDataHeader.add("Top 250");
-        listDataHeader.add("Now Showing");
-        listDataHeader.add("Coming Soon..");
-
-        // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
-
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
-
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
-
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
     }
 
     private void setListener() {
@@ -222,6 +136,9 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
         listMyTrips = (ListView) findViewById(R.id.listMyTrips);
 
+        rGridView = (RecyclerView) findViewById(R.id.recycler_view);
+
+
     }
 
     private void showToast(String msg) {
@@ -230,6 +147,122 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (userChoosenTask.equals("Take Photo"))
+                        cameraIntent();
+                    else if (userChoosenTask.equals("Choose from Library"))
+                        galleryIntent();
+                } else {
+                    //code for deny
+                }
+                break;
+        }
+    }
+
+    private void selectImage() {
+        final CharSequence[] items = {"Take Photo", "Choose from Library",
+                "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result = Utility.checkPermission(ReportActivity.this);
+
+                if (items[item].equals("Take Photo")) {
+                    userChoosenTask = "Take Photo";
+                    if (result)
+                        cameraIntent();
+
+                } else if (items[item].equals("Choose from Library")) {
+                    userChoosenTask = "Choose from Library";
+                    if (result)
+                        galleryIntent();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    private void cameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == REQUEST_CAMERA)
+                onCaptureImageResult(data);
+        }
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        ivImage.setImageBitmap(thumbnail);
+
+        arrBitmap.add(thumbnail);
+
+        setRecyAdapter();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void onSelectFromGalleryResult(Intent data) {
+
+        Bitmap bm = null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        ivImage.setImageBitmap(bm);
+
+        arrBitmap.add(bm);
+
+        setRecyAdapter();
+
+
+    }
 
     @Override
     public void onClick(View view) {
@@ -238,7 +271,19 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
         int id = view.getId();
 
-        if (id == R.id.layoutGroupMain) {
+        if (id == R.id.btnAdd) {
+
+            selectImage();
+
+        } else if (id == R.id.btnDelete) {
+
+            int pos = (int) view.getTag();
+
+            arrBitmap.remove(pos);
+
+            setRecyAdapter();
+
+        } else if (id == R.id.layoutGroupMain) {
 
             // custom dialog
             final Dialog dialog = new Dialog(this);
@@ -325,13 +370,6 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void assignAdapter() {
-
-        myTripsAdapter = new MyTripsAdapter(this, this, arrTripSummary);
-        listMyTrips.setAdapter(myTripsAdapter);
-
-    }
-
 
     private void getMyTripsDetails() {
 
@@ -371,7 +409,7 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
                                 }
 
-                                assignAdapter();
+                                // assignAdapter();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -387,7 +425,7 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
                             Constants.hideProgressDialog();
 
-                            Constants.showToast(MyTripsActivity.this, Constants.serverErrorMsg);
+                            Constants.showToast(ReportActivity.this, Constants.serverErrorMsg);
 
                         }
                     });
