@@ -32,4 +32,6 @@
     <color name="circleProgressIncompleteStartGradient">@color/light_gray</color>
     <color name="circleProgressIncompleteEndGradient">@color/light_gray</color>
 
+    <color name="temp_bg">#ff000000</color>
+
 </resources>

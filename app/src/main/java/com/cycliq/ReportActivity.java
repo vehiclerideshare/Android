@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -73,6 +75,8 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+
+    ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat;
 
     private RecyclerView rGridView;
 
@@ -137,6 +141,41 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         listMyTrips = (ListView) findViewById(R.id.listMyTrips);
 
         rGridView = (RecyclerView) findViewById(R.id.recycler_view);
+
+
+        ivHand = (ImageView) findViewById(R.id.ivHand);
+        ivBag = (ImageView) findViewById(R.id.ivBag);
+        ivFrontLock = (ImageView) findViewById(R.id.ivFrontLock);
+        ivFrontWheel = (ImageView) findViewById(R.id.ivFrontWheel);
+        ivPark = (ImageView) findViewById(R.id.ivPark);
+        ivBackWheel = (ImageView) findViewById(R.id.ivBackWheel);
+        ivChain = (ImageView) findViewById(R.id.ivChain);
+        ivPedal = (ImageView) findViewById(R.id.ivPedal);
+        ivBackLock = (ImageView) findViewById(R.id.ivBackLock);
+        ivSeat = (ImageView) findViewById(R.id.ivSeat);
+
+        ivHand.setSelected(false);
+        ivBag.setSelected(false);
+        ivFrontLock.setSelected(false);
+        ivFrontWheel.setSelected(false);
+        ivPark.setSelected(false);
+        ivBackWheel.setSelected(false);
+        ivChain.setSelected(false);
+        ivPedal.setSelected(false);
+        ivBackLock.setSelected(false);
+        ivSeat.setSelected(false);
+
+
+        ivHand.setOnClickListener(this);
+        ivBag.setOnClickListener(this);
+        ivFrontLock.setOnClickListener(this);
+        ivFrontWheel.setOnClickListener(this);
+        ivPark.setOnClickListener(this);
+        ivBackWheel.setOnClickListener(this);
+        ivChain.setOnClickListener(this);
+        ivPedal.setOnClickListener(this);
+        ivBackLock.setOnClickListener(this);
+        ivSeat.setOnClickListener(this);
 
 
     }
@@ -368,8 +407,214 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
 
         }
+
+
+        //ivHand
+        if (view == ivHand) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivHand.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_hand);
+
+            }
+
+
+        }
+
+
+        // ivBag
+        if (view == ivBag) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivBag.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_bag);
+
+            }
+
+
+        }
+
+
+        // ivFrontLock
+        if (view == ivFrontLock) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivFrontLock.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_front_lock);
+
+            }
+
+
+        }
+
+
+        // ivFrontWheel
+        if (view == ivFrontWheel) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivFrontWheel.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_front_wheel);
+
+            }
+
+
+        }
+
+
+        // ivPark
+        if (view == ivPark) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivPark.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_park);
+
+            }
+
+
+        }
+
+
+        // ivBackWheel
+        if (view == ivBackWheel) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivBackWheel.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_back_wheel);
+
+            }
+
+
+        }
+
+
+        // ivChain
+        if (view == ivChain) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivChain.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_chain);
+
+            }
+
+
+        }
+
+
+        // ivPedal
+        if (view == ivPedal) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivPedal.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_pedal);
+
+            }
+
+
+        }
+
+
+        // ivBackLock
+        if (view == ivBackLock) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivBackLock.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_back_lock);
+
+            }
+
+
+        }
+
+
+        // ivSeat
+        if (view == ivSeat) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivSeat.isSelected()) {
+
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_seat);
+
+            }
+
+
+        }
+
     }
 
+    private void setUnseleted(ImageView iv) {
+
+        iv.setImageResource(R.mipmap.ic_empty_round);
+
+    }
 
     private void getMyTripsDetails() {
 

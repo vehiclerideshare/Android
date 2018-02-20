@@ -105,18 +105,132 @@
                     android:layout_width="300dp"
                     android:layout_height="250dp">
 
-
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_cyc_report" />
 
+                    <ImageView
+                        android:id="@+id/ivHand"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="30dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_hand" />
+
+                    <ImageView
+                        android:id="@+id/ivBag"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="55dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_bag" />
+
+                    <ImageView
+                        android:id="@+id/ivFrontLock"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginTop="95dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_front_lock" />
+
+                    <ImageView
+                        android:id="@+id/ivFrontWheel"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_front_wheel" />
+
+                    <ImageView
+                        android:id="@+id/ivPark"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_park" />
+
+                    <ImageView
+                        android:layout_width="5dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="50dp"
+                        android:background="#dad4d4" />
+
+                    <ImageView
+                        android:id="@+id/ivBackWheel"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_back_wheel" />
+
+                    <ImageView
+                        android:layout_width="5dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="170dp"
+                        android:background="#dad4d4" />
+
+                    <ImageView
+                        android:id="@+id/ivChain"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="55dp"
+                        android:layout_marginTop="130dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_chain" />
+
+                    <ImageView
+                        android:id="@+id/ivPedal"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="150dp"
+                        android:layout_marginTop="140dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_pedal" />
+
+                    <ImageView
+                        android:id="@+id/ivBackLock"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="80dp"
+                        android:layout_marginTop="100dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_back_lock" />
+
+
+                    <ImageView
+                        android:id="@+id/ivSeat"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="85dp"
+                        android:layout_marginTop="35dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_seat" />
+
                 </FrameLayout>
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,8 +296,8 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
                 android:scrollbars="horizontal" />
-
 
         </LinearLayout>
     </ScrollView>
