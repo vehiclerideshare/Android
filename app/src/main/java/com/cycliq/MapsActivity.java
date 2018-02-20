@@ -277,6 +277,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         CycliqBluetoothComm.getInstance().setMapsActivity(this);
 
+      //  startCounDownTimer();
+//
+//        countDownTimer.start();
+//
+//        layoutClock.setVisibility(View.VISIBLE);
+
     }
 
     private void startCounDownTimer() {
@@ -596,6 +602,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setViews() {
+
+        progress = (ProgressBar) findViewById(R.id.circle_progress_bar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 

@@ -2,6 +2,7 @@ package com.cycliq.Application;
 
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -10,7 +11,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.cycliq.Payment.AppEnvironment;
 
-public class CycliqApplication extends Application {
+public class CycliqApplication extends MultiDexApplication {
 
     AppEnvironment appEnvironment;
 
