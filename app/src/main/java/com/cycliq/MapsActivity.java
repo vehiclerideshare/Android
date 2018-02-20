@@ -663,6 +663,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnBikeReport = (Button) findViewById(R.id.btnReportBike);
         btnTripClose = (Button) findViewById(R.id.btnTripClose);
         txtAddress = (TextView) findViewById(R.id.txtBottomAddress);
+        progress = (ProgressBar) findViewById(R.id.progressbar);
+
+
 
         txtAddress.setVisibility(View.GONE);
         navHeader = navigationView.getHeaderView(0);
