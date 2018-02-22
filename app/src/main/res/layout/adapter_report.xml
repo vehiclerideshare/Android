@@ -7,15 +7,17 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="10dp"
+        android:background="#c4bbbb"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp">
 
         <FrameLayout
-            android:layout_width="70dp"
-            android:layout_height="70dp">
+            android:layout_width="60dp"
+            android:background="#c4bbbb"
+            android:layout_height="60dp">
 
             <ImageView
                 android:id="@+id/ivMain"
@@ -23,23 +25,28 @@
                 android:layout_height="match_parent"
                 android:background="#000"
                 android:scaleType="fitXY"
+                android:visibility="gone"
                 android:src="@mipmap/unlock" />
 
             <ImageButton
                 android:id="@+id/btnAdd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#c4bbbb"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:alpha="0.5"
                 android:scaleType="fitXY"
-                android:src="@mipmap/ic_plus" />
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_camera_alt_black" />
+
 
             <ImageButton
                 android:id="@+id/btnDelete"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="right"
-                android:background="#fff"
+                android:background="#e9e7e7"
                 android:scaleType="fitXY"
+
                 android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
         </FrameLayout>
@@ -47,3 +54,21 @@
     </LinearLayout>
 
 </LinearLayout>
+
+
+
+<!--<LinearLayout-->
+<!--android:layout_width="26dp"-->
+<!--android:layout_height="26dp"-->
+<!--android:background="@android:color/darker_gray"-->
+<!--android:layout_gravity="right">-->
+
+<!--<ImageButton-->
+    <!--android:id="@+id/btnDelete"-->
+    <!--android:layout_width="25dp"-->
+    <!--android:layout_height="25dp"-->
+    <!--android:background="#fff"-->
+    <!--android:scaleType="fitXY"-->
+    <!--android:src="@android:drawable/ic_menu_close_clear_cancel" />-->
+
+<!--</LinearLayout>-->

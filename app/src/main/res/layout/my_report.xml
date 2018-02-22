@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -60,11 +61,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
+
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -123,8 +128,8 @@
 
                     <ImageView
                         android:id="@+id/ivBag"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="left"
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="55dp"
@@ -143,20 +148,20 @@
 
                     <ImageView
                         android:id="@+id/ivFrontWheel"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="left"
-                        android:layout_marginRight="0dp"
+                        android:layout_marginLeft="-5dp"
                         android:layout_marginTop="120dp"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_front_wheel" />
 
                     <ImageView
                         android:id="@+id/ivPark"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="left"
-                        android:layout_marginRight="0dp"
+                        android:layout_marginLeft="-5dp"
                         android:layout_marginTop="10dp"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_park" />
@@ -171,8 +176,8 @@
 
                     <ImageView
                         android:id="@+id/ivBackWheel"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="0dp"
                         android:layout_marginTop="120dp"
@@ -193,7 +198,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="55dp"
-                        android:layout_marginTop="130dp"
+                        android:layout_marginTop="135dp"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_chain" />
 
@@ -220,8 +225,8 @@
 
                     <ImageView
                         android:id="@+id/ivSeat"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="85dp"
                         android:layout_marginTop="35dp"
@@ -237,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
 
                 android:orientation="horizontal">
 
@@ -279,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:background="#d7d3d3"
                 android:orientation="horizontal">
 
@@ -298,6 +303,38 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
                 android:scrollbars="horizontal" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutRecharge"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_rounded_corner"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_done_white" />
+
+                <Button
+                    android:id="@+id/btnRecharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
