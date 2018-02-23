@@ -42,7 +42,7 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:gravity="center"
-                    android:text="@string/title_my_trips"
+                    android:text="@string/title_my_report"
                     android:textAllCaps="false"
                     android:textColor="@color/nav_title_clr"
                     android:textStyle="bold" />
@@ -146,33 +146,34 @@
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_front_lock" />
 
-                    <ImageView
-                        android:id="@+id/ivFrontWheel"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="-5dp"
-                        android:layout_marginTop="120dp"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_front_wheel" />
 
                     <ImageView
                         android:id="@+id/ivPark"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="left"
-                        android:layout_marginLeft="-5dp"
+                        android:layout_marginLeft="0dp"
                         android:layout_marginTop="10dp"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_park" />
 
                     <ImageView
                         android:layout_width="5dp"
-                        android:layout_height="70dp"
+                        android:layout_height="160dp"
                         android:layout_gravity="left"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="50dp"
                         android:background="#dad4d4" />
+
+                    <ImageView
+                        android:id="@+id/ivFrontWheel"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_front_wheel" />
 
                     <ImageView
                         android:id="@+id/ivBackWheel"
@@ -188,9 +189,10 @@
                         android:layout_width="5dp"
                         android:layout_height="40dp"
                         android:layout_gravity="left"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="170dp"
-                        android:background="#dad4d4" />
+                        android:background="#dad4d4"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/ivChain"
@@ -243,38 +245,14 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#d7d3d3"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Seat"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="#d7d3d3"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Pedal"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="#d7d3d3"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Break"
-                    android:textColor="@android:color/black" />
-
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerSelectedParts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:scrollbars="horizontal" />
 
             </LinearLayout>
 

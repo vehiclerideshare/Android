@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.cycliq.Adapter.ExpandableTripsListAdapter;
 import com.cycliq.Adapter.MyTripsAdapter;
+import com.cycliq.Adapter.ReportCyclePartsRecyclerAdapter;
 import com.cycliq.Adapter.ReportRecyclerAdapter;
 import com.cycliq.Application.CycliqApplication;
 import com.cycliq.CommonClasses.Constants;
@@ -78,13 +80,21 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
     ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat;
 
-    private RecyclerView rGridView;
+    private RecyclerView rGridView, recyclerSelectedParts;
 
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String userChoosenTask;
 
     ReportRecyclerAdapter adapter;
     ArrayList<Bitmap> arrBitmap = new ArrayList<>();
+
+    ReportCyclePartsRecyclerAdapter adapterParts;
+    ArrayList<String> arrParts = new ArrayList<>();
+
+    HorizontalScrollView scrollHorizontal;
+
+    TextView tvParking, tvFrontWheel, tvBag, tvBreak, tvFrontLock, tvSeat, tvPedal, tvChain, tvBackLock, tvBackWheel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +109,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
         arrBitmap = new ArrayList<>();
 
-
         rGridView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false));
 
+        recyclerSelectedParts.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false));
+
         setRecyAdapter();
+
+        recyclerSelectedParts.setVisibility(View.GONE);
 
     }
 
@@ -111,6 +124,24 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         adapter = new ReportRecyclerAdapter(arrBitmap, this);
 
         rGridView.setAdapter(adapter);
+
+    }
+
+    private void setRecyCyclePartsAdapter() {
+
+        if (arrParts.size() == 0) {
+
+            recyclerSelectedParts.setVisibility(View.GONE);
+
+        } else {
+
+            recyclerSelectedParts.setVisibility(View.VISIBLE);
+
+        }
+
+        adapterParts = new ReportCyclePartsRecyclerAdapter(arrParts, this);
+
+        recyclerSelectedParts.setAdapter(adapterParts);
 
     }
 
@@ -141,6 +172,21 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         listMyTrips = (ListView) findViewById(R.id.listMyTrips);
 
         rGridView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerSelectedParts = (RecyclerView) findViewById(R.id.recyclerSelectedParts);
+
+
+//        tvParking = (TextView) findViewById(R.id.tvParking);
+//        tvFrontWheel = (TextView) findViewById(R.id.tvFrontWheel);
+//        tvBag = (TextView) findViewById(R.id.tvBag);
+//        tvBreak = (TextView) findViewById(R.id.tvBreak);
+//        tvFrontLock = (TextView) findViewById(R.id.tvFrontLock);
+//        tvSeat = (TextView) findViewById(R.id.tvSeat);
+//        tvPedal = (TextView) findViewById(R.id.tvPedal);
+//        tvChain = (TextView) findViewById(R.id.tvChain);
+//        tvBackLock = (TextView) findViewById(R.id.tvBackLock);
+//        tvBackWheel = (TextView) findViewById(R.id.tvBackWheel);
+//
+//        scrollHorizontal= (HorizontalScrollView) findViewById(R.id.scrollHorizontal);
 
 
         ivHand = (ImageView) findViewById(R.id.ivHand);
@@ -153,6 +199,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         ivPedal = (ImageView) findViewById(R.id.ivPedal);
         ivBackLock = (ImageView) findViewById(R.id.ivBackLock);
         ivSeat = (ImageView) findViewById(R.id.ivSeat);
+
 
         ivHand.setSelected(false);
         ivBag.setSelected(false);
@@ -418,13 +465,17 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
 
                 setUnseleted(((ImageView) view));
+                arrParts.add("Break");
+
 
             } else {
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_hand);
+                arrParts.remove("Break");
 
             }
 
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -436,15 +487,19 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivBag.isSelected()) {
 
+                arrParts.add("Bag");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Bag");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_bag);
 
             }
 
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -456,14 +511,18 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivFrontLock.isSelected()) {
 
+                arrParts.add("Front Lock");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Front Lock");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_front_lock);
 
             }
+            setRecyCyclePartsAdapter();
 
 
         }
@@ -476,15 +535,19 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivFrontWheel.isSelected()) {
 
+                arrParts.add("Front Wheel");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Front Wheel");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_front_wheel);
 
             }
 
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -492,19 +555,23 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         // ivPark
         if (view == ivPark) {
 
-            view.setSelected(!view.isSelected());
-
-            if (ivPark.isSelected()) {
-
-
-                setUnseleted(((ImageView) view));
-
-            } else {
-
-                ((ImageView) view).setImageResource(R.mipmap.ic_park);
-
-            }
-
+//            view.setSelected(!view.isSelected());
+//
+//            if (ivPark.isSelected()) {
+//
+//                arrParts.add("Parking");
+//
+//                setUnseleted(((ImageView) view));
+//
+//            } else {
+//
+//                arrParts.remove("Parking");
+//
+//                ((ImageView) view).setImageResource(R.mipmap.ic_park);
+//
+//            }
+//
+//            setRecyCyclePartsAdapter();
 
         }
 
@@ -516,15 +583,18 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivBackWheel.isSelected()) {
 
+                arrParts.add("Back Wheel");
 
                 setUnseleted(((ImageView) view));
 
             } else {
+                arrParts.remove("Back Wheel");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_back_wheel);
 
             }
 
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -536,15 +606,19 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivChain.isSelected()) {
 
+                arrParts.add("Chain");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Chain");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_chain);
 
             }
 
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -556,15 +630,19 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivPedal.isSelected()) {
 
+                arrParts.add("Pedal");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Pedal");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_pedal);
 
             }
 
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -576,14 +654,18 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivBackLock.isSelected()) {
 
+                arrParts.add("Back Lock");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Back Lock");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_back_lock);
 
             }
+            setRecyCyclePartsAdapter();
 
 
         }
@@ -596,15 +678,18 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivSeat.isSelected()) {
 
+                arrParts.add("Seat");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
+                arrParts.remove("Seat");
+
                 ((ImageView) view).setImageResource(R.mipmap.ic_seat);
 
             }
-
+            setRecyCyclePartsAdapter();
 
         }
 
@@ -612,7 +697,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
     private void setUnseleted(ImageView iv) {
 
-        iv.setImageResource(R.mipmap.ic_empty_round);
+        iv.setImageResource(R.mipmap.ic_empty);
 
     }
 
