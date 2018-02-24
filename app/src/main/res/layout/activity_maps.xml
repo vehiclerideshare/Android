@@ -2,6 +2,7 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -231,6 +232,7 @@
                             android:gravity="center">
 
                             <Button
+
                                 android:id="@+id/btnUnlock"
                                 style="@style/btn_style"
                                 android:layout_width="wrap_content"
@@ -300,7 +302,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <com.cycliq.utils.TextViewWithFont
                                         android:id="@+id/txtTripId"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -308,7 +310,9 @@
                                         android:gravity="center"
                                         android:text="Trip Id: 123456"
                                         android:textColor="#ffffff"
-                                        android:textSize="15dp" />
+                                        android:textSize="15dp"
+                                        font:name="Ubuntu"
+                                        font:type="regular" />
 
 
                                 </LinearLayout>
@@ -325,7 +329,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <com.cycliq.utils.TextViewWithFont
                                         android:id="@+id/txtBikeId"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -333,7 +337,9 @@
                                         android:gravity="center"
                                         android:text="Bike Id: 123456"
                                         android:textColor="#ffffff"
-                                        android:textSize="15dp" />
+                                        android:textSize="15dp"
+                                        font:name="Ubuntu"
+                                        font:type="regular" />
 
 
                                 </LinearLayout>
@@ -351,7 +357,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <com.cycliq.utils.TextViewWithFont
                                         android:id="@+id/txtTripStart"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -359,7 +365,9 @@
                                         android:gravity="center"
                                         android:text="Trip Start: 10/10/2017 05:45 PM"
                                         android:textColor="#ffffff"
-                                        android:textSize="15dp" />
+                                        android:textSize="15dp"
+                                        font:name="Ubuntu"
+                                        font:type="regular" />
 
                                 </LinearLayout>
 
@@ -375,7 +383,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <com.cycliq.utils.TextViewWithFont
                                         android:id="@+id/txtTripEnd"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -383,7 +391,9 @@
                                         android:gravity="center"
                                         android:text="Trip End: 10/10/2017 05:45 PM"
                                         android:textColor="#ffffff"
-                                        android:textSize="15dp" />
+                                        android:textSize="15dp"
+                                        font:name="Ubuntu"
+                                        font:type="regular" />
 
                                 </LinearLayout>
 
@@ -399,7 +409,7 @@
                                     android:gravity="center"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <com.cycliq.utils.TextViewWithFont
                                         android:id="@+id/txtDuration"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -408,7 +418,9 @@
                                         android:text="TOTAL DURATION: 01h 0m"
                                         android:textColor="#ffffff"
                                         android:textSize="15dp"
-                                        android:visibility="gone" />
+                                        android:visibility="gone"
+                                        font:name="Ubuntu"
+                                        font:type="regular" />
 
                                 </LinearLayout>
 
@@ -443,7 +455,7 @@
                                             android:orientation="vertical"
                                             android:padding="10dp">
 
-                                            <TextView
+                                            <com.cycliq.utils.TextViewWithFont
                                                 android:id="@+id/txtTitleDuration"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
@@ -452,10 +464,12 @@
                                                 android:text="Duration"
                                                 android:textColor="@color/color_2"
                                                 android:textSize="25dp"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                font:name="Ubuntu"
+                                                font:type="regular" />
 
 
-                                            <TextView
+                                            <com.cycliq.utils.TextViewWithFont
                                                 android:id="@+id/txtTripTimer"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
@@ -464,7 +478,9 @@
                                                 android:text="00:00:00"
                                                 android:textColor="@color/colorPrimary"
                                                 android:textSize="25dp"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                font:name="Ubuntu"
+                                                font:type="regular" />
 
 
                                         </LinearLayout>
@@ -575,9 +591,9 @@
                                 android:layout_height="match_parent"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
+                                android:layout_centerInParent="true"
                                 android:indeterminate="false"
                                 android:max="100"
-                                android:layout_centerInParent="true"
                                 android:progress="100"
                                 android:progressDrawable="@drawable/circle_progress_background" />
 
@@ -599,14 +615,16 @@
                                 android:gravity="center"
                                 android:orientation="vertical">
 
-                                <TextView
+                                <com.cycliq.utils.TextViewWithFont
                                     android:id="@+id/txtClock"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:textColor="@color/black"
                                     android:textSize="28dp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    font:name="Ubuntu"
+                                    font:type="regular" />
 
                             </LinearLayout>
 
@@ -615,8 +633,8 @@
                         <LinearLayout
                             android:layout_width="120dp"
                             android:layout_height="30dp"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
                             android:background="@android:color/white"
                             android:orientation="horizontal">
 
@@ -625,7 +643,7 @@
                                 android:layout_height="30dp"
                                 android:src="@mipmap/ic_tick" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/txtBikeIdTop"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -633,11 +651,13 @@
                                 android:gravity="center"
                                 android:text="Bike Id:------"
                                 android:textColor="@color/btnBlack"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
                         </LinearLayout>
 
-                        <TextView
+                        <com.cycliq.utils.TextViewWithFont
                             android:id="@+id/txtCancelReservation"
                             android:layout_width="120dp"
                             android:layout_height="30dp"
@@ -645,7 +665,9 @@
                             android:background="@color/btnBlack"
                             android:gravity="center"
                             android:text="Cancel"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@android:color/white"
+                            font:name="Ubuntu"
+                            font:type="regular" />
 
                     </LinearLayout>
 
@@ -669,16 +691,18 @@
                             android:layout_marginTop="20dp"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/txtBottomVehicleNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Vehicle No: 100002"
                                 android:textColor="#000000"
-                                android:textSize="15dp" />
+                                android:textSize="15dp"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/btnCloseBottomView"
                                 android:layout_width="40dp"
                                 android:layout_height="30dp"
@@ -686,13 +710,15 @@
                                 android:text="X"
                                 android:textColor="#000000"
                                 android:textSize="15dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
 
                         </LinearLayout>
 
 
-                        <TextView
+                        <com.cycliq.utils.TextViewWithFont
                             android:id="@+id/txtBottomAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -703,7 +729,9 @@
                             android:text="1st Main Road, Anna Nager West, Chennai"
                             android:textColor="#000000"
                             android:textSize="15dp"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            font:name="Ubuntu"
+                            font:type="regular" />
 
                         <View
                             android:layout_width="match_parent"
@@ -714,7 +742,7 @@
                             android:layout_marginTop="7dp"
                             android:background="@android:color/darker_gray" />
 
-                        <TextView
+                        <com.cycliq.utils.TextViewWithFont
                             android:id="@+id/txtAvailable"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -725,7 +753,9 @@
                             android:gravity="center"
                             android:text="Available"
                             android:textColor="#59e729"
-                            android:textSize="15dp" />
+                            android:textSize="15dp"
+                            font:name="Ubuntu"
+                            font:type="regular" />
 
 
                         <Button

@@ -45,7 +45,8 @@
                     android:text="@string/title_my_report"
                     android:textAllCaps="false"
                     android:textColor="@color/nav_title_clr"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                     />
 
             </FrameLayout>
 

@@ -12,4 +12,16 @@
         <attr name="auto_focus" format="boolean" />
         <attr name="use_flash" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="font">
+        <attr name="type">
+            <enum name="bold" value="1"/>
+            <enum name="regular" value="2"/>
+        </attr>
+        <attr name="name">
+            <enum name="Ubuntu" value="1"/>
+            <enum name="OpenSans" value="2"/>
+        </attr>
+    </declare-styleable>
+
 </resources>

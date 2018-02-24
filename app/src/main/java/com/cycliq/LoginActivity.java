@@ -83,6 +83,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         layoutVerifyOtp = (LinearLayout) findViewById(R.id.layoutVerifyOtp);
 
+
+        editPhoneNumber.setTypeface(CycliqApplication.typeface);
+
+        editOtp.setTypeface(CycliqApplication.typeface);
+        btnSubmit.setTypeface(CycliqApplication.typeface);
+        btnVerifyPin.setTypeface(CycliqApplication.typeface);
+        btnCancel.setTypeface(CycliqApplication.typeface);
+
     }
 
     private boolean isValidatedLogin() {

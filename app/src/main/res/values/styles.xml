@@ -2,10 +2,10 @@
 
     <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -13,7 +13,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@android:color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -27,9 +26,9 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
+
         <item name="android:background">@drawable/btn_rounded_corner</item>
     </style>
-
 
 
     <style name="btn_rounded" parent="Widget.AppCompat.ImageButton">
@@ -44,7 +43,7 @@
         <attr name="android:inputType" />
         <attr name="android:textColor" />
         <attr name="text_background_color" format="color" />
-        <attr name="otp" format="string"/>
+        <attr name="otp" format="string" />
     </declare-styleable>
 
 </resources>
