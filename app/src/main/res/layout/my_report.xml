@@ -236,6 +236,17 @@
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_seat" />
 
+                    <ImageView
+                        android:id="@+id/ivSeatScan"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="35dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_bar_code" />
+
+
                 </FrameLayout>
 
             </LinearLayout>
@@ -267,11 +278,15 @@
                 android:background="#d7d3d3"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <EditText
+                    android:id="@+id/reportdesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:padding="10dp"
-                    android:text="Lorum Ipseal skd sfbsds sd g sdfg dsf gdfs dkjsdb sf fjsbfk sb sdbf shdfsd  as  sgs"
+                    android:lines="3"
+                    android:text=""
+                    android:background="#f0f0f0"
+                    android:hint="Enter you comments here..."
                     android:textColor="@android:color/black" />
 
             </LinearLayout>
@@ -281,6 +296,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
                 android:scrollbars="horizontal" />
 
 

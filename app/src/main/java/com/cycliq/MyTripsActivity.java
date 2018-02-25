@@ -242,7 +242,7 @@ public class MyTripsActivity extends AppCompatActivity implements View.OnClickLi
 
             // custom dialog
             final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.dialog_trip_details);
+            dialog.setContentView(R.layout.dialog_trip_details1);
             dialog.setCancelable(true);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 

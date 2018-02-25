@@ -78,7 +78,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
-    ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat;
+    ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat, ivSeatScan;
 
     private RecyclerView rGridView, recyclerSelectedParts;
 
@@ -199,6 +199,11 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         ivPedal = (ImageView) findViewById(R.id.ivPedal);
         ivBackLock = (ImageView) findViewById(R.id.ivBackLock);
         ivSeat = (ImageView) findViewById(R.id.ivSeat);
+        ivSeatScan = (ImageView) findViewById(R.id.ivSeatScan);
+
+
+
+
 
 
         ivHand.setSelected(false);
@@ -211,6 +216,19 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         ivPedal.setSelected(false);
         ivBackLock.setSelected(false);
         ivSeat.setSelected(false);
+        ivSeatScan.setSelected(false);
+
+        setUnseleted(ivHand);
+        setUnseleted(ivBag);
+        setUnseleted(ivFrontLock);
+        setUnseleted(ivFrontWheel);
+        setUnseleted(ivBackWheel);
+        setUnseleted(ivChain);
+        setUnseleted(ivPedal);
+        setUnseleted(ivPedal);
+        setUnseleted(ivBackLock);
+        setUnseleted(ivSeat);
+        setUnseleted(ivSeatScan);
 
 
         ivHand.setOnClickListener(this);
@@ -223,6 +241,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         ivPedal.setOnClickListener(this);
         ivBackLock.setOnClickListener(this);
         ivSeat.setOnClickListener(this);
+        ivSeatScan.setOnClickListener(this);
 
 
     }
@@ -693,11 +712,33 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
         }
 
+        // ivSeat
+        if (view == ivSeatScan) {
+
+            view.setSelected(!view.isSelected());
+
+            if (ivSeat.isSelected()) {
+
+                arrParts.add("Barcode");
+
+                setUnseleted(((ImageView) view));
+
+            } else {
+
+                arrParts.remove("Barcode");
+
+                ((ImageView) view).setImageResource(R.mipmap.ic_bar_code);
+
+            }
+            setRecyCyclePartsAdapter();
+
+        }
+
     }
 
     private void setUnseleted(ImageView iv) {
 
-        iv.setImageResource(R.mipmap.ic_empty);
+        iv.setImageResource(R.mipmap.ic_empty_round);
 
     }
 

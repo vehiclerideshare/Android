@@ -22,11 +22,11 @@
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:background="@color/colorPrimary"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -44,8 +44,10 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:gravity="center"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:text="@string/title_verify_otp"
                     android:textAllCaps="false"
+                    android:textAlignment="center"
                     android:textColor="@color/nav_title_clr"
                     android:textStyle="bold" />
 
@@ -56,10 +58,10 @@
                     android:text="Details"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
 
-            </LinearLayout>
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"
