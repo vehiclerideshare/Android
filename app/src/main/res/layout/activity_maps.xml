@@ -660,7 +660,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="Bike Id:------qere qwerwqerqwre"
+                                android:text="Bike Id:-----"
                                 android:textColor="@color/btnBlack"
                                 android:textSize="12sp"
                                 font:name="Ubuntu"

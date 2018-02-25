@@ -869,7 +869,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(false);
 
             LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -1403,11 +1403,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             polylineFinal = null;
         }
 
-        layoutBottom.setVisibility(View.GONE);
-
-        btnUnlock.setVisibility(View.VISIBLE);
-        btnReserve.setVisibility(View.GONE);
-
+        resetValues();
     }
 
     private class Handler {
@@ -1422,6 +1418,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnReserve.setVisibility(View.GONE);
 
         layoutClock.setVisibility(View.GONE);
+
+
 
     }
 
