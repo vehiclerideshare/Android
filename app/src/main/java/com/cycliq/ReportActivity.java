@@ -204,19 +204,31 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
+        ivHand.setSelected(true);
+        ivBag.setSelected(true);
+        ivFrontLock.setSelected(true);
+        ivFrontWheel.setSelected(true);
+        ivPark.setSelected(true);
+        ivBackWheel.setSelected(true);
+        ivChain.setSelected(true);
+        ivPedal.setSelected(true);
+        ivBackLock.setSelected(true);
+        ivSeat.setSelected(true);
+        ivSeatScan.setSelected(true);
 
-
-        ivHand.setSelected(false);
-        ivBag.setSelected(false);
-        ivFrontLock.setSelected(false);
-        ivFrontWheel.setSelected(false);
-        ivPark.setSelected(false);
-        ivBackWheel.setSelected(false);
-        ivChain.setSelected(false);
-        ivPedal.setSelected(false);
-        ivBackLock.setSelected(false);
-        ivSeat.setSelected(false);
-        ivSeatScan.setSelected(false);
+//
+//
+//        ivHand.setSelected(false);
+//        ivBag.setSelected(false);
+//        ivFrontLock.setSelected(false);
+//        ivFrontWheel.setSelected(false);
+//        ivPark.setSelected(false);
+//        ivBackWheel.setSelected(false);
+//        ivChain.setSelected(false);
+//        ivPedal.setSelected(false);
+//        ivBackLock.setSelected(false);
+//        ivSeat.setSelected(false);
+//        ivSeatScan.setSelected(false);
 
         setUnseleted(ivHand);
         setUnseleted(ivBag);
@@ -484,13 +496,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
 
                 setUnseleted(((ImageView) view));
-                arrParts.add("Break");
+                arrParts.remove("Break");
 
 
             } else {
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_hand);
-                arrParts.remove("Break");
+                arrParts.add("Break");
 
             }
 
@@ -506,13 +518,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivBag.isSelected()) {
 
-                arrParts.add("Bag");
+                arrParts.remove("Bag");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Bag");
+                arrParts.add("Bag");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_bag);
 
@@ -530,13 +542,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivFrontLock.isSelected()) {
 
-                arrParts.add("Front Lock");
+                arrParts.remove("Front Lock");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Front Lock");
+                arrParts.add("Front Lock");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_front_lock);
 
@@ -554,13 +566,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivFrontWheel.isSelected()) {
 
-                arrParts.add("Front Wheel");
+                arrParts.remove("Front Wheel");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Front Wheel");
+                arrParts.add("Front Wheel");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_front_wheel);
 
@@ -602,12 +614,12 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivBackWheel.isSelected()) {
 
-                arrParts.add("Back Wheel");
+                arrParts.remove("Back Wheel");
 
                 setUnseleted(((ImageView) view));
 
             } else {
-                arrParts.remove("Back Wheel");
+                arrParts.add("Back Wheel");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_back_wheel);
 
@@ -625,13 +637,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivChain.isSelected()) {
 
-                arrParts.add("Chain");
+                arrParts.remove("Chain");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Chain");
+                arrParts.add("Chain");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_chain);
 
@@ -649,13 +661,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivPedal.isSelected()) {
 
-                arrParts.add("Pedal");
+                arrParts.remove("Pedal");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Pedal");
+                arrParts.add("Pedal");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_pedal);
 
@@ -673,13 +685,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivBackLock.isSelected()) {
 
-                arrParts.add("Back Lock");
+                arrParts.remove("Back Lock");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Back Lock");
+                arrParts.add("Back Lock");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_back_lock);
 
@@ -697,13 +709,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             if (ivSeat.isSelected()) {
 
-                arrParts.add("Seat");
+                arrParts.remove("Seat");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Seat");
+                arrParts.add("Seat");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_seat);
 
@@ -717,15 +729,15 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
             view.setSelected(!view.isSelected());
 
-            if (ivSeat.isSelected()) {
+            if (ivSeatScan.isSelected()) {
 
-                arrParts.add("Barcode");
+                arrParts.remove("Barcode");
 
                 setUnseleted(((ImageView) view));
 
             } else {
 
-                arrParts.remove("Barcode");
+                arrParts.add("Barcode");
 
                 ((ImageView) view).setImageResource(R.mipmap.ic_bar_code);
 

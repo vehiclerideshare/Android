@@ -277,7 +277,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         CycliqBluetoothComm.getInstance().setMapsActivity(this);
 
-      //  startCounDownTimer();
+//        startCounDownTimer();
 //
 //        countDownTimer.start();
 //

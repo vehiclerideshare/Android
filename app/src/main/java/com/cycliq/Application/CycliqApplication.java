@@ -44,7 +44,6 @@ public class CycliqApplication extends MultiDexApplication {
 
 
 
-
         ubuFont = Typeface.createFromAsset(getAssets(), "Ubuntu-Regular.ttf");
         openSans = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
     }

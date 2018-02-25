@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearMain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -12,15 +13,17 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
+        <com.cycliq.utils.TextViewWithFont
             android:id="@+id/txtParts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#d7d3d3"
+            android:background="#f0f0f0"
             android:gravity="center"
             android:padding="10dp"
             android:text="Parking"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            font:name="Ubuntu"
+            font:type="regular" />
 
     </LinearLayout>
 

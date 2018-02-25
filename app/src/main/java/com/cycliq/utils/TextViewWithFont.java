@@ -62,7 +62,7 @@ public class TextViewWithFont extends TextView {
         if (fontType == TYPE_BOLD) {
             setTypeface(font, Typeface.BOLD);
         } else if (fontType == TYPE_ITALIC) {
-            setTypeface(font, Typeface.ITALIC);
+            setTypeface(font, Typeface.NORMAL);
         } else {
             setTypeface(font);
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,7 +37,7 @@
                     android:padding="15dp"
                     android:src="@mipmap/back" />
 
-                <TextView
+                <com.cycliq.utils.TextViewWithFont
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -47,7 +47,9 @@
                     android:text="@string/title_profile"
                     android:textAllCaps="false"
                     android:textColor="@color/nav_title_clr"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    font:name="Ubuntu"
+                    font:type="regular" />
 
             </FrameLayout>
 
@@ -86,7 +88,7 @@
                     android:gravity="center"
                     card_view:cardCornerRadius="10dp">
 
-                    <TextView
+                    <com.cycliq.utils.TextViewWithFont
                         android:id="@+id/tvCreditScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,7 +100,9 @@
                         android:text="My Credits 185"
                         android:textColor="@android:color/black"
                         android:textSize="15dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        font:name="Ubuntu"
+                        font:type="regular" />
 
                 </android.support.v7.widget.CardView>
 
@@ -112,7 +116,7 @@
                     android:background="@android:color/transparent"
                     android:src="@mipmap/img_tempprofile" />
 
-                <TextView
+                <com.cycliq.utils.TextViewWithFont
                     android:id="@+id/tvNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,7 +128,9 @@
                     android:text="12345121222"
                     android:textColor="#000000"
                     android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    font:name="Ubuntu"
+                    font:type="regular" />
 
             </RelativeLayout>
 
@@ -172,14 +178,16 @@
                                 android:layout_gravity="center"
                                 android:src="@mipmap/ic_duration" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/tvDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="91.7"
                                 android:textColor="#000000"
                                 android:textSize="23dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
                         </LinearLayout>
 
@@ -188,19 +196,23 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/textView3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Duration" />
+                                android:text="Duration"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="(Min)"
                                 android:textColor="@android:color/darker_gray"
+                                android:visibility="gone"
+                                font:name="Ubuntu"
 
-                                android:visibility="gone" />
+                                font:type="regular" />
 
                         </LinearLayout>
 
@@ -231,14 +243,16 @@
                                 android:layout_gravity="center"
                                 android:src="@mipmap/ic_carbon" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/tvCarbon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="91.7"
                                 android:textColor="#000000"
                                 android:textSize="23dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
                         </LinearLayout>
 
@@ -248,17 +262,21 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Carbon" />
+                                android:text="Carbon"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="(Min)"
                                 android:textColor="@android:color/darker_gray"
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
                         </LinearLayout>
 
@@ -290,14 +308,16 @@
                                 android:src="@mipmap/ic_kcal" />
 
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/tvKcal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="91.7"
                                 android:textColor="#000000"
                                 android:textSize="23dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
                         </LinearLayout>
 
@@ -307,17 +327,21 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="kCal" />
+                                android:text="kCal"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
-                            <TextView
+                            <com.cycliq.utils.TextViewWithFont
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="(Min)"
                                 android:textColor="@android:color/darker_gray"
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                font:name="Ubuntu"
+                                font:type="regular" />
 
                         </LinearLayout>
 
