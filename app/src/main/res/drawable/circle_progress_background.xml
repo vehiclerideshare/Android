@@ -9,8 +9,8 @@
             android:thickness="@dimen/circleProgressThickness">
             
             <gradient
-                android:startColor="@color/circleProgressIncompleteStartGradient"
-                android:endColor="@color/circleProgressIncompleteEndGradient"
+                android:startColor="@color/circleProgressCompleteEndGradient"
+                android:endColor="@color/circleProgressCompleteEndGradient"
 
                 android:type="sweep" />   
         </shape>
