@@ -35,18 +35,15 @@
                     android:src="@mipmap/back" />
 
                 <com.cycliq.utils.TextViewWithFont
-                    font:name="Ubuntu"
-                    font:type="regular"
                     android:id="@+id/textView2"
+                    style="@style/nav_title_style"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:gravity="center"
                     android:text="@string/title_my_trips"
                     android:textAllCaps="false"
-                    android:textColor="@color/nav_title_clr"
-                    android:textStyle="bold" />
+                    font:name="Ubuntu"
+                    font:type="regular" />
+
 
             </FrameLayout>
 

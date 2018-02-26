@@ -8,7 +8,7 @@
                 android:useLevel="true">
                 
                 <gradient
-                    android:startColor="@color/circleProgressCompleteStartGradient"
+                    android:startColor="@color/circleProgressCompleteEndGradient"
                     android:endColor="@color/circleProgressCompleteEndGradient"
                     android:type="sweep" />   
             </shape>

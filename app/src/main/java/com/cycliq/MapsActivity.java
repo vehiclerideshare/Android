@@ -402,10 +402,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         builder.include(latLng);
 
-        for (int i = 0; i < navigationView.getMenu().size(); i++) {
-            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
-
-        }
 
         setUpNavigationView();
 
@@ -438,7 +434,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Drawable drawable = menuItem.getIcon();
         if (drawable != null) {
             drawable.mutate();
-            drawable.setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
         }
 
     }
@@ -447,13 +443,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         for (int i = 0; i < navigationView.getMenu().size(); i++) {
-            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
+            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.darker_gray);
 
-            Drawable drawable = navigationView.getMenu().getItem(i).getIcon();
-            if(drawable != null) {
-                drawable.mutate();
-                drawable.setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
-            }
 
         }
 
@@ -666,7 +657,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         progress = (ProgressBar) findViewById(R.id.progressbar);
 
 
-
         txtAddress.setVisibility(View.GONE);
         navHeader = navigationView.getHeaderView(0);
         btnBack = (ImageButton) navHeader.findViewById(R.id.btnBack);
@@ -684,15 +674,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             startActivity(intent);
 
-        }
-        else if (view == btnReport) {
+        } else if (view == btnReport) {
 
             Intent intent = new Intent(this, ReportActivity.class);
 
             startActivity(intent);
 
-        }
-        else if (view == btnMenu) {
+        } else if (view == btnMenu) {
 
 //            Intent intent = new Intent(this, ProfileActivity.class);
 //
@@ -850,9 +838,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        for(int i = 0; i < menu.size(); i++){
+        for (int i = 0; i < menu.size(); i++) {
             Drawable drawable = menu.getItem(i).getIcon();
-            if(drawable != null) {
+            if (drawable != null) {
                 drawable.mutate();
                 drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
             }
@@ -945,9 +933,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onBackPressed() {
         super.onBackPressed();
 
-       // finish();
+        // finish();
 
-      //  System.exit(0);
+        //  System.exit(0);
 
 
         android.os.Process.killProcess(android.os.Process.myPid());
@@ -1418,7 +1406,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnReserve.setVisibility(View.GONE);
 
         layoutClock.setVisibility(View.GONE);
-
 
 
     }

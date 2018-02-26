@@ -37,21 +37,17 @@
                     android:padding="15dp"
                     android:src="@mipmap/back" />
 
+
+
                 <com.cycliq.utils.TextViewWithFont
-                    font:name="Ubuntu"
-                    font:type="regular"
                     android:id="@+id/textView2"
+                    style="@style/nav_title_style"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_height="match_parent"
                     android:text="@string/title_verify_otp"
                     android:textAllCaps="false"
-                    android:textAlignment="center"
-                    android:textColor="@color/nav_title_clr"
-                    android:textStyle="bold" />
+                    font:name="Ubuntu"
+                    font:type="regular" />
 
                 <Button
                     android:layout_width="wrap_content"

@@ -30,6 +30,15 @@
         <item name="android:background">@drawable/btn_rounded_corner</item>
     </style>
 
+    <style name="nav_title_style" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">@color/nav_title_clr</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">20dp</item>
+
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
     <style name="btn_rounded" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@drawable/btn_rounded_corner</item>
