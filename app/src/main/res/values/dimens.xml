@@ -18,4 +18,9 @@
     <dimen name="curvedTextRadius">70dp</dimen>
     <dimen name="curvedTextPadding">3dp</dimen>
 
+    <!--Verify OTP font size-->
+
+    <dimen name="verify_otp_font_size">30dp</dimen>
+    <dimen name="verify_otp_height">58dp</dimen>
+
 </resources>

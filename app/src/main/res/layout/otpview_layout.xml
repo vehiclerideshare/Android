@@ -3,61 +3,59 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="horizontal"
-    android:background="@color/white"
     android:padding="16dp">
 
     <EditText
         android:id="@+id/otp_one_edit_text"
         android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/verify_otp_height"
         android:layout_marginRight="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center"
         android:maxLength="1"
-        android:textSize="25dp"
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_one_edit_text"
-        android:nextFocusRight="@+id/otp_two_edit_text" />
+        android:nextFocusRight="@+id/otp_two_edit_text"
+        android:textSize="@dimen/verify_otp_font_size" />
 
     <EditText
         android:id="@+id/otp_two_edit_text"
         android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/verify_otp_height"
         android:layout_marginRight="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center"
         android:maxLength="1"
-        android:textSize="25dp"
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_one_edit_text"
-        android:nextFocusRight="@+id/otp_three_edit_text" />
+        android:nextFocusRight="@+id/otp_three_edit_text"
+        android:textSize="@dimen/verify_otp_font_size" />
 
     <EditText
         android:id="@+id/otp_three_edit_text"
         android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/verify_otp_height"
         android:layout_marginRight="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center"
-        android:textSize="25dp"
-
         android:maxLength="1"
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_two_edit_text"
-        android:nextFocusRight="@+id/otp_four_edit_text" />
+        android:nextFocusRight="@+id/otp_four_edit_text"
+        android:textSize="@dimen/verify_otp_font_size" />
 
     <EditText
         android:id="@+id/otp_four_edit_text"
         android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/verify_otp_height"
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center"
         android:maxLength="1"
         android:maxLines="1"
-        android:textSize="25dp"
-
         android:nextFocusLeft="@+id/otp_three_edit_text"
-        android:nextFocusRight="@+id/otp_four_edit_text" />
+        android:nextFocusRight="@+id/otp_four_edit_text"
+        android:textSize="@dimen/verify_otp_font_size" />
 </LinearLayout>
