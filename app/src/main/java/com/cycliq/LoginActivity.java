@@ -3,6 +3,7 @@ package com.cycliq;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setViews() {
+        Typeface ubuntuBold = Typeface.createFromAsset(getAssets(), "Ubuntu-Bold.ttf");
 
         editPhoneNumber = (EditText) findViewById(R.id.txtPhoneNumber);
 
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editPhoneNumber.setTypeface(CycliqApplication.typeface);
 
         editOtp.setTypeface(CycliqApplication.typeface);
-        btnSubmit.setTypeface(CycliqApplication.typeface);
+        btnSubmit.setTypeface(ubuntuBold);
         btnVerifyPin.setTypeface(CycliqApplication.typeface);
         btnCancel.setTypeface(CycliqApplication.typeface);
 

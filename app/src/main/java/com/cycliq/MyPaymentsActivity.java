@@ -181,7 +181,7 @@ public class MyPaymentsActivity extends AppCompatActivity implements View.OnClic
 
                             Constants.hideProgressDialog();
 
-                            Constants.showToast(MyPaymentsActivity.this, Constants.serverErrorMsg);
+                            Constants.showToast(MyPaymentsActivity.this, error.getLocalizedMessage());
 
                         }
                     });

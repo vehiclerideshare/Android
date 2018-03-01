@@ -50,9 +50,9 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="23-09-2017 23:32:32"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/black1"
                     android:textSize="18dp"
-                    font:name="Ubuntu"
+                    font:name="OpenSans"
                     font:type="regular" />
 
                 <com.cycliq.utils.TextViewWithFont
@@ -64,12 +64,13 @@
                     android:text="$100"
                     android:textColor="@android:color/black"
                     android:textSize="18dp"
-                    font:name="Ubuntu"
-                    font:type="regular" />
+                    font:name="OpenSans"
+                    font:type="bold" />
 
                 <ImageButton
                     android:id="@+id/tvdf"
                     android:layout_width="22dp"
+                    android:layout_marginTop="5dp"
                     android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
@@ -93,9 +94,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="TRIP ID: "
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gray1"
                     android:textSize="18dp"
-                    font:name="Ubuntu"
+                    font:name="OpenSans"
 
                     font:type="regular" />
 
@@ -106,9 +107,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="2345354345"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gray1"
                     android:textSize="18dp"
-                    font:name="Ubuntu"
+                    font:name="OpenSans"
                     font:type="regular" />
 
             </LinearLayout>

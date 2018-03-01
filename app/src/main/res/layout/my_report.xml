@@ -43,8 +43,8 @@
                     android:layout_height="match_parent"
                     android:text="@string/title_my_report"
                     android:textAllCaps="false"
-                    font:name="Ubuntu"
-                    font:type="regular" />
+                    font:name="OpenSans"
+                    font:type="bold"/>
 
             </FrameLayout>
 
@@ -278,7 +278,7 @@
                     android:id="@+id/reportdesc"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:background="#f0f0f0"
+                    android:background="@drawable/layout_bg_corner"
                     android:hint="Enter you comments here..."
                     android:lines="3"
                     android:padding="10dp"

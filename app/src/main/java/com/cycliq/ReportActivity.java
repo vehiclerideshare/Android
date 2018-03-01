@@ -79,7 +79,6 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
-    Button btnSubmit;
 
     ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat, ivSeatScan;
 

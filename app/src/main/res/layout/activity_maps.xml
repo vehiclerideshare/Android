@@ -69,6 +69,16 @@
                                     android:padding="15dp"
                                     android:src="@mipmap/menu" />
 
+                                <com.cycliq.utils.TextViewWithFont
+                                    android:id="@+id/textView2"
+                                    style="@style/nav_title_style"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/app_name"
+                                    android:textAllCaps="false"
+                                    font:name="OpenSans"
+                                    font:type="bold" />
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -241,7 +251,7 @@
                                 android:paddingLeft="30dp"
                                 android:paddingRight="30dp"
                                 android:text=" Unlock"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
 
 
                             <Button
@@ -253,7 +263,7 @@
                                 android:paddingLeft="20dp"
                                 android:paddingRight="20dp"
                                 android:text="Reserve"
-                                android:visibility="visible" />
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -804,6 +814,7 @@
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
         android:visibility="visible"
+        app:itemTextColor="@color/black1"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 

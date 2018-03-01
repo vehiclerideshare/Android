@@ -41,8 +41,8 @@
                     android:layout_height="match_parent"
                     android:text="@string/title_my_trips"
                     android:textAllCaps="false"
-                    font:name="Ubuntu"
-                    font:type="regular" />
+                    font:name="OpenSans"
+                    font:type="bold" />
 
 
             </FrameLayout>

@@ -44,8 +44,8 @@
                     android:layout_height="match_parent"
                     android:text="@string/title_settings"
                     android:textAllCaps="false"
-                    font:name="Ubuntu"
-                    font:type="regular" />
+                    font:name="OpenSans"
+                    font:type="bold" />
 
             </FrameLayout>
 
@@ -309,8 +309,9 @@
             <Button
                 android:id="@+id/btnLogout"
                 style="@style/btn_style"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
                 android:layout_margin="20dp"
                 android:text="Log Out" />
 
