@@ -200,6 +200,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean shouldLoadHomeFragOnBackPress = true;
     private android.os.Handler mHandler;
 
+    TextView txtUnlock, txtReserve;
+    ImageView imgReserve, imgUnlock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -578,7 +581,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setListener() {
 
-        btnUnlock.setOnClickListener(this);
+        txtUnlock.setOnClickListener(this);
 
         btnRefresh.setOnClickListener(this);
 
@@ -606,7 +609,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnBack.setOnClickListener(this);
 
-        btnReserve.setOnClickListener(this);
+        txtReserve.setOnClickListener(this);
 
     }
 
@@ -678,6 +681,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtAddress = (TextView) findViewById(R.id.txtBottomAddress);
         progress = (ProgressBar) findViewById(R.id.progressbar);
 
+        txtUnlock = (TextView) findViewById(R.id.txtUnlock);
+        txtReserve = (TextView) findViewById(R.id.txtReserve);
+        imgUnlock = (ImageView) findViewById(R.id.imgUnlock);
+        imgReserve = (ImageView) findViewById(R.id.imgReserve);
+
 
         txtAddress.setVisibility(View.GONE);
         navHeader = navigationView.getHeaderView(0);
@@ -695,7 +703,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         int id = view.getId();
 
-        if (view == btnUnlock) {
+        if (view == imgUnlock) {
 
             Intent intent = new Intent(this, QRScanActivity.class);
 
@@ -809,15 +817,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             makeReservation();
 
 
-        } else if (view == btnReserve) {
+        } else if (view == txtReserve) {
 
             makeReservation();
 
 
         } else if (view == btnCloseBottomView) {
 
-            btnReserve.setVisibility(View.GONE);
-            btnUnlock.setVisibility(View.VISIBLE);
+            txtReserve.setVisibility(View.GONE);
+            txtUnlock.setVisibility(View.VISIBLE);
+
+            imgReserve.setVisibility(View.GONE);
+            imgUnlock.setVisibility(View.VISIBLE);
 
             layoutBottom.setVisibility(View.GONE);
             if (polylineFinal != null) {
@@ -835,7 +846,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else if (view == btnTripClose) {
 
             layoutRideStatus.setVisibility(View.GONE);
-            btnUnlock.setVisibility(View.VISIBLE);
+            txtUnlock.setVisibility(View.VISIBLE);
+            imgUnlock.setVisibility(View.VISIBLE);
+
+            imgReserve.setVisibility(View.VISIBLE);
+            txtReserve.setVisibility(View.VISIBLE);
 
         } else if (view == btnBack) {
 
@@ -1401,8 +1416,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         layoutBottom.setVisibility(View.GONE);
 
-        btnUnlock.setVisibility(View.GONE);
-        btnReserve.setVisibility(View.VISIBLE);
+        txtUnlock.setVisibility(View.GONE);
+        txtReserve.setVisibility(View.VISIBLE);
+
+        imgUnlock.setVisibility(View.GONE);
+        imgReserve.setVisibility(View.VISIBLE);
 
         makeDirection(clickedMarkerDetails.getLat(), clickedMarkerDetails.getLng());
 
@@ -1429,8 +1447,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void resetValues() {
 
         layoutBottom.setVisibility(View.GONE);
-        btnUnlock.setVisibility(View.VISIBLE);
-        btnReserve.setVisibility(View.GONE);
+        txtUnlock.setVisibility(View.VISIBLE);
+        txtReserve.setVisibility(View.GONE);
+
+        imgUnlock.setVisibility(View.VISIBLE);
+        imgReserve.setVisibility(View.GONE);
 
         layoutClock.setVisibility(View.GONE);
 
@@ -1459,7 +1480,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtTripEnd.setText("Trip End: " + "-");
         txtTripTimer.setText("00:00:00");
         btnTripClose.setVisibility(View.GONE);
-        btnUnlock.setVisibility(View.GONE);
+        txtUnlock.setVisibility(View.GONE);
+        imgUnlock.setVisibility(View.GONE);
 
         JSONObject params = new JSONObject();
         try {

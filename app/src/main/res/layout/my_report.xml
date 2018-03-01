@@ -79,22 +79,25 @@
                 android:layout_marginTop="20dp">
 
                 <EditText
-                    android:id="@+id/editCountryCode"
+                    android:id="@+id/editBikeId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
                     android:drawableRight="@mipmap/ic_focus"
                     android:hint="Bike ID"
+                    android:lines="1"
                     android:textColorHint="@color/colorPrimary" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <TextView
+            <com.cycliq.utils.TextViewWithFont
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
                 android:gravity="center"
+                font:name="OpenSans"
+                font:type="bold"
                 android:text="Select the damaged parts(s):"
                 android:textColor="@android:color/darker_gray" />
 
@@ -251,8 +254,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
@@ -271,17 +274,17 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:background="#f0f0f0"
+                android:background="@drawable/layout_bg_corner"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/reportdesc"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/layout_bg_corner"
+                    android:layout_height="wrap_content"
                     android:hint="Enter you comments here..."
                     android:lines="3"
                     android:padding="10dp"
+                    android:background="@android:color/transparent"
                     android:text=""
                     android:textColor="@android:color/black" />
 
@@ -300,58 +303,78 @@
                 android:id="@+id/layoutRecharge"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_corner"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="15dp">
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_done_white" />
 
 
                 <Button
-
                     android:id="@+id/btnSubmit"
-                    style="@style/btn_style"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:drawableLeft="@mipmap/ic_done_white"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
+                    android:background="@android:color/transparent"
                     android:text=" Submit"
-                    android:visibility="visible" />
+                    android:visibility="gone"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
 
+                <com.cycliq.utils.TextViewWithFont
+                    android:id="@+id/txtSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:textAlignment="textStart"
+                    android:text=" Submit"
+                    android:paddingRight="10dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="16dp"
+                    font:name="Ubuntu"
+                    font:type="bold" />
 
-                <!--<ImageView-->
-                    <!--android:layout_width="30dp"-->
-                    <!--android:layout_height="30dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:scaleType="fitXY"-->
-                    <!--android:src="@mipmap/ic_done_white" />-->
-
-                <!--<Button-->
-                    <!--android:id="@+id/btnRecharge"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:background="@android:color/transparent"-->
-                    <!--android:text=" Submit"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--android:textColor="#ffffff"-->
-                    <!--android:visibility="gone"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<com.cycliq.utils.TextViewWithFont-->
-                    <!--android:id="@+id/txtSubmit"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:textAlignment="textStart"-->
-                    <!--android:text="Submit"-->
-                    <!--android:paddingRight="20dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:textColor="@android:color/white"-->
-                    <!--android:textSize="20dp"-->
-                    <!--font:name="Ubuntu"-->
-                    <!--font:type="bold" />*/-->
 
             </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/layoutRecharge"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginBottom="20dp"-->
+                <!--android:background="@drawable/btn_rounded_corner"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal">-->
+
+
+                <!--<Button-->
+
+                    <!--android:id="@+id/btnSubmit"-->
+                    <!--style="@style/btn_style"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="60dp"-->
+                    <!--android:drawableLeft="@mipmap/ic_done_white"-->
+                    <!--android:paddingLeft="30dp"-->
+                    <!--android:paddingRight="30dp"-->
+                    <!--android:text=" Submit"-->
+                    <!--android:visibility="visible" />-->
+
+
+
+            <!--</LinearLayout>-->
 
         </LinearLayout>
     </ScrollView>

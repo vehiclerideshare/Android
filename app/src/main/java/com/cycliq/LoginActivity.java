@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editPhoneNumber, editOtp;
     private LinearLayout layoutLogin;
     private LinearLayout layoutVerifyOtp;
+    private TextView txtSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void setListener() {
 
-        btnSubmit.setOnClickListener(this);
+        txtSubmit.setOnClickListener(this);
 
         btnVerifyPin.setOnClickListener(this);
 
@@ -72,6 +74,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Typeface ubuntuBold = Typeface.createFromAsset(getAssets(), "Ubuntu-Bold.ttf");
 
         editPhoneNumber = (EditText) findViewById(R.id.txtPhoneNumber);
+        txtSubmit = (TextView) findViewById(R.id.txtSubmit);
+
+
 
         editOtp = (EditText) findViewById(R.id.txtOtp);
 
@@ -133,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         int id = view.getId();
 
-        if (view == btnSubmit) {
+        if (view == txtSubmit) {
 
             if (isValidatedLogin()) {
 

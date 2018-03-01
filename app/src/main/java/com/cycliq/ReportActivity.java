@@ -79,6 +79,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
+    private TextView txtSubmit;
 
     ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat, ivSeatScan;
 
@@ -97,6 +98,8 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
     TextView tvParking, tvFrontWheel, tvBag, tvBreak, tvFrontLock, tvSeat, tvPedal, tvChain, tvBackLock, tvBackWheel;
 
+    EditText editBikeId;
+    EditText reportdesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +170,19 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 //
         btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        editBikeId = (EditText) findViewById(R.id.editBikeId);
+        reportdesc = (EditText) findViewById(R.id.reportdesc);
+        txtSubmit = (TextView) findViewById(R.id.txtSubmit);
+
+
+
+
+        txtSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateReport();
+            }
+        });
 
 //        layoutMyWallet = (LinearLayout) findViewById(R.id.layoutMyWallet);
 //
@@ -181,6 +197,11 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
         Typeface ubuntuBold = Typeface.createFromAsset(getAssets(), "Ubuntu-Bold.ttf");
         btnSubmit.setTypeface(ubuntuBold);
+
+        Typeface openSansSemiBold = Typeface.createFromAsset(getAssets(), "OpenSans-SemiBold.ttf");
+        editBikeId.setTypeface(openSansSemiBold);
+        reportdesc.setTypeface(openSansSemiBold);
+
 
 //        tvParking = (TextView) findViewById(R.id.tvParking);
 //        tvFrontWheel = (TextView) findViewById(R.id.tvFrontWheel);
@@ -261,6 +282,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         ivBackLock.setOnClickListener(this);
         ivSeat.setOnClickListener(this);
         ivSeatScan.setOnClickListener(this);
+
 
 
     }
@@ -761,7 +783,13 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void getMyTripsDetails() {
+    private void updateReport() {
+
+
+        if (editBikeId.getText().toString().equalsIgnoreCase("")) {
+            showToast("Please enter Bike Id");
+            return;
+        }
 
         if (Constants.isNetworkAvailable(this)) {
 
@@ -771,33 +799,35 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
             try {
 
                 params.put("userRegistrationId", Constants.USER_REGISTERATION_ID);
+                params.put("cycle_id",editBikeId.getText().toString());
+                params.put("damaged_parts", arrParts);
+                params.put("parking_issue",true);
+                params.put("comments",editBikeId.getText().toString());
+                params.put("image","");
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            String url = Constants.DEMO_BASE_URL + Constants.KEY_TRIP_SUMMARY;
+            String url = Constants.DEMO_BASE_URL + Constants.UPDATE_REPORT_STATUS;
 
             RequestQueue queue = CycliqApplication.getInstance().getRequestQueue();
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, params,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            System.out.println("" + Constants.KEY_TRIP_SUMMARY + "==" + response);
 
                             try {
 
-                                JSONArray jsonArray = response.getJSONArray("tripSummary");
-
-                                for (int i = 0; i < jsonArray.length(); i++) {
-
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                                    TripSummaryModel tripSummaryModel = new TripSummaryModel(jsonObject.getString("tripDateTime").toString(), jsonObject.getString("tripID").toString(), jsonObject.getString("bikeID").toString(), jsonObject.getString("tripAmount").toString());
-
-                                    arrTripSummary.add(tripSummaryModel);
-
+                                if (response != null) {
+                                    if (response.getString("status").equalsIgnoreCase("success")) {
+                                        Constants.showToast(ReportActivity.this, "Report submitted successfully.");
+                                        resetValues();
+                                    } else {
+                                        Constants.showToast(ReportActivity.this, "Something went wrong. Please try again");
+                                    }
                                 }
+
 
                                 // assignAdapter();
 
@@ -829,6 +859,15 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
         }
 
+    }
+
+    public void resetValues() {
+        editBikeId.setText("");
+        reportdesc.setText("");
+        arrParts.clear();
+        adapterParts.notifyDataSetChanged();
+        arrBitmap.clear();
+        adapter.notifyDataSetChanged();
     }
 
 

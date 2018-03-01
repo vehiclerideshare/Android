@@ -30,6 +30,7 @@ public class Constants {
     public static final String KEY_CANCEL_VEHICLE = "cancelvehicle";
     public static final String KEY_PAYMENT_REQUEST = "paymentrequest";
     public static final String UPDATE_RIDE_STATUS = "updateRideStatus";
+    public static final String UPDATE_REPORT_STATUS = "updateReports";
 
 
 

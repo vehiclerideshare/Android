@@ -69,14 +69,65 @@
                     android:maxLines="1"
                     android:paddingLeft="10dp" />
 
-                <Button
-                    android:id="@+id/btnSubmit"
-                    style="@style/btn_style"
-                    android:layout_width="160dp"
+
+                <LinearLayout
+                    android:id="@+id/layoutRecharge"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_alignParentBottom="true"
-                     android:layout_gravity="center"
-                    android:text="Submit" />
+                    android:background="@drawable/btn_rounded_corner"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="15dp">
+
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="16dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_done_white" />
+
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:background="@android:color/transparent"
+                        android:text=" Submit"
+                        android:visibility="gone"
+                        android:textAlignment="textStart"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold" />
+
+                    <com.cycliq.utils.TextViewWithFont
+                        android:id="@+id/txtSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:textAlignment="textStart"
+                        android:text=" Submit"
+                        android:paddingRight="10dp"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="16dp"
+                        font:name="Ubuntu"
+                        font:type="bold" />
+
+
+                </LinearLayout>
+
+                <!--<Button-->
+                    <!--android:id="@+id/btnSubmit"-->
+                    <!--style="@style/btn_style"-->
+                    <!--android:layout_width="160dp"-->
+                    <!--android:layout_height="60dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                     <!--android:layout_gravity="center"-->
+                    <!--android:text="Submit" />-->
 
             </LinearLayout>
 

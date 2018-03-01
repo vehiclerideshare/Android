@@ -324,16 +324,6 @@
                         android:scaleType="fitXY"
                         android:src="@mipmap/ic_recharge" />
 
-                    <!--<Button-->
-                        <!--android:id="@+id/btnRecharge"-->
-                        <!--style="@style/btn_style"-->
-                        <!--android:drawableLeft="@mipmap/ic_recharge"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="60dp"-->
-                        <!--android:paddingLeft="20dp"-->
-                        <!--android:paddingRight="20dp"-->
-                        <!--android:text="Recharge"-->
-                        <!--android:visibility="visible" />-->
 
                     <Button
                         android:id="@+id/btnRecharge"
@@ -356,7 +346,7 @@
                         android:paddingRight="10dp"
                         android:gravity="center"
                         android:textColor="@android:color/white"
-                        android:textSize="20dp"
+                        android:textSize="16dp"
                         font:name="Ubuntu"
                         font:type="bold" />
 
