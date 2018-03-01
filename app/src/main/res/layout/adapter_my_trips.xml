@@ -24,8 +24,9 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="23-09-2017 23:32:32"
+            android:textSize="20dp"
             android:textColor="@android:color/black"
-            android:textStyle="bold" />
+             />
 
         <com.cycliq.utils.TextViewWithFont
             font:name="Ubuntu"

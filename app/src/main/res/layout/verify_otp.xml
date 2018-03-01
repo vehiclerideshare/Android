@@ -38,7 +38,6 @@
                     android:src="@mipmap/back" />
 
 
-
                 <com.cycliq.utils.TextViewWithFont
                     android:id="@+id/textView2"
                     style="@style/nav_title_style"
@@ -93,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="20dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/otp" />
@@ -124,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-30dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -136,7 +136,8 @@
                         android:background="@android:color/transparent"
                         android:text="Didn't receive OTP?"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/darker_gray" />
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="18dp" />
 
                     <Button
                         android:id="@+id/btnResend"
@@ -148,7 +149,8 @@
                         android:gravity="center|left"
                         android:text="RESEND OTP"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15dp" />
 
                 </LinearLayout>
 
