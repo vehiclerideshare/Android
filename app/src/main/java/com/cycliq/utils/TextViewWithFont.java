@@ -27,6 +27,8 @@ public class TextViewWithFont extends TextView {
     private int defaultDimension = 0;
     private int TYPE_BOLD = 1;
     private int TYPE_ITALIC = 2;
+    private int TYPE_MEDIUM = 3;
+    private int TYPE_LIGHT = 4;
     private int FONT_UBUNTU = 1;
     private int FONT_OPEN_SANS = 2;
     private int fontType;
@@ -62,6 +64,8 @@ public class TextViewWithFont extends TextView {
         if (fontType == TYPE_BOLD) {
             setTypeface(font, Typeface.BOLD);
         } else if (fontType == TYPE_ITALIC) {
+            setTypeface(font, Typeface.NORMAL);
+        } else if (fontType == TYPE_MEDIUM) {
             setTypeface(font, Typeface.NORMAL);
         } else {
             setTypeface(font);

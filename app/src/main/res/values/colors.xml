@@ -7,6 +7,9 @@
     <color name="btnBlack">#363738</color>
     <color name="btnYellow">#EC733A</color>
     <color name="wallet_rc_bg">#678649</color>
+    <color name="wallet_rc_bg1">#7b955e</color>
+
+
 
     <color name="durationClr">#ED792F</color>
     <color name="carbonClr">#E14248</color>
@@ -33,5 +36,9 @@
     <color name="circleProgressIncompleteEndGradient">@color/light_gray</color>
 
     <color name="temp_bg">#ff000000</color>
+
+    <color name="black1">#231f20</color>
+    <color name="gray1">#606060</color>
+
 
 </resources>

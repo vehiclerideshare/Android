@@ -12,6 +12,7 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -29,6 +30,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -63,6 +65,7 @@ import com.cycliq.Application.CycliqApplication;
 import com.cycliq.CommonClasses.Constants;
 import com.cycliq.ble.CycliqBluetoothComm;
 import com.cycliq.model.LocationListModel;
+import com.cycliq.utils.CustomTypefaceSpan;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -448,6 +451,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
 
+        Menu m = navigationView .getMenu();
+
+        Typeface tf1 = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
+
+        for (int i=0;i<m.size();i++) {
+
+            MenuItem mi = m.getItem(i);
+
+            SpannableString s = new SpannableString(mi.getTitle());
+            s.setSpan(new CustomTypefaceSpan("", tf1), 0, s.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mi.setTitle(s);
+
+        }
+
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -594,6 +612,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setViews() {
 
+
+        Typeface ubuntuBold = Typeface.createFromAsset(getAssets(), "Ubuntu-Bold.ttf");
+        Typeface ubuntuReqular = Typeface.createFromAsset(getAssets(), "Ubuntu-Regular.ttf");
+
         progress = (ProgressBar) findViewById(R.id.circle_progress_bar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -660,6 +682,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtAddress.setVisibility(View.GONE);
         navHeader = navigationView.getHeaderView(0);
         btnBack = (ImageButton) navHeader.findViewById(R.id.btnBack);
+
+
+        btnUnlock.setTypeface(ubuntuBold);
+        btnReserve.setTypeface(ubuntuBold);
+
 
     }
 

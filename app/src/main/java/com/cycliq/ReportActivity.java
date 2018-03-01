@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -77,6 +78,8 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+
+    Button btnSubmit;
 
     ImageView ivHand, ivBag, ivFrontLock, ivFrontWheel, ivPark, ivBackWheel, ivChain, ivPedal, ivBackLock, ivSeat, ivSeatScan;
 
@@ -164,6 +167,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 //        btnVerifyPin = (Button) findViewById(R.id.btnVerifyPin);
 //
         btnBack = (ImageButton) findViewById(R.id.btnBack);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
 //        layoutMyWallet = (LinearLayout) findViewById(R.id.layoutMyWallet);
 //
@@ -174,6 +178,10 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
         rGridView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerSelectedParts = (RecyclerView) findViewById(R.id.recyclerSelectedParts);
 
+
+
+        Typeface ubuntuBold = Typeface.createFromAsset(getAssets(), "Ubuntu-Bold.ttf");
+        btnSubmit.setTypeface(ubuntuBold);
 
 //        tvParking = (TextView) findViewById(R.id.tvParking);
 //        tvFrontWheel = (TextView) findViewById(R.id.tvFrontWheel);

@@ -17,6 +17,9 @@
         <attr name="type">
             <enum name="bold" value="1"/>
             <enum name="regular" value="2"/>
+            <enum name="medim" value="3"/>
+            <enum name="light" value="4"/>
+
         </attr>
         <attr name="name">
             <enum name="Ubuntu" value="1"/>

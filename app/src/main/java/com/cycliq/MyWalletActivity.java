@@ -191,6 +191,8 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
 
             txtAmount.setText("50");
 
+            txtAdd1.setTextColor(getResources().getColor(R.color.white));
+
         }
 
         if (view == txtAdd2) {
@@ -201,6 +203,8 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
             txtAdd2.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("100");
+            txtAdd2.setTextColor(getResources().getColor(R.color.white));
+
 
         }
 
@@ -213,6 +217,8 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
             txtAdd3.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("200");
+            txtAdd3.setTextColor(getResources().getColor(R.color.white));
+
 
         }
 
@@ -225,6 +231,8 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
             txtAdd4.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner));
 
             txtAmount.setText("500");
+            txtAdd4.setTextColor(getResources().getColor(R.color.white));
+
 
         }
 
@@ -253,10 +261,10 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
         txtAdd3.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner_with_border));
         txtAdd4.setBackground(getResources().getDrawable(R.drawable.txt_full_rounded_corner_with_border));
 
-      //  txtAdd1.setBackgroundColor(Color.WHITE);
-//        txtAdd2.setBackgroundColor(Color.WHITE);
-//        txtAdd3.setBackgroundColor(Color.WHITE);
-//        txtAdd4.setBackgroundColor(Color.WHITE);
+        txtAdd1.setTextColor(Color.BLACK);
+        txtAdd2.setTextColor(Color.BLACK);
+        txtAdd3.setTextColor(Color.BLACK);
+        txtAdd4.setTextColor(Color.BLACK);
 
     }
 

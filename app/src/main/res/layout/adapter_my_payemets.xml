@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
         <com.cycliq.utils.TextViewWithFont
-            font:name="Ubuntu"
+            font:name="OpenSans"
             font:type="regular"
             android:id="@+id/tvBikeId"
             android:layout_width="match_parent"
@@ -24,20 +24,20 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="Payment Date:"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:textColor="@color/black1"
+             />
 
         <com.cycliq.utils.TextViewWithFont
-            font:name="Ubuntu"
-            font:type="regular"
+            font:name="OpenSans"
+            font:type="bold"
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:text="100 INR"
+            android:text="₹100"
             android:textColor="@android:color/black"
-            android:textStyle="bold" />
+             />
 
     </LinearLayout>
 
@@ -50,13 +50,13 @@
         android:orientation="horizontal">
 
         <com.cycliq.utils.TextViewWithFont
-            font:name="Ubuntu"
+            font:name="OpenSans"
             font:type="regular"
             android:id="@+id/tvDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="2345354345"
+            android:text="@color/gray1"
             android:textColor="@android:color/black" />
 
     </LinearLayout>
