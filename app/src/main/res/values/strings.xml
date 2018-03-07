@@ -11,6 +11,7 @@
     <string name="title_my_report">Report</string>
     <string name="title_my_payments">My Payments</string>
     <string name="title_verify_otp">Verify OTP</string>
+    <string name="title_cyc">CYC</string>
 
     <string name="un_lock">unlock</string>
     <string name="received_lock">received lock</string>

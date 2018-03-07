@@ -46,6 +46,7 @@
                         android:layout_height="match_parent"
                         android:animateLayoutChanges="true">
 
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -69,18 +70,6 @@
                                     android:padding="15dp"
                                     android:src="@mipmap/menu" />
 
-                                <com.cycliq.utils.TextViewWithFont
-                                    android:id="@+id/textView2"
-                                    style="@style/nav_title_style"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:layout_marginLeft="15dp"
-                                    android:text="  CYC"
-                                    android:textAllCaps="false"
-                                    font:name="OpenSans"
-                                    font:type="bold" />
 
                             </LinearLayout>
 
@@ -119,6 +108,18 @@
                             </LinearLayout>
 
                         </LinearLayout>
+
+                        <com.cycliq.utils.TextViewWithFont
+                            android:id="@+id/textView2"
+                            style="@style/nav_title_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="  CYC"
+                            android:textAllCaps="false"
+                            font:name="OpenSans"
+                            font:type="bold" />
 
                         <LinearLayout
                             android:id="@+id/layoutSearch"
@@ -242,11 +243,11 @@
                             android:id="@+id/layoutBottomButtons"
                             android:layout_width="wrap_content"
                             android:layout_height="60dp"
-                            android:background="@drawable/btn_rounded_corner"
-                            android:gravity="center"
                             android:layout_gravity="center"
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="30dp"
+                            android:background="@drawable/btn_rounded_corner"
+                            android:gravity="center"
                             android:orientation="horizontal"
                             android:paddingLeft="5dp"
                             android:paddingRight="10dp">
@@ -259,8 +260,8 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="16dp"
                                 android:scaleType="fitXY"
-                                android:visibility="gone"
-                                android:src="@mipmap/unlock" />
+                                android:src="@mipmap/unlock"
+                                android:visibility="gone" />
 
                             <ImageView
                                 android:id="@+id/imgReserve"
@@ -278,23 +279,22 @@
                                 android:layout_height="60dp"
                                 android:background="@android:color/transparent"
                                 android:text=" Submit"
-                                android:visibility="gone"
                                 android:textAlignment="textStart"
                                 android:textAllCaps="false"
                                 android:textColor="#ffffff"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                             <com.cycliq.utils.TextViewWithFont
                                 android:id="@+id/txtUnlock"
                                 android:layout_width="wrap_content"
                                 android:layout_height="60dp"
-                                android:textAlignment="textStart"
-                                android:text=" Unlock"
+                                android:gravity="center|left"
                                 android:paddingRight="10dp"
-                                android:visibility="gone"
-                                android:gravity="center"
+                                android:text=" Unlock"
                                 android:textColor="@android:color/white"
                                 android:textSize="16dp"
+                                android:visibility="gone"
                                 font:name="Ubuntu"
                                 font:type="bold" />
 
@@ -314,10 +314,9 @@
                                 android:id="@+id/txtReserve"
                                 android:layout_width="wrap_content"
                                 android:layout_height="60dp"
-                                android:textAlignment="textStart"
-                                android:text=" Reserve"
+                                android:gravity="center|left"
                                 android:paddingRight="15dp"
-                                android:gravity="center"
+                                android:text=" Reserve"
                                 android:textColor="@android:color/white"
                                 android:textSize="16dp"
                                 font:name="Ubuntu"
@@ -326,36 +325,36 @@
                         </LinearLayout>
 
                         <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="60dp"-->
-                            <!--android:layout_marginLeft="30dp"-->
-                            <!--android:layout_marginRight="30dp"-->
-                            <!--android:visibility="gone"-->
-                            <!--android:gravity="center">-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="60dp"-->
+                        <!--android:layout_marginLeft="30dp"-->
+                        <!--android:layout_marginRight="30dp"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:gravity="center">-->
 
-                            <!--<Button-->
+                        <!--<Button-->
 
-                                <!--android:id="@+id/btnUnlock"-->
-                                <!--style="@style/btn_style"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="60dp"-->
-                                <!--android:drawableLeft="@mipmap/unlock"-->
-                                <!--android:paddingLeft="30dp"-->
-                                <!--android:paddingRight="30dp"-->
-                                <!--android:text=" Unlock"-->
-                                <!--android:visibility="visible" />-->
+                        <!--android:id="@+id/btnUnlock"-->
+                        <!--style="@style/btn_style"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="60dp"-->
+                        <!--android:drawableLeft="@mipmap/unlock"-->
+                        <!--android:paddingLeft="30dp"-->
+                        <!--android:paddingRight="30dp"-->
+                        <!--android:text=" Unlock"-->
+                        <!--android:visibility="visible" />-->
 
 
-                            <!--<Button-->
-                                <!--android:id="@+id/btnReserve"-->
-                                <!--style="@style/btn_style"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="60dp"-->
-                                <!--android:drawableLeft="@mipmap/ic_reserve"-->
-                                <!--android:paddingLeft="20dp"-->
-                                <!--android:paddingRight="20dp"-->
-                                <!--android:text="Reserve"-->
-                                <!--android:visibility="gone" />-->
+                        <!--<Button-->
+                        <!--android:id="@+id/btnReserve"-->
+                        <!--style="@style/btn_style"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="60dp"-->
+                        <!--android:drawableLeft="@mipmap/ic_reserve"-->
+                        <!--android:paddingLeft="20dp"-->
+                        <!--android:paddingRight="20dp"-->
+                        <!--android:text="Reserve"-->
+                        <!--android:visibility="gone" />-->
 
                         <!--</LinearLayout>-->
 
@@ -906,8 +905,8 @@
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
         android:visibility="visible"
-        app:itemTextColor="@color/black1"
         app:headerLayout="@layout/nav_header_main"
+        app:itemTextColor="@color/black1"
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

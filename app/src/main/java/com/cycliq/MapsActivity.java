@@ -703,13 +703,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         int id = view.getId();
 
-        if (view == imgUnlock) {
+        if (view == imgUnlock || view == txtUnlock || view == btnUnlock) {
 
             Intent intent = new Intent(this, QRScanActivity.class);
 
             startActivity(intent);
 
-        } else if (view == btnReport) {
+        }
+        else if (view == btnReport) {
 
             Intent intent = new Intent(this, ReportActivity.class);
 
