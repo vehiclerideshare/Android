@@ -440,7 +440,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Drawable drawable = menuItem.getIcon();
         if (drawable != null) {
             drawable.mutate();
-            drawable.setColorFilter(getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
         }
 
     }
@@ -449,7 +449,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         for (int i = 0; i < navigationView.getMenu().size(); i++) {
-            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.darker_gray);
+            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
 
 
         }
