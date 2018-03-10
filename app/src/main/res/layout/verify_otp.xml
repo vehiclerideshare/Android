@@ -31,11 +31,13 @@
 
                 <ImageButton
                     android:id="@+id/btnBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="15dp"
                     android:background="@android:color/transparent"
                     android:padding="15dp"
-                    android:src="@mipmap/back" />
+                    android:src="@mipmap/back_black" />
 
 
                 <com.cycliq.utils.TextViewWithFont
@@ -46,7 +48,7 @@
                     android:text="@string/title_verify_otp"
                     android:textAllCaps="false"
                     font:name="Ubuntu"
-                    font:type="regular" />
+                    font:type="bold" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -123,34 +125,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-30dp"
+                    android:layout_marginTop="-0dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <Button
+                    <com.cycliq.utils.TextViewWithFont
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center|left"
                         android:layout_marginRight="5dp"
-                        android:background="@android:color/transparent"
+                        android:gravity="center|left"
                         android:text="Didn't receive OTP?"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="18dp" />
+                        android:textColor="#9c9c9c"
+                        android:textSize="18dp"
+                        font:name="OpenSans"
+                        font:type="bold" />
 
-                    <Button
+
+                    <com.cycliq.utils.TextViewWithFont
                         android:id="@+id/btnResend"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
-                        android:background="@android:color/transparent"
+                        android:layout_marginRight="5dp"
                         android:gravity="center|left"
                         android:text="RESEND OTP"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        font:name="OpenSans"
+                        font:type="bold" />
+
 
                 </LinearLayout>
 

@@ -283,11 +283,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         CycliqBluetoothComm.getInstance().setMapsActivity(this);
 
-//        startCounDownTimer();
-//
-//        countDownTimer.start();
-//
-//        layoutClock.setVisibility(View.VISIBLE);
+        startCounDownTimer();
+
+        countDownTimer.start();
+
+        layoutClock.setVisibility(View.VISIBLE);
 
     }
 
@@ -981,8 +981,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //  System.exit(0);
 
 
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//        System.exit(1);
 
     }
 

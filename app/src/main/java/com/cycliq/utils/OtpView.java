@@ -3,6 +3,7 @@ package com.cycliq.utils;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.cycliq.Application.CycliqApplication;
 import com.cycliq.R;
 
 public class OtpView extends LinearLayout {
@@ -64,6 +66,36 @@ public class OtpView extends LinearLayout {
         mOtpFourField = (EditText) findViewById(R.id.otp_four_edit_text);
         styleEditTexts(styles);
         styles.recycle();
+
+        CycliqApplication application = (CycliqApplication ) getContext().getApplicationContext();
+
+        setFontType(mOtpOneField, application .getOpenSans());
+        setFontType(mOtpTwoField, application .getOpenSans());
+        setFontType(mOtpThreeField, application .getOpenSans());
+        setFontType(mOtpFourField, application .getOpenSans());
+
+    }
+
+    private int defaultDimension = 0;
+    private int TYPE_BOLD = 1;
+    private int TYPE_ITALIC = 2;
+    private int TYPE_MEDIUM = 3;
+    private int TYPE_LIGHT = 4;
+    private int FONT_UBUNTU = 1;
+    private int FONT_OPEN_SANS = 2;
+    private int fontType;
+    private int fontName;
+
+    private void setFontType(EditText ed, Typeface font) {
+        if (fontType == TYPE_BOLD) {
+            ed.setTypeface(font, Typeface.BOLD);
+        } else if (fontType == TYPE_ITALIC) {
+            ed.setTypeface(font, Typeface.NORMAL);
+        } else if (fontType == TYPE_MEDIUM) {
+            ed.setTypeface(font, Typeface.NORMAL);
+        } else {
+            ed.setTypeface(font);
+        }
     }
 
     /**

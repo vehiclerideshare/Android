@@ -732,7 +732,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:gravity="left|center"
                                 android:text="Bike Id:"
-                                android:textColor="@color/btnBlack"
+                                android:textColor="#363636"
                                 android:textSize="12sp"
                                 font:name="Ubuntu"
                                 font:type="regular" />

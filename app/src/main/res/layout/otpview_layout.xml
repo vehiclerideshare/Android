@@ -19,6 +19,7 @@
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_one_edit_text"
         android:nextFocusRight="@+id/otp_two_edit_text"
+        android:text=""
         android:textSize="@dimen/verify_otp_font_size" />
 
     <EditText
@@ -32,6 +33,7 @@
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_one_edit_text"
         android:nextFocusRight="@+id/otp_three_edit_text"
+        android:text=""
         android:textSize="@dimen/verify_otp_font_size" />
 
     <EditText
@@ -45,6 +47,7 @@
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_two_edit_text"
         android:nextFocusRight="@+id/otp_four_edit_text"
+        android:text=""
         android:textSize="@dimen/verify_otp_font_size" />
 
     <EditText
@@ -57,5 +60,6 @@
         android:maxLines="1"
         android:nextFocusLeft="@+id/otp_three_edit_text"
         android:nextFocusRight="@+id/otp_four_edit_text"
+        android:text=""
         android:textSize="@dimen/verify_otp_font_size" />
 </LinearLayout>
