@@ -283,11 +283,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         CycliqBluetoothComm.getInstance().setMapsActivity(this);
 
-        startCounDownTimer();
-
-        countDownTimer.start();
-
-        layoutClock.setVisibility(View.VISIBLE);
+//        startCounDownTimer();
+//
+//        countDownTimer.start();
+//
+//        layoutClock.setVisibility(View.VISIBLE);
 
     }
 
@@ -454,11 +454,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
 
-        Menu m = navigationView .getMenu();
+        Menu m = navigationView.getMenu();
 
         Typeface tf1 = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
 
-        for (int i=0;i<m.size();i++) {
+        for (int i = 0; i < m.size(); i++) {
 
             MenuItem mi = m.getItem(i);
 
@@ -709,8 +709,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             startActivity(intent);
 
-        }
-        else if (view == btnReport) {
+        } else if (view == btnReport) {
 
             Intent intent = new Intent(this, ReportActivity.class);
 

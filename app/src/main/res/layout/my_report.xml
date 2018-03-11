@@ -46,7 +46,7 @@
                     android:text="@string/title_my_report"
                     android:textAllCaps="false"
                     font:name="OpenSans"
-                    font:type="bold"/>
+                    font:type="bold" />
 
             </FrameLayout>
 
@@ -98,10 +98,10 @@
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                font:name="OpenSans"
-                font:type="bold"
                 android:text="Select the damaged parts(s):"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"
+                font:name="OpenSans"
+                font:type="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,8 +167,7 @@
                         android:layout_gravity="left"
                         android:layout_marginTop="50dp"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_cycle_part_line"
-                         />
+                        android:src="@mipmap/ic_cycle_part_line" />
 
                     <ImageView
                         android:id="@+id/ivFrontWheel"
@@ -265,7 +264,7 @@
                     android:id="@+id/recyclerSelectedParts"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="horizontal" />
+                     />
 
             </LinearLayout>
 
@@ -276,19 +275,20 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/layout_bg_corner"
+                android:background="@drawable/layout_bg_edit_corner"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/reportdesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:hint="Enter you comments here..."
                     android:lines="3"
+                    android:gravity="top"
                     android:padding="10dp"
-                    android:background="@android:color/transparent"
                     android:text=""
-                    android:textColor="@android:color/black" />
+                    android:textColor="#231f20" />
 
             </LinearLayout>
 
@@ -305,11 +305,11 @@
                 android:id="@+id/layoutRecharge"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_corner"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="15dp">
 
@@ -329,20 +329,20 @@
                     android:layout_height="60dp"
                     android:background="@android:color/transparent"
                     android:text=" Submit"
-                    android:visibility="gone"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <com.cycliq.utils.TextViewWithFont
                     android:id="@+id/txtSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:textAlignment="textStart"
-                    android:text=" Submit"
-                    android:paddingRight="10dp"
                     android:gravity="center"
+                    android:paddingRight="10dp"
+                    android:text=" Submit"
+                    android:textAlignment="textStart"
                     android:textColor="@android:color/white"
                     android:textSize="16dp"
                     font:name="Ubuntu"
@@ -352,28 +352,27 @@
             </LinearLayout>
 
             <!--<LinearLayout-->
-                <!--android:id="@+id/layoutRecharge"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginBottom="20dp"-->
-                <!--android:background="@drawable/btn_rounded_corner"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="horizontal">-->
+            <!--android:id="@+id/layoutRecharge"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:background="@drawable/btn_rounded_corner"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
 
 
-                <!--<Button-->
+            <!--<Button-->
 
-                    <!--android:id="@+id/btnSubmit"-->
-                    <!--style="@style/btn_style"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="60dp"-->
-                    <!--android:drawableLeft="@mipmap/ic_done_white"-->
-                    <!--android:paddingLeft="30dp"-->
-                    <!--android:paddingRight="30dp"-->
-                    <!--android:text=" Submit"-->
-                    <!--android:visibility="visible" />-->
-
+            <!--android:id="@+id/btnSubmit"-->
+            <!--style="@style/btn_style"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:drawableLeft="@mipmap/ic_done_white"-->
+            <!--android:paddingLeft="30dp"-->
+            <!--android:paddingRight="30dp"-->
+            <!--android:text=" Submit"-->
+            <!--android:visibility="visible" />-->
 
 
             <!--</LinearLayout>-->

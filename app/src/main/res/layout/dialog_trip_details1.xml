@@ -65,11 +65,11 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:text="Amount"
-                                    android:textColor="#000000"
+                                    android:textColor="#363636"
                                     android:textSize="30dp"
                                     android:textStyle="bold"
-                                    font:name="Ubuntu"
-                                    font:type="regular" />
+                                    font:name="OpenSans"
+                                    font:type="bold" />
 
 
                                 <com.cycliq.utils.TextViewWithFont
