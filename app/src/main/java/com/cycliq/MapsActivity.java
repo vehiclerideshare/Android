@@ -35,14 +35,18 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +65,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.cycliq.Adapter.HomeMenuAdapter;
+import com.cycliq.Adapter.MyPaymentAdapter;
 import com.cycliq.Application.CycliqApplication;
 import com.cycliq.CommonClasses.Constants;
 import com.cycliq.ble.CycliqBluetoothComm;
@@ -185,6 +191,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private View navHeader;
     public static int navItemIndex = 0;
 
+    ListView listViewMenu;
+    HomeMenuAdapter homeMenuAdapter;
+
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
     private static final String TAG_PHOTOS = "photos";
@@ -288,6 +297,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        countDownTimer.start();
 //
 //        layoutClock.setVisibility(View.VISIBLE);
+
+        setMenuAdapter();
+
+    }
+
+    private void setMenuAdapter() {
+
+
+        ArrayList<String> arr = new ArrayList<>();
+
+        arr.add("sdsd");
+
+        homeMenuAdapter = new HomeMenuAdapter(this, this, arr);
+        listViewMenu.setAdapter(homeMenuAdapter);
+        listViewMenu.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        LayoutInflater myinflater = getLayoutInflater();
+        ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.nav_header_main, listViewMenu, false);
+        listViewMenu.addHeaderView(myHeader, null, false);
+
+        btnBack = (ImageButton) myHeader.findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(this);
 
     }
 
@@ -448,7 +481,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setUpNavigationView() {
 
 
-        for (int i = 0; i < navigationView.getMenu().size(); i++) {
+      /*  for (int i = 0; i < navigationView.getMenu().size(); i++) {
             setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
 
 
@@ -556,6 +589,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
@@ -576,6 +610,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+
+*/
     }
 
 
@@ -607,8 +643,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnTripClose.setOnClickListener(this);
 
-        btnBack.setOnClickListener(this);
-
         txtReserve.setOnClickListener(this);
 
     }
@@ -623,7 +657,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+      //  navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        listViewMenu = (ListView) findViewById(R.id.listViewMenu);
 
         btnUnlock = (Button) findViewById(R.id.btnUnlock);
 
@@ -688,8 +724,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         txtAddress.setVisibility(View.GONE);
-        navHeader = navigationView.getHeaderView(0);
-        btnBack = (ImageButton) navHeader.findViewById(R.id.btnBack);
+//        navHeader = navigationView.getHeaderView(0);
+//        btnBack = (ImageButton) navHeader.findViewById(R.id.btnBack);
 
 
         btnUnlock.setTypeface(ubuntuBold);
@@ -1964,6 +2000,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
         }
+
+
+    }
+
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+
+    }
+
+    private void selectItem(int position) {
 
 
     }

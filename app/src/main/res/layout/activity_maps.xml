@@ -864,16 +864,28 @@
         </LinearLayout>
     </FrameLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+    <!--<android.support.design.widget.NavigationView-->
+    <!--android:id="@+id/nav_view"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="start"-->
+    <!--android:background="@android:color/white"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--android:visibility="visible"-->
+    <!--app:headerLayout="@layout/nav_header_main"-->
+    <!--app:itemTextColor="@color/black1"-->
+    <!--app:menu="@menu/activity_main_drawer" />-->
+
+    <ListView
+        android:id="@+id/listViewMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@android:color/white"
-        android:fitsSystemWindows="true"
-        android:visibility="visible"
-        app:headerLayout="@layout/nav_header_main"
-        app:itemTextColor="@color/black1"
-        app:menu="@menu/activity_main_drawer" />
+        android:background="#FFFFFF"
+        android:choiceMode="singleChoice"
+        android:divider="@null"
+        android:dividerHeight="1dp"
+        tools:listheader="@layout/nav_header_main" />
+
 
 </android.support.v4.widget.DrawerLayout>
