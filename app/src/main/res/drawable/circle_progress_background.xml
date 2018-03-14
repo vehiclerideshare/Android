@@ -9,8 +9,8 @@
             android:thickness="@dimen/circleProgressThickness">
             
             <gradient
-                android:startColor="@color/colorPrimary"
-                android:endColor="@color/colorPrimary"
+                android:startColor="@color/button_gray"
+                android:endColor="@color/button_gray"
 
                 android:type="sweep" />   
         </shape>

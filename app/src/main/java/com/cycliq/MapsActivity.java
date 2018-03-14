@@ -292,11 +292,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         CycliqBluetoothComm.getInstance().setMapsActivity(this);
 
-//        startCounDownTimer();
-//
-//        countDownTimer.start();
-//
-//        layoutClock.setVisibility(View.VISIBLE);
+        startCounDownTimer();
+
+        countDownTimer.start();
+
+        layoutClock.setVisibility(View.VISIBLE);
 
         setMenuAdapter();
 
@@ -315,7 +315,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         LayoutInflater myinflater = getLayoutInflater();
-        ViewGroup myHeader = (ViewGroup)myinflater.inflate(R.layout.nav_header_main, listViewMenu, false);
+        ViewGroup myHeader = (ViewGroup) myinflater.inflate(R.layout.nav_header_main, listViewMenu, false);
         listViewMenu.addHeaderView(myHeader, null, false);
 
         btnBack = (ImageButton) myHeader.findViewById(R.id.btnBack);
@@ -480,27 +480,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setUpNavigationView() {
 
-
-      /*  for (int i = 0; i < navigationView.getMenu().size(); i++) {
-            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
-
-
-        }
-
-        Menu m = navigationView.getMenu();
-
-        Typeface tf1 = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
-
-        for (int i = 0; i < m.size(); i++) {
-
-            MenuItem mi = m.getItem(i);
-
-            SpannableString s = new SpannableString(mi.getTitle());
-            s.setSpan(new CustomTypefaceSpan("", tf1), 0, s.length(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mi.setTitle(s);
-
-        }
+/*
+//        for (int i = 0; i < navigationView.getMenu().size(); i++) {
+//            setTextColorForMenuItem(navigationView.getMenu().getItem(i), android.R.color.black);
+//
+//
+//        }
+//
+//        Menu m = navigationView.getMenu();
+//
+//        Typeface tf1 = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
+//
+//        for (int i = 0; i < m.size(); i++) {
+//
+//            MenuItem mi = m.getItem(i);
+//
+//            SpannableString s = new SpannableString(mi.getTitle());
+//            s.setSpan(new CustomTypefaceSpan("", tf1), 0, s.length(),
+//                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            mi.setTitle(s);
+//
+//        }
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -657,7 +657,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-      //  navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //  navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         listViewMenu = (ListView) findViewById(R.id.listViewMenu);
 
@@ -715,7 +715,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnBikeReport = (Button) findViewById(R.id.btnReportBike);
         btnTripClose = (Button) findViewById(R.id.btnTripClose);
         txtAddress = (TextView) findViewById(R.id.txtBottomAddress);
-        progress = (ProgressBar) findViewById(R.id.progressbar);
+       // progress = (ProgressBar) findViewById(R.id.progressbar);
 
         txtUnlock = (TextView) findViewById(R.id.txtUnlock);
         txtReserve = (TextView) findViewById(R.id.txtReserve);
@@ -892,7 +892,66 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             drawer.closeDrawers();
 
+        } else if (id == R.id.activity_main) {
+
+            int rowMenu = (int) view.getTag();
+
+
+//            if (rowMenu == 0) {
+//
+//                navItemIndex = 0;
+//                CURRENT_TAG = TAG_HOME;
+//            } else
+
+            if (rowMenu == 0) {
+
+                navItemIndex = 1;
+                CURRENT_TAG = TAG_PHOTOS;
+
+                startActivity(new Intent(MapsActivity.this, MyWalletActivity.class));
+                drawer.closeDrawers();
+            } else if (rowMenu == 1) {
+
+                navItemIndex = 2;
+                CURRENT_TAG = TAG_MOVIES;
+
+                startActivity(new Intent(MapsActivity.this, MyPaymentsActivity.class));
+                drawer.closeDrawers();
+            } else if (rowMenu == 2) {
+
+                navItemIndex = 3;
+                CURRENT_TAG = TAG_NOTIFICATIONS;
+                startActivity(new Intent(MapsActivity.this, MyTripsActivity.class));
+                drawer.closeDrawers();
+            } else if (rowMenu == 3) {
+
+                navItemIndex = 3;
+                CURRENT_TAG = TAG_NOTIFICATIONS;
+                drawer.closeDrawers();
+            } else if (rowMenu == 4) {
+
+                navItemIndex = 3;
+                CURRENT_TAG = TAG_NOTIFICATIONS;
+
+                drawer.closeDrawers();
+            } else if (rowMenu == 5) {
+
+                navItemIndex = 3;
+                CURRENT_TAG = TAG_NOTIFICATIONS;
+
+                drawer.closeDrawers();
+            } else if (rowMenu == 6) {
+
+                navItemIndex = 4;
+                CURRENT_TAG = TAG_SETTINGS;
+
+                startActivity(new Intent(MapsActivity.this, SettingsActivity.class));
+                drawer.closeDrawers();
+            }
+
         }
+
+
     }
 
     @Override
@@ -1342,6 +1401,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             txtTripId.setText("Trip ID:" + rideId);
             txtBikeId.setText("Bike ID:" + rideId);
             txtBikeIdTop.setText("Bike ID:" + rideId);
+
+            if (clickedMarkerDetails != null) {
+
+
+                txtBikeId.setText("Bike ID:" + clickedMarkerDetails.getVehicleRegnNumber());
+                txtBikeIdTop.setText("Bike ID:" + clickedMarkerDetails.getVehicleRegnNumber());
+
+            }
 
             Log.d("TAG", "Tag values rideId == " + rideId);
 

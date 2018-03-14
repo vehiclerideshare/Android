@@ -8,8 +8,8 @@
                 android:useLevel="true">
                 
                 <gradient
-                    android:startColor="@color/colorPrimary"
-                    android:endColor="@color/colorPrimary"
+                    android:startColor="@color/btnBlack"
+                    android:endColor="@color/btnBlack"
                     android:type="sweep" />   
             </shape>
     </item>

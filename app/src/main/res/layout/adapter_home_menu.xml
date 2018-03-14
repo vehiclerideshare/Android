@@ -10,10 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
 
@@ -30,14 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="15dp"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:text="Payment Date:"
             android:textColor="@color/black1"
+            android:textSize="15dp"
             font:name="OpenSans"
             font:type="regular" />
-
 
     </LinearLayout>
 
@@ -47,8 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:background="@android:color/black" />
+        android:background="@android:color/black"
+        android:visibility="gone" />
 
 
 </LinearLayout>

@@ -31,8 +31,8 @@
 
                 <ImageButton
                     android:id="@+id/btnBack"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center|left"
                     android:layout_marginLeft="15dp"
                     android:background="@android:color/transparent"
@@ -51,8 +51,8 @@
 
             </FrameLayout>
 
-
         </LinearLayout>
+
     </LinearLayout>
 
 

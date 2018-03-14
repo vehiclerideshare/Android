@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cycliq.R;
@@ -50,11 +51,17 @@ public class HomeMenuAdapter extends BaseAdapter {
         if (convertView == null)
             vi = inflater.inflate(R.layout.adapter_home_menu, null);
 
+        LinearLayout layoutMain = (LinearLayout) vi.findViewById(R.id.activity_main);
+
         TextView tvMenuTitle = (TextView) vi.findViewById(R.id.tvMenuTitle);
 
         ImageView ivMenu = (ImageView) vi.findViewById(R.id.ivMenu);
 
         View viewLine = (View) vi.findViewById(R.id.viewLine);
+
+        layoutMain.setOnClickListener(onClickListener);
+
+        layoutMain.setTag(position);
 
         viewLine.setVisibility(View.GONE);
 
