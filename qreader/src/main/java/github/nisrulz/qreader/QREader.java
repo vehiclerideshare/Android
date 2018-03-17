@@ -210,7 +210,8 @@ public class QREader {
   private void startCameraView(Context context, CameraSource cameraSource,
       SurfaceView surfaceView) {
     if (cameraRunning) {
-      throw new IllegalStateException("Camera already started!");
+      return;
+//      throw new IllegalStateException("Camera already started!");
     }
     try {
       if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA)

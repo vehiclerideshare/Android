@@ -33,13 +33,12 @@
                         android:src="@mipmap/bg" />
 
                     <ImageView
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="40dp"
-                        android:background="@android:color/transparent"
-                        android:src="@mipmap/logo" />
+                        android:src="@mipmap/logo_new" />
 
                 </RelativeLayout>
 

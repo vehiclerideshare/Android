@@ -55,7 +55,7 @@ import static com.cycliq.CommonClasses.Constants.KEY_RIDE_ID;
 
 public class TripRunningActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, LocationListener, GoogleMap.OnMarkerClickListener {
 
-    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer, txtTripAmount, txtClock;
+    private TextView txtTripId, txtBikeId, txtTripStart, txtTripEnd, txtTripTimer, txtTripAmount, txtClock, txtRideStatus;
 
     private GoogleMap mMap;
 
@@ -87,11 +87,16 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
         txtTripId = (TextView) findViewById(R.id.txtTripId);
         txtTripStart = (TextView) findViewById(R.id.txtTripStart);
         txtTripEnd = (TextView) findViewById(R.id.txtTripEnd);
-        txtTripTimer = (TextView) findViewById(R.id.txtTripTimer);
+        txtRideStatus = (TextView) findViewById(R.id.ridestatus);
+
+//        txtTripTimer = (TextView) findViewById(R.id.txtTripTimer);
         txtTripAmount = (TextView) findViewById(R.id.txtTripAmount);
         txtClock = (TextView) findViewById(R.id.txtClock);
+        progress = (ProgressBar) findViewById(R.id.circle_progress_bar);
+        progress.setMax((int) 7200);
 
-        txtTripAmount.setVisibility(View.GONE);
+//        txtTripAmount.setVisibility(View.GONE);
+        txtTripAmount.setText("₹ 0.00");
 
         btnBikeReport = (Button) findViewById(R.id.btnReportBike);
         btnTripClose = (Button) findViewById(R.id.btnTripClose);
@@ -104,10 +109,12 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
         sendLockOpenStatus();
 
+        txtRideStatus.setText("Ride In Progress");
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
 
 
     }
@@ -115,7 +122,6 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
     private void startCounDownTimer() {
 
-        progress.setMax((int) millisFinishedUntil);
 
         countDownTimer = new CountDownTimer(millisFinishedUntil, 1000) {
 
@@ -283,7 +289,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 //        validateCurrentRideStatus();
         txtTripStart.setText("Trip Start: "+GetToday());
         txtTripEnd.setText("Trip End: "+"-");
-        txtTripTimer.setText("00:00:00");
+//        txtTripTimer.setText("00:00:00");
         btnTripClose.setVisibility(View.GONE);
 
         JSONObject params = new JSONObject();
@@ -302,9 +308,9 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
         startTripTimer();
 
 
-        startCounDownTimer();
+        //startCounDownTimer();
 
-        countDownTimer.start();
+        //countDownTimer.start();
 
         String url = Constants.DEMO_BASE_URL + Constants.UPDATE_RIDE_STATUS;
 
@@ -471,6 +477,9 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
                 final String text =  String.format("%02d:%02d:%02d", hours, mins, seconds);
 
 
+
+                progress.setProgress((int) tripCountDown);
+
                 checkStatus();
 
 //                final String text = String.format(Locale.getDefault(), "%02d:%02d:%02d",
@@ -479,7 +488,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 //                        TimeUnit.MILLISECONDS.toSeconds(tripCountDown) % 60);
                 runOnUiThread(new Runnable() {
                     public void run() {
-                       // txtTripTimer.setText(text);
+                        txtClock.setText(text);
 
 
                     }
@@ -500,6 +509,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
                 txtTripEnd.setText("Trip End :" + GetToday());
                 btnTripClose.setVisibility(View.VISIBLE);
                 txtTripAmount.setVisibility(View.VISIBLE);
+                txtRideStatus.setText("Ride Completed");
 
             }
         });

@@ -65,6 +65,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
     Timer timer = null;
 
     ProgressDialog progressDialog;
+    View border;
 
 
     ScannerOverlay overlay_view;
@@ -103,6 +104,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
         txtQrResult = (TextView) findViewById(R.id.txtQrResult);
 
         txtLoading = (TextView) findViewById(R.id.txtLoading);
+        border = (View) findViewById(R.id.border);
 
 
         CycliqBluetoothComm.getInstance().setCurrentActivity(this);
@@ -141,10 +143,14 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
                 txtQrResult.post(new Runnable() {
                     @Override
                     public void run() {
+                        if (isScanned) {
+                            return;
+                        }
                         isScanned = true;
                         qrEader.stop();
                         mySurfaceView.setVisibility(View.GONE);
                         overlay_view.setVisibility(View.GONE);
+                        border.setVisibility(View.GONE);
                         update(data);
 
                     }
@@ -250,6 +256,11 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
     private void update(final String scannedString) {
 
+        if (webCalling) {
+            return;
+        }
+
+        webCalling = true;
 
         progressDialog = new ProgressDialog(QRScanActivity.this);
         progressDialog.setCancelable(false);
@@ -368,6 +379,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             // Update UI elements
+                                            Constants.hideProgressDialog();
 
 //                                            Constants.hideProgressDialog();
 //                                            Toast.makeText(this, getResources().getString(R.string.error_message_unlock_server), Toast.LENGTH_SHORT).show();
@@ -379,14 +391,16 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
 
                                             unLocking = true;
+                                            sendLockOpenStatus();
 
-                                            CycliqBluetoothComm.getInstance().bgOperation(1002);
+                                          //  CycliqBluetoothComm.getInstance().bgOperation(1002);
 
 
                                         }
                                     });
                                 } else {
                                     if (strRideStatus.equalsIgnoreCase("Authorized")) {
+                                        Constants.hideProgressDialog();
 
                                         String strRideId = response.getString(Constants.KEY_RIDE_ID);
 
@@ -396,8 +410,13 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
                                         unLocking = true;
 
-                                        CycliqBluetoothComm.getInstance().bgOperation(1002);
+                                        sendLockOpenStatus();
 
+                                      //  CycliqBluetoothComm.getInstance().bgOperation(1002);
+
+
+                                    } else {
+                                        Constants.hideProgressDialog();
 
                                     }
                                 }
@@ -420,6 +439,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
                             runOnUiThread(new Runnable() {
                                 public void run() {
+                                    webCalling = false;
                                     // Update UI elements
 //                                    Toast.makeText(this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
