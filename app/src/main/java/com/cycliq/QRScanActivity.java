@@ -391,9 +391,9 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
 
                                             unLocking = true;
-                                            sendLockOpenStatus();
+//                                            sendLockOpenStatus();
 
-                                          //  CycliqBluetoothComm.getInstance().bgOperation(1002);
+                                            CycliqBluetoothComm.getInstance().bgOperation(1002);
 
 
                                         }
@@ -410,13 +410,15 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 
                                         unLocking = true;
 
-                                        sendLockOpenStatus();
+                                     //   sendLockOpenStatus();
 
-                                      //  CycliqBluetoothComm.getInstance().bgOperation(1002);
+                                        CycliqBluetoothComm.getInstance().bgOperation(1002);
 
 
                                     } else {
                                         Constants.hideProgressDialog();
+                                        showDialog("Something went wrong. Please try again");
+
 
                                     }
                                 }
@@ -444,6 +446,7 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
 //                                    Toast.makeText(this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
                                     Constants.hideProgressDialog();
+                                    showDialog(error.getLocalizedMessage());
 
                                 }
                             });
@@ -481,6 +484,11 @@ public class QRScanActivity extends AppCompatActivity implements BarcodeReader.B
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+
+                Intent intent = new Intent(QRScanActivity.this, MapsActivity.class);
+
+                startActivity(intent);
+
             }
         });
         builder.show();

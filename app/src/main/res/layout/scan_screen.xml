@@ -59,8 +59,8 @@
         app:line_speed="6"
         app:line_width="4"
         android:layout_centerInParent="true"
-        app:square_height="200"
-        app:square_width="200" />
+        app:square_height="250"
+        app:square_width="250" />
 
     <View
         android:layout_width="200dp"
@@ -70,6 +70,8 @@
         android:id="@+id/border"
         android:background="@drawable/border"
         />
+
+
 
     <!--<fragment-->
         <!--android:id="@+id/barcode_fragment"-->

@@ -153,7 +153,9 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
 
         int id = view.getId();
         if (view == btnBikeReport) {
+            Intent intent = new Intent(this, ReportActivity.class);
 
+            startActivity(intent);
 
         } else if (view == btnTripClose) {
 
@@ -474,7 +476,7 @@ public class TripRunningActivity extends AppCompatActivity implements OnMapReady
                 Integer mins = (tripCountDown / 60) % 60;
                 Integer seconds = tripCountDown % 60;
 
-                final String text =  String.format("%02d:%02d:%02d", hours, mins, seconds);
+                final String text =  String.format("%02d:%02d", mins, seconds);
 
 
 
